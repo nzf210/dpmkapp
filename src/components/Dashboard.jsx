@@ -1,20 +1,25 @@
+import { useState } from "react";
 import Navbar from "./Navbar";
 import Welcome from "./Welcome";
-
-const hd = {
-    display: "none"
-}
+import Header from "./Header";
 
 const Dashboard = () => {
+    const [menudash, setMenudash] = useState(Welcome);
+
+    const ubahmenu = (tag) => {
+        setMenudash(tag);
+    }
+
     return (
-        <div>
-            <Navbar />
-            <div className="h-20">
+        <>
+            <div className="fixed w-full">
+                <Header />
+                <Navbar ubahmenu={ubahmenu} />
             </div>
             <div>
-                <Welcome />
+                {menudash}
             </div>
-        </div>
+        </>
     )
 }
 

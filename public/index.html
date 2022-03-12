@@ -12,35 +12,9 @@
     <title>DPMK | Kabupaten Yahukimo 2022</title>
   </head>
   <body>
-      <!-- <noscript>You need to enable JavaScript to run this app.</noscript> -->
-      <div class="fixed w-full">
-        <div class="flex flex-row justify-between px-4 h-9 items-center bg-slate-800">
-            <span class="sm:font-semibold font-thin text-green-700">DPMK <span class="text-white sm:font-light"> Kabupaten
-                    Yahukimo</span></span>
-            <div class="hidden" id="nama-login">
-                <div class="flex flex-row">
-                    <span class="hidden lg:block text-white font-light mr-3">Selamat Datang : </span>
-                    <span class="hidden md:block text-slate-300 font-semibold"> Syahril Syamsuddin</span>
-                </div>
-            </div>
-            <span class="text-blue-200 sm:text-white font-thin sm:font-semibold" id="tanggalwaktu">----, -- ------ -----</span>
+      <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root">
+          
         </div>
-        <div id="root"></div>
-
-    <script>
-      let a;
-      let tw = new Date();
-      if (tw.getTimezoneOffset() == 0) (a = tw.getTime() + (7 * 60 * 60 * 1000))
-      else (a = tw.getTime());
-      tw.setTime(a);
-      let tahun = tw.getFullYear();
-      let hari = tw.getDay();
-      let bulan = tw.getMonth();
-      let tanggal = tw.getDate();
-      let hariarray = new Array("Minggu,", "Senin,", "Selasa,", "Rabu,", "Kamis,", "Jum'at,", "Sabtu,");
-      let bulanarray = new Array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus",
-          "September", "Oktober", "Nopember", "Desember");
-        document.getElementById('tanggalwaktu').innerHTML = hariarray[hari] + " " + tanggal + " " + bulanarray[bulan] + " " + tahun;
-    </script>
-  </body>
+   </body>
 </html>

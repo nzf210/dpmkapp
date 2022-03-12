@@ -1,12 +1,13 @@
 
 const ApbkMonitoring = () => {
     return (
+
+
         <div>
-            <div className="h-20"></div>
-            <div>
-                <h1>Halaman Apbk Monitoring</h1>
-            </div>
+            <div className="h-40"></div>
+            <h1>Apbk Monitoring</h1>
         </div>
+
     )
 }
 

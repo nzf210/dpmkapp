@@ -13,7 +13,6 @@ const Dashboard = () => {
     return (
         <>
             <div className="fixed w-full">
-                <Header />
                 <Navbar ubahmenu={ubahmenu} />
             </div>
             <div>

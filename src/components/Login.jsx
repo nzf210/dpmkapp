@@ -46,7 +46,7 @@ const Login = () => {
                                         onClick={(btn) => {
                                             //document.getElementsByTagName('form')[0].preventDefault();
                                             btn.preventDefault();
-                                            window.location = window.location + "dashboard";
+                                            window.location = window.location + "home";
                                         }}
                                     >LOGIN</button>
                                 </form>

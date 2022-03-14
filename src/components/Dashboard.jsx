@@ -1,22 +1,23 @@
+import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import Navbar from "./Navbar";
 import Welcome from "./Welcome";
-import Header from "./Header";
+
 
 const Dashboard = () => {
-    const [menudash, setMenudash] = useState(Welcome);
+    const [out, setOut] = useState(<Welcome />);
 
-    const ubahmenu = (tag) => {
-        setMenudash(tag);
+    function ubahMenu(e) {
+        if (e === 'home') {
+            setOut(<Welcome />)
+        } else { setOut(<Outlet />) }
     }
 
     return (
         <>
-            <div className="fixed w-full">
-                <Navbar ubahmenu={ubahmenu} />
-            </div>
+            <Navbar ubahMenu={ubahMenu} />
             <div>
-                {menudash}
+                {out}
             </div>
         </>
     )

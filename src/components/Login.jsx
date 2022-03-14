@@ -44,8 +44,8 @@ const Login = () => {
                                     </div>
                                     <button id="btn-login" className="w-[50%] sm:w-[60%] min-w-min bg-blue-700 hover:bg-blue-800 active:bg-blue-900 rounded-md sm:rounded-sm sm:h-10 sm:mt-4"
                                         onClick={(btn) => {
-                                            //document.getElementsByTagName('form')[0].preventDefault();
                                             btn.preventDefault();
+                                            //document.getElementsByTagName('form')[0].preventDefault();
                                             window.location = window.location + "home";
                                         }}
                                     >LOGIN</button>

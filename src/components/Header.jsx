@@ -1,27 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+let a;
+let tw = new Date();
+if (tw.getTimezoneOffset() === 0) (a = tw.getTime() + (7 * 60 * 60 * 1000))
+else (a = tw.getTime());
+tw.setTime(a);
+let tahun = tw.getFullYear();
+let hari = tw.getDay();
+let bulan = tw.getMonth();
+let tanggal = tw.getDate();
+let hariarray = ["Minggu,", "Senin,", "Selasa,", "Rabu,", "Kamis,", "Jum'at,", "Sabtu,"];
+let bulanarray = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus",
+    "September", "Oktober", "Nopember", "Desember"];
+let tgl_ = hariarray[hari] + " " + tanggal + " " + bulanarray[bulan] + " " + tahun;
 
 const Header = () => {
-    let a;
-    let tw = new Date();
-    if (tw.getTimezoneOffset() == 0) (a = tw.getTime() + (7 * 60 * 60 * 1000))
-    else (a = tw.getTime());
-    tw.setTime(a);
-    let tahun = tw.getFullYear();
-    let hari = tw.getDay();
-    let bulan = tw.getMonth();
-    let tanggal = tw.getDate();
-    let hariarray = new Array("Minggu,", "Senin,", "Selasa,", "Rabu,", "Kamis,", "Jum'at,", "Sabtu,");
-    let bulanarray = new Array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus",
-        "September", "Oktober", "Nopember", "Desember");
-    let tgl_ = hariarray[hari] + " " + tanggal + " " + bulanarray[bulan] + " " + tahun;
-
-    const [tgl, setTgl] = useState('.. . .........');
-
-    useEffect(() => {
-        setTgl(tgl_);
-    }, [])
-
-
+    const [tgl] = useState(tgl_);
     return (
         < >
             <div className="flex flex-row justify-between px-4 h-9 items-center bg-slate-800">

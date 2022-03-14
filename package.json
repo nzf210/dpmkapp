@@ -4,6 +4,10 @@
   "homepage": "http://202.157.176.42",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.5.0",
+    "@mui/material": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
@@ -18,8 +22,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "tail": "npx tailwindcss -i ./cssinput.css -o ./src/style.css --watch",
-    "tailm": "npx tailwindcss -i ./cssinput.css -o ./src/style.css --minify"
+    "t": "npx tailwindcss -i ./cssinput.css -o ./src/style.css --watch",
+    "tm": "npx tailwindcss -i ./cssinput.css -o ./src/style.css --minify",
+    "r": "npm start && npm run tail"
   },
   "eslintConfig": {
     "extends": [

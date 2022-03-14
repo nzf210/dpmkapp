@@ -39,8 +39,11 @@ const Login = () => {
                                         <img src="icons/login.png" className="h-7 w-7  hidden sm:block ml-4" alt="" />
                                     </div>
                                     <div className="flex sm:w-full">
-                                        <input type="text" placeholder="tahun" className="sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700" />
-                                        <img src="icons/calendar.png" className="h-7 w-7 hidden sm:block ml-4" alt="" />
+                                        <select type="text" placeholder="tahun" className="sm:w-[80%] min-w-min block border-2 border-blue-700 rounded-none mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700 outline-none">
+                                            <option className="rounded-none">Pilih Tahun</option>
+                                            <option className="rounded-none">2022</option>
+                                        </select>
+                                        <img src="icons/calendar.png" className="h-7 w-7  hidden sm:block ml-4" alt="" />
                                     </div>
                                     <button id="btn-login" className="w-[50%] sm:w-[60%] min-w-min bg-blue-700 hover:bg-blue-800 active:bg-blue-900 rounded-md sm:rounded-sm sm:h-10 sm:mt-4"
                                         onClick={(btn) => {

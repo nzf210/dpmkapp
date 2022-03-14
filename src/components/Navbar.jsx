@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 // import Welcome from "./Welcome"
 import Header from "./Header"
+import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 // import ApbkMonitoring from "./sub/apbk/ApbkMonitoring";
@@ -174,9 +176,8 @@ const Navbar = ({ ubahMenu }) => {
                                     onClick={() => {
                                         document.getElementById('div-navbar').firstElementChild.classList.toggle('hidden');
                                     }} /></button>
-                                <Link to="/" className="-mt-[4.5px] inline-block">
-                                    <img src="icons/icons8-unavailable-50.svg" className="hidden sm:block h-5 w-5 absolute mt-1 -ml-6" alt="logout" />
-                                    LOGOUT
+                                <Link to="/" className="-mt-[4.5px] flex space-x-1">
+                                    <span className="mr-1 font-semibold text-red-100">LOGOUT</span>  <LogoutIcon />
                                 </Link>
                             </div>
                         </div>

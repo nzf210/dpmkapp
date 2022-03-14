@@ -41,11 +41,13 @@ import Atvis from "./components/Atvis";
 import RealisasiAnggaran from "./components/RealisasiAnggaran";
 /* SPP */
 
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
     <div>
       <Routes >
+        <Route path='*' element={<NotFound />}></Route>
         <Route path="/" exact element={<Login />} />
         <Route path="home" exact element={<Dashboard />} >
 

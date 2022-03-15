@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 // import Welcome from "./Welcome"
 import Header from "./Header"
-import MenuIcon from '@mui/icons-material/Menu';
+// import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 
@@ -369,15 +369,8 @@ const Navbar = ({ ubahMenu }) => {
                                         </li>
                                     </Link>
                                     <Link onClick={() => { ubahMenu() }} to="/home/realisasi" className="inline-block w-11">
-                                        {/* <li id="li-dropdown-realisasi" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-44 flex sm:bg-transparent cursor-pointer group" onClick={(e) => {
-                                            btnNav(e); ubahmenu(RealisasiAnggaran)
-                                        }}>
-                                            <i><img src="icons/icons8-about-50.svg" alt="" id="img-realisasi" className="h-6 sm:hidden md:block" /></i>
-                                            <span className="text-center pl-2" id="btn-realisasi">Realisasi
-                                                Anggaran</span>
-                                        </li> */}
-                                        <li id="li-dropdown-realisasi" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-44 flex cursor-pointer sm:py-1 sm:bg-transparent" onClick={(e) => { btnNav(e); }} >
-                                            <i><img src="icons/icons8-about-50.svg" id="img-realisasi" alt="" className="h-6 sm:hidden md:block" /></i>
+                                        <li id="li-dropdown-realisasi" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[190px] flex cursor-pointer sm:py-1 sm:bg-transparent" onClick={(e) => { btnNav(e); }} >
+                                            <i><img src="icons/icons8-about-50.svg" id="img-realisasi" alt="ico" className="h-6 sm:hidden md:block" /></i>
                                             <span className="text-center pl-2" id="btn-realisasi">Realisasi Anggaran</span>
                                         </li>
                                     </Link>
@@ -393,3 +386,4 @@ const Navbar = ({ ubahMenu }) => {
 }
 
 export default Navbar;
+

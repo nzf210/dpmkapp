@@ -1,4 +1,4 @@
-import SearchIcon from '@mui/icons-material/Search';
+// import SearchIcon from '@mui/icons-material/Search';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
@@ -100,29 +100,29 @@ const NamaDistrik = () => {
     }
 
     return (
-        <div className="bg-slate-100">
-            <div className='grid grid-cols-1'>
-                <div className="items-center justify-center mx-auto flex  border-2 border-blue-700 placeholder:text-slate-500">
-                    <input type="text" className='outline-none pr-5 pl-2 rounded-sm shadow-lg' placeholder='Nama Distrik' value={nmdis_input} onChange={setInputDistrik} />
+        <div>
+            <div className='grid grid-cols-1 items-end mr-0'>
+                <div className="flex placeholder:text-slate-500 sm:pr-0 mx-auto sm:mr-2">
+                    <input type="text" className='outline-none pr-5 pl-2 rounded-sm shadow-lg border-2 border-slate-300 active:ring active:ring-blue-300 transition focus:ring-blue-400 ' placeholder='Nama Distrik' value={nmdis_input} onChange={setInputDistrik} />
                     <div className="searchIcon"><span className='rotate-90 -ml-6'>
                         {nmdis_input === '' ? <ChevronRightIcon className='h-5 cursor-pointer' style={{ transform: 'rotate(90deg)' }} />
-                            : <CloseIcon className='h-5 cursor-pointer' onClick={() => {
+                            : <CloseIcon className='h-3 w-3 cursor-pointer' onClick={() => {
                                 bersihkanData()
                             }} />
                         }
                     </span></div>
                 </div>
-                {filternamadis.length != 0 && (
-                    <ul className="mx-auto justify-start items-start bg-slate-200 w-52 h-64 overflow-hidden rounded-sm shadow-lg" >
+                {filternamadis.length !== 0 && (
+                    <div className="mx-auto bg-slate-200 w-52 h-64 overflow-hidden rounded-sm shadow-lg sm:mr-2" >
                         {filternamadis.slice(0, 3).map((val, key) => {
-                            return (<li
+                            return (<div
                                 className='cursor-pointer m-1 hover:bg-slate-300'
                                 onClick={(val) => {
                                     setnmdis_input(val.target.innerText); setFilternamadis([]);
                                 }}
-                                key={key}>{val.nama}</li>)
+                                key={key}>{val.nama}</div>)
                         })}
-                    </ul>)
+                    </div>)
                 }
             </div>
         </div>

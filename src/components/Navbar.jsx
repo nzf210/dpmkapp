@@ -1,49 +1,6 @@
 import { Link } from "react-router-dom";
-// import Welcome from "./Welcome"
 import Header from "./Header"
-// import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
-
-
-// import ApbkMonitoring from "./sub/apbk/ApbkMonitoring";
-// import ApbkRealiasai from "./sub/apbk/ApbkRealiasai";
-
-
-// /* CONFIG */
-// import ConfigAparatKampung from "./sub/config/ConfigAparatKampung";
-// import ConfigPejabatPengesahan from "./sub/config/ConfigPejabatPengesahan";
-// import ConfigUbahPassword from "./sub/config/ConfigUbahPassword";
-// /* CONFIG */
-
-// /* SP2D */
-// import Sp2dAdd from "./sub/sp2d/Sp2dAdd";
-// import Sp2dBlt from "./sub/sp2d/Sp2dBlt";
-// import Sp2dCovid from "./sub/sp2d/Sp2dCovid";
-// import Sp2dLaporan from "./sub/sp2d/Sp2dLaporan";
-// import Sp2dReguler from "./sub/sp2d/Sp2dReguler";
-// /* SP2D */
-
-// /* SPM */
-// import SpmAdd from "./sub/spm/SpmAdd";
-// import SpmBlt from "./sub/spm/SpmBlt";
-// import SpmCovid from "./sub/spm/SpmCovid";
-// import SpmLaporan from "./sub/spm/SpmLaporan";
-// import SpmPersetujuan from "./sub/spm/SpmPersetujuan";
-// import SpmReguler from "./sub/spm/SpmReguler";
-// /* SPM */
-
-// /* SPP */
-// import SppAdd from "./sub/spp/SppAdd";
-// import SppBlt from "./sub/spp/SppBlt";
-// import SppCovid from "./sub/spp/SppCovid";
-// import SppLaporan from "./sub/spp/SppLaporan";
-// import SppPersetujuan from "./sub/spp/SppPersetujuan";
-// import SppReguler from "./sub/spp/SppReguler";
-// import Atvis from "./Atvis";
-// import RealisasiAnggaran from "./RealisasiAnggaran";
-// /* SPP */
-
-
 
 const Navbar = ({ ubahMenu }) => {
     function btnNav(e) {
@@ -159,6 +116,7 @@ const Navbar = ({ ubahMenu }) => {
         }
     }
 
+
     return (
 
         <div className="fixed w-full">
@@ -176,7 +134,7 @@ const Navbar = ({ ubahMenu }) => {
                                     onClick={() => {
                                         document.getElementById('div-navbar').firstElementChild.classList.toggle('hidden');
                                     }} /></button>
-                                <Link to="/" className="-mt-[4.5px] flex space-x-1">
+                                <Link to="/" className="-mt-[4.5px] sm:mt-0 flex space-x-1 hover:bg-blue-700 p-2">
                                     <span className="mr-1 font-semibold text-red-100">LOGOUT</span>  <LogoutIcon />
                                 </Link>
                             </div>

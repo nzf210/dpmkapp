@@ -1,9 +1,8 @@
 import Header from "./Header";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-
-
-
+    let nav = useNavigate();
     return (
         <div>
             <div className="fixed w-full">
@@ -48,8 +47,7 @@ const Login = () => {
                                     <button id="btn-login" className="w-[50%] sm:w-[60%] min-w-min bg-blue-700 hover:bg-blue-800 active:bg-blue-900 rounded-md sm:rounded-sm sm:h-10 sm:mt-4"
                                         onClick={(btn) => {
                                             btn.preventDefault();
-                                            //document.getElementsByTagName('form')[0].preventDefault();
-                                            window.location = window.location + "home";
+                                            nav('/home')
                                         }}
                                     >LOGIN</button>
                                 </form>
@@ -62,4 +60,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default Login

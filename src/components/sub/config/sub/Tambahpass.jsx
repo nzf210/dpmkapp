@@ -22,31 +22,37 @@ export function Modal() {
     const [nohp, setnohp] = useState('');
     const [email, setemail] = useState('');
     const [username, setusername] = useState('');
-    const [kdlvl1, setkdlvl1] = useState(11);
-    const [kdlvl2, setkdlvl2] = useState(12);
-    const [kdkampung, setkdkampung] = useState(22);
-    const [kddistrik, setkddistrik] = useState(23);
-    //const hostory = useHistory();
-    const [save_, setSave_] = useState();
+    const [kd_lvl1, setkdlvl1] = useState(2);
+    const [kd_lvl2, setkdlvl2] = useState(1);
+    const [kd_kampung, setkdkampung] = useState(2);
+    const [kd_distrik, setkddistrik] = useState(4);
 
 
     const saveuser = async (e) => {
         e.preventDefault();
-        console.log('Save User');
-
-        await axios.post('http://localhost:3002/user',
-            {
-                nama: nama,
-                username: username,
-                nohp: nohp,
-                email: email,
-                password: password,
-                kd_lvl1: kdlvl1,
-                kd_lvl2: kdlvl2,
-                kd_distrik: kddistrik,
-                kd_kampung: kdkampung,
+        try {
+            await axios.post('http://localhost:3002/user',
+                {
+                    nama: nama,
+                    username: username,
+                    nohp: nohp,
+                    email: email,
+                    password: password + "a",
+                    ulangpassword: password,
+                    kd_lvl1: kd_lvl1,
+                    kd_lvl2: kd_lvl2,
+                    kd_distrik: kd_distrik,
+                    kd_kampung: kd_kampung
+                }
+            )
+        }
+        catch (e) {
+            console.log('Save User error');
+            if (e.response) {
+                console.log(e.response.data);
             }
-        )
+        }
+
     }
 
     return (
@@ -65,15 +71,11 @@ export function Modal() {
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                 {/*header*/}
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                                    <h3 className="text-3xl font-semibold">
-                                        Tambah User
-                                    </h3>
+                                    <h3 className="text-3xl font-semibold">Tambah User</h3>
                                     <button
                                         className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                                         onClick={() => setShowModal(false)}>
-                                        <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                                            ❌
-                                        </span>
+                                        <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">❌</span>
                                     </button>
                                 </div>
                                 {/*body*/}
@@ -132,7 +134,7 @@ export function Modal() {
                                                 <input type="text" id="kdlvl1"
                                                     className="outline-none border-2 border-slate-600 ring-1ring-slate-700 pl-2 ml-2"
                                                     placeholder="email"
-                                                    value={kdlvl1}
+                                                    value={kd_lvl1}
                                                     onChange={(e) => setemail(e.target.value)}
                                                 />
                                             </div>
@@ -140,7 +142,7 @@ export function Modal() {
                                                 <input type="text" id="kdlvl2"
                                                     className="outline-none border-2 border-slate-600 ring-1ring-slate-700 pl-2 ml-2"
                                                     placeholder="email"
-                                                    value={kdlvl2}
+                                                    value={kd_lvl2}
                                                     onChange={(e) => setemail(e.target.value)}
                                                 />
                                             </div>
@@ -148,7 +150,7 @@ export function Modal() {
                                                 <input type="text" id="kddistrik"
                                                     className="outline-none border-2 border-slate-600 ring-1ring-slate-700 pl-2 ml-2"
                                                     placeholder="email"
-                                                    value={kddistrik}
+                                                    value={kd_distrik}
                                                     onChange={(e) => setemail(e.target.value)}
                                                 />
                                             </div>
@@ -156,7 +158,7 @@ export function Modal() {
                                                 <input type="text" id="kdkampung"
                                                     className="outline-none border-2 border-slate-600 ring-1ring-slate-700 pl-2 ml-2"
                                                     placeholder="email"
-                                                    value={kdkampung}
+                                                    value={kd_kampung}
                                                     onChange={(e) => setemail(e.target.value)}
                                                 />
                                             </div>
@@ -169,9 +171,7 @@ export function Modal() {
                                             className="hover:shadow-xl text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                             type="button"
                                             onClick={() => {
-
                                                 setShowModal(false);
-
                                             }}>
                                             Batal
                                         </button>

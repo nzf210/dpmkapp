@@ -57,7 +57,7 @@ function App() {
         <Route path="/" exact element={<Login />} />
         <Route path='user' element={<Tambahpass />} />
         <Route path='user/:id' element={<Ubahpass />} />
-        <Route path="home" exact element={<Dashboard />} >
+        <Route path="home" element={<Dashboard />} >
 
           <Route path="apbk/monitoring" element={<ApbkMonitoring />} />
           <Route path="apbk/realisasi" element={<ApbkRealiasai />} />
@@ -66,7 +66,7 @@ function App() {
           <Route path="realisasi" element={<RealisasiAnggaran />} />
 
           <Route path="config/ubahpassword" element={<ConfigUbahPassword />} />
-          {/* <Route path="config/ubahpassword/:id" element={<ConfigUbahPassword />} /> */}
+          <Route path="config/ubahpassword/:id" element={<ConfigUbahPassword />} />
           <Route path="config/pejabat" element={<ConfigPejabatPengesahan />} />
           <Route path="config/aparat" element={<ConfigAparatKampung />} />
 
@@ -78,6 +78,7 @@ function App() {
           <Route path="spp/reguler" element={<SppReguler />} />
 
           <Route path="spm/blt" element={<SpmBlt />} />
+
           <Route path="spm/covid" element={<SpmCovid />} />
           <Route path="spm/laporan" element={<SpmLaporan />} />
           <Route path="spm/persetujuan" element={<SpmPersetujuan />} />
@@ -89,7 +90,6 @@ function App() {
           <Route path="sp2d/laporan" element={<Sp2dLaporan />} />
           <Route path="sp2d/add-honor" element={<Sp2dAdd />} />
           <Route path="sp2d/reguler" element={<Sp2dReguler />} />
-
         </Route>
       </Routes>
     </div>

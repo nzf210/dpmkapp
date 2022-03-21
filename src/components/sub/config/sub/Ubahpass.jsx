@@ -1,54 +1,17 @@
-
-
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const stylemodal = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(0%, 0%)',
-    },
-};
-
-
-const stylemodalinfo = {
-    overlay: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.35)'
-    },
-    content: {
-        position: 'absolute',
-        top: '20%',
-        left: '30%',
-        right: '30%',
-        bottom: '40%',
-        border: '1px solid #ccc',
-        background: '#fff',
-        overflow: 'hidden',
-        WebkitOverflowScrolling: 'touch',
-        borderRadius: '4px',
-        outline: 'none',
-        padding: '20px',
-        height: '320px'
-    }
-};
 
 Modal.setAppElement('#root');
 
-function Ubahpass({ getUser }) {
+function Ubahpass({ setModalEdit, modaledit }) {
+    const { id } = useParams();
     const navLink = useNavigate();
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(true);
     const [showModalinfo, setShowModalinfo] = useState(false);
+    //=============//
     const [nama, setnama] = useState('');
     const [password, setpassword] = useState('');
     const [nohp, setnohp] = useState('');
@@ -59,20 +22,31 @@ function Ubahpass({ getUser }) {
     const [kdkampung, setkdkampung] = useState(22);
     const [kddistrik, setkddistrik] = useState(23);
 
-    function setBlank() {
-        setnama('');
-        setpassword('');
-        setnohp('');
-        setemail('');
-        setusername('');
-        setkdlvl1('');
-        setkdlvl2('');
+
+    const getUserOne = async () => {
+        const user = await axios.get(`http://localhost:3002/user/${id}`);
+        console.log('get one', user.data.nama)
+        setnama(user.data.nama);
+        setpassword(user.data.password);
+        setnohp(user.data.nohp);
+        setemail(user.data.email);
+        setusername(user.data.username);
+        setkdlvl1(user.data.kd_lvl1);
+        setkdlvl2(user.data.kd_lvl2);
     }
 
-    const saveUser = async (e) => {
-        console.log('savee');
+    useEffect(() => {
+        let e = true;
+        if (e) {
+            getUserOne(); e = false;
+        }
+        return () => { e = true };
+    }, [modaledit]);
+
+    const updateUser = async (e) => {
+        console.log('Editt');
         try {
-            await axios.post('http://127.0.0.1:3002/user', {
+            await axios.patch(`http://127.0.0.1:3002/user/${id}`, {
                 nama: nama,
                 username: username,
                 password: password,
@@ -81,12 +55,12 @@ function Ubahpass({ getUser }) {
                 hd_lvl1: kdlvl1,
                 hd_lvl2: kdlvl2
             });
-            setShowModal(false);
             setShowModalinfo(true);
             setTimeout(setShowModalinfo(false), 30000);
             navLink('/home/config/ubahpassword');
-            getUser();
-            setBlank();
+            setModalEdit(false);
+            //getUser();
+            //setBlank();
         } catch (error) {
             console.log(error);
         }
@@ -94,41 +68,12 @@ function Ubahpass({ getUser }) {
 
     return (
         <>
-            <button className="h-10 px-5 m-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
-                onClick={() => { setShowModal(true) }}
-            >Tambah Pengguna</button>
             <Modal isOpen={showModal} onRequestClose={() => setShowModal(false)}
-                style={{
-                    overlay: {
-                        position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        backgroundColor: 'rgba(255, 255, 255, 0.35)'
-                    },
-                    content: {
-                        position: 'absolute',
-                        top: '20%',
-                        left: '30%',
-                        right: '30%',
-                        bottom: '20%',
-                        border: '1px solid #ccc',
-                        background: '#fff',
-                        overflow: 'hidden',
-                        WebkitOverflowScrolling: 'touch',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        padding: '20px',
-                        height: '320px'
-                    }
-                }}
-
-            >
-                <h1 className='text-center font-bold text-slate-800 mb-4'>Menambah User Baru</h1>
+                style={stylemodal}>
+                <h1 className='text-center font-bold text-slate-800 mb-4'>Mengubah Data User</h1>
                 <hr />
                 <div className="space-y-2 mb-2">
-                    <form onSubmit={(e) => { e.preventDefault(); saveUser() }} className="space-y-2 mt-2" >
+                    <form onSubmit={(e) => { e.preventDefault(); updateUser() }} className="space-y-2 mt-2" >
                         <div className="grid grid-cols-5">
                             <label htmlFor="nama" className='shadow-blue-600 shadow-sm rounded-sm'>Nama</label>
                             <input type="text"
@@ -179,7 +124,10 @@ function Ubahpass({ getUser }) {
                         <div className="grid grid-cols-6 gap-1 mt-5">
                             <div className='...'></div>
                             <span className="mt-3 text-center rounded-md bg-red-700 hover:bg-red-800 p-2 active:bg-red-700 col-span-2 ... shadow-md active:ring-2 active:ring-blue-400 hover:text-yellow-50"
-                                onClick={(e) => { setShowModal(false) }}
+                                onClick={(e) => {
+                                    setModalEdit(false);
+                                    navLink('/home/config/ubahpassword');
+                                }}
                             >BATAL
                             </span>
                             <button className="mt-3 rounded-md bg-blue-700 hover:bg-blue-800 p-2 active:bg-blue-700 col-span-2 ... shadow-md active:ring-2 active:ring-blue-400 hover:text-yellow-50"
@@ -192,9 +140,8 @@ function Ubahpass({ getUser }) {
                 </div>
             </Modal>
             <Modal isOpen={showModalinfo} style={stylemodalinfo} onRequestClose={() => setShowModalinfo(false)}>
-                <div className='mx-auto text-blue-500 font-semibold'>Pengguna Berhasil Di Tambahkan</div>
+                <div className='bg-transparent mx-auto font-black  h-full items-center flex border '><span className='mx-auto items-center text-center my-auto text-blue-900'>Data Pengguna Berhasil Di Ubah</span> </div>
             </Modal>
-
         </>
     )
 }
@@ -347,3 +294,56 @@ export default Ubahpass
 // }
 
 // export default Ubahpass
+
+const stylemodal = {
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0.35)'
+    },
+    content: {
+        position: 'absolute',
+        top: '20%',
+        left: '30%',
+        right: '30%',
+        bottom: '20%',
+        border: '1px solid #ccc',
+        background: '#fff',
+        overflow: 'hidden',
+        WebkitOverflowScrolling: 'touch',
+        borderRadius: '4px',
+        outline: 'none',
+        padding: '20px',
+        height: '320px'
+    }
+};
+
+
+const stylemodalinfo = {
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0.35)'
+    },
+    content: {
+        position: 'absolute',
+        top: '20%',
+        left: '30%',
+        right: '30%',
+        bottom: '40%',
+        border: '1px solid #ccc',
+        background: '#fff',
+        overflow: 'hidden',
+        WebkitOverflowScrolling: 'touch',
+        borderRadius: '4px',
+        outline: 'none',
+        padding: '20px',
+        height: '320px'
+    }
+};

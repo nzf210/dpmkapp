@@ -1,13 +1,34 @@
 import Header from "./Header";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 const Login = () => {
-    let nav = useNavigate();
+    //let nav = Link();
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [info, setInfo] = useState('');
+    const navLink = useNavigate();
+
+    const Auth = async () => {
+
+        try {
+            await axios.post('login', {
+                username: username,
+                password: password
+            });
+            navLink('/home')
+        } catch (e) {
+            if (e) { setInfo(e.response.data.info); console.log(e.response.data.info); }
+        }
+    }
+
     return (
         <div>
-            <div className="fixed w-full">
-                <Header />
-                <div className="container pb-8 mx-auto">
+            <div className="fixed w-full"><Header /></div>
+            <div className="w-full h-full">
+                <div className="container pb-8 mx-auto h-full">
                     <div className="container max-w-full h-[100px] sm:h-64">
                         <div className="container w-4" />
                     </div>
@@ -28,13 +49,13 @@ const Login = () => {
                             </div>
                             <div className="pb-3 sm:border-l-2 sm:border-slate-900 sm:my-10">
                                 <h3 className="text-center sm:text-left sm:pl-8 font-semibold mt-1">Silahkan Masuk</h3>
-                                <form className="flex flex-col items-center sm:items-start sm:pl-8 sm:-pr-14 sm:mt-2">
+                                <form onSubmit={(e) => { e.preventDefault(); Auth() }} className="flex flex-col items-center sm:items-start sm:pl-8 sm:-pr-14 sm:mt-2">
                                     <div className="flex sm:w-full">
-                                        <input type="text" placeholder="username" className="sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700 mt-1" />
+                                        <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="username" className="sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700 mt-1" />
                                         <img src="icons/user.png" className="h-7 w-7 mt-1 hidden sm:block ml-4" alt="" />
                                     </div>
                                     <div className="flex sm:w-full">
-                                        <input type="text" placeholder="password" className="sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700" />
+                                        <input value={password} onChange={(e) => setPassword(e.target.value)} type="text" placeholder="password" className="sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700" />
                                         <img src="icons/login.png" className="h-7 w-7  hidden sm:block ml-4" alt="" />
                                     </div>
                                     <div className="flex sm:w-full">
@@ -44,11 +65,7 @@ const Login = () => {
                                         </select>
                                         <img src="icons/calendar.png" className="h-7 w-7  hidden sm:block ml-4" alt="" />
                                     </div>
-                                    <button id="btn-login" className="w-[50%] sm:w-[60%] min-w-min bg-blue-700 hover:bg-blue-800 active:bg-blue-900 rounded-md sm:rounded-sm sm:h-10 sm:mt-4"
-                                        onClick={(btn) => {
-                                            btn.preventDefault();
-                                            nav('/home')
-                                        }}
+                                    <button type="submit" id="btn-login" className="w-[50%] sm:w-[60%] min-w-min bg-blue-700 hover:bg-blue-800 active:bg-blue-900 rounded-md sm:rounded-sm sm:h-10 sm:mt-4"
                                     >LOGIN</button>
                                 </form>
                             </div>

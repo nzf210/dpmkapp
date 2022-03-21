@@ -3,49 +3,7 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 
-const stylemodal = {
-    content: {
-        top: '60%',
-        left: '60%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(0%, 0%)',
-    },
-};
-
-
-const stylemodalinfo = {
-    overlay: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.35)',
-        border: '0px solid #ccc',
-    },
-    content: {
-        position: 'absolute',
-        top: '20%',
-        left: '30%',
-        right: '30%',
-        bottom: '40%',
-        border: '0px solid #ccc',
-        background: '#fff',
-        overflow: 'hidden',
-        WebkitOverflowScrolling: 'touch',
-        borderRadius: '40px',
-        outline: 'none',
-        padding: '20px',
-        height: '80px',
-        width: '520px',
-        backgroundColor: 'transparent'
-    }
-};
-
 Modal.setAppElement('#root');
-
 function Viewuser({ getUser }) {
     const navLink = useNavigate();
     const [showModal, setShowModal] = useState(false);
@@ -55,10 +13,11 @@ function Viewuser({ getUser }) {
     const [nohp, setnohp] = useState('');
     const [email, setemail] = useState('');
     const [username, setusername] = useState('');
-    const [kdlvl1, setkdlvl1] = useState(11);
-    const [kdlvl2, setkdlvl2] = useState(12);
-    const [kdkampung, setkdkampung] = useState(22);
-    const [kddistrik, setkddistrik] = useState(23);
+    const [kd_lvl1, setkdlvl1] = useState(2);
+    const [kd_lvl2, setkdlvl2] = useState(1);
+    const [kd_kampung, setkdkampung] = useState(2);
+    const [kd_distrik, setkddistrik] = useState(1);
+    const [info, setinfo] = useState('');
 
     function setBlank() {
         setnama('');
@@ -73,40 +32,40 @@ function Viewuser({ getUser }) {
     const saveUser = async (e) => {
         console.log('savee');
         try {
-            await axios.post('http://127.0.0.1:3002/user', {
+            const user = await axios.post('http://127.0.0.1:3002/user', {
                 nama: nama,
                 username: username,
-                password: password,
-                email: email,
                 nohp: nohp,
-                hd_lvl1: kdlvl1,
-                hd_lvl2: kdlvl2
+                email: email,
+                password: password,
+                ulangpassword: password,
+                kd_lvl1: kd_lvl1,
+                kd_lvl2: kd_lvl2,
+                kd_distrik: kd_distrik,
+                kd_kampung: kd_kampung
             });
             setShowModal(false);
             setShowModalinfo(true);
-            //setTimeout(setShowModalinfo(false), 30000);
+
             navLink('/home/config/ubahpassword');
             getUser();
             setBlank();
 
             let timeout;
-
             function myFunction() {
-                timeout = setTimeout(alertFunc, 3000);
+                timeout = setTimeout(alertFunc, 1000);
             }
-
             function alertFunc() {
-                //alert("Hello!");
                 setShowModalinfo(false);
             }
-
             myFunction();
 
+            setinfo(user.data.response.info);
 
-
-
-        } catch (error) {
-            console.log(error);
+        } catch (e) {
+            if (e.response) {
+                setinfo(e.response.data.info);
+            }
         }
     }
 
@@ -116,35 +75,12 @@ function Viewuser({ getUser }) {
                 onClick={() => { setShowModal(true) }}
             >Tambah Pengguna</button>
             <Modal isOpen={showModal} onRequestClose={() => setShowModal(false)}
-                style={{
-                    overlay: {
-                        position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        backgroundColor: 'rgba(255, 255, 255, 0.35)'
-                    },
-                    content: {
-                        position: 'absolute',
-                        top: '20%',
-                        left: '30%',
-                        right: '30%',
-                        bottom: '20%',
-                        border: '1px solid #ccc',
-                        background: '#fff',
-                        overflow: 'hidden',
-                        WebkitOverflowScrolling: 'touch',
-                        borderRadius: '4px',
-                        outline: 'none',
-                        padding: '20px',
-                        height: '320px'
-                    }
-                }}
+                style={stylemodal}
 
             >
-                <h1 className='text-center font-bold text-slate-800 mb-4'>Menambah User Baru</h1>
+                <h1 className='text-center font-bold text-slate-800 mb-4'>Tambah Pengguna</h1>
                 <hr />
+                <div>{info}</div>
                 <div className="space-y-2 mb-2">
                     <form onSubmit={(e) => { e.preventDefault(); saveUser() }} className="space-y-2 mt-2" >
                         <div className="grid grid-cols-5">
@@ -210,11 +146,90 @@ function Viewuser({ getUser }) {
                 </div>
             </Modal>
             <Modal isOpen={showModalinfo} style={stylemodalinfo} onRequestClose={() => setShowModalinfo(false)}>
-                <div className='bg-transparent mx-auto font-black  h-full items-center flex border '><span className='mx-auto items-center text-center my-auto text-blue-900'>Pengguna Berhasil Di Tambahkan</span> </div>
+                <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center top-0 right-0 bottom-0 left-0 fixed">
+                    <div className="bg-white px-16 py-14 rounded-md text-center">
+                        <h1 className="text-xl mb-4 font-bold text-slate-900">{info}</h1>
+                    </div>
+                </div>
             </Modal>
 
         </>
     )
 }
 
-export default Viewuser
+export default Viewuser;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const stylemodal = {
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0.35)'
+    },
+    content: {
+        position: 'absolute',
+        top: '20%',
+        left: '30%',
+        right: '30%',
+        bottom: '20%',
+        border: '1px solid #ccc',
+        background: '#fff',
+        overflow: 'hidden',
+        WebkitOverflowScrolling: 'touch',
+        borderRadius: '4px',
+        outline: 'none',
+        padding: '20px',
+        height: '320px'
+    }
+};
+
+
+const stylemodalinfo = {
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0.35)',
+        border: '0px solid #ccc',
+    },
+    content: {
+        position: 'absolute',
+        top: '20%',
+        left: '30%',
+        right: '30%',
+        bottom: '40%',
+        border: '0px solid #ccc',
+        background: '#fff',
+        overflow: 'hidden',
+        WebkitOverflowScrolling: 'touch',
+        borderRadius: '40px',
+        outline: 'none',
+        padding: '20px',
+        height: '80px',
+        width: '520px',
+        backgroundColor: 'transparent'
+    }
+};

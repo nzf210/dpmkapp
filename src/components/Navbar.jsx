@@ -1,8 +1,26 @@
 import { Link } from "react-router-dom";
 import Header from "./Header"
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+
+axios.defaults.withCredentials = true;
+
+
+// axios.interceptors.request.use(
+//     config => {
+//         config.headers.authorization = `Bearer ${tkn}`;
+//         return config;
+//     },
+//     error => {
+//         return Promise.reject(error);
+//     }
+// );
+
 
 const Navbar = ({ ubahMenu }) => {
+
     function btnNav(e) {
         switch (e.target.id) {
             case 'btn-home':
@@ -116,13 +134,36 @@ const Navbar = ({ ubahMenu }) => {
         }
     }
 
+    const [nama, setNama] = useState('');
+    const [token, setToken] = useState('');
+    const [namauser, setNamauser] = useState('');
+
+
+    useEffect(() => {
+        refreshtoken();
+    }, []);
+
+    const refreshtoken = async () => {
+        try {
+            const respon = await axios.get('token');
+            setToken(respon.data.accestoken);
+            const decode = jwt_decode(respon.data.accestoken);
+            console.log(decode);
+            setNamauser(decode.nama);
+        } catch (e) {
+            console.log('ddd', e.message);
+        }
+    }
+
+
+    document.getElementById('namauser').innerText = namauser
 
     return (
 
-        <div className="fixed w-full">
+        <div className="fixed w-full h-full">
             <nav>
                 <Header />
-                <div className="fixed w-full">
+                <div className="w-full h-full">
                     <div className="sm:items-center sm:my-auto border-b-4 border-slate-800 sm:border-b-0 transition-all">
                         <div className="flex">
                             <div className="flex pl-3 bg-slate-600 p-1 w-full pr-1">
@@ -140,12 +181,14 @@ const Navbar = ({ ubahMenu }) => {
                             </div>
                         </div>
                         <div id="div-navbar" className="sm:ml-28">
-                            <div className="pl-4 pr-4 text-white font-thin sm:flex sm:flex-row sm:space-x-1 hidden" id="div-nav">
-                                <ul className="py-1 my-1 pl-2 sm:flex sm:flex-row sm:-mt-[45px] sm:space-x-2 duration-100">
+                            <div className="pl-4 pr-4 text-white font-thin sm:flex sm:flex-row hidden" id="div-nav">
+                                <ul className="py-1 my-1 pl-2 sm:flex sm:flex-row sm:-mt-[45px] sm:space-x-1 duration-100 md:space-x-2">
                                     <Link to="/home" onClick={() => { ubahMenu('home') }}>
-                                        <li id="li-dropdown-home" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex cursor-pointer sm:py-1" onMouseEnter={() => { console.log('home in') }} onMouseLeave={() => { console.log('mouse left') }} onClick={(e) => { btnNav(e) }} >
-                                            <i><img src="icons/icons8-home.svg" id="img-home" alt="" className="h-6 sm:hidden md:block" /></i>
-                                            <span className="text-center pl-2" id="btn-home">Home</span>
+                                        <li id="li-dropdown-home" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-full flex cursor-pointer sm:py-1" onMouseEnter={() => { console.log('home in') }} onMouseLeave={() => { console.log('mouse left') }} onClick={(e) => { btnNav(e) }} >
+                                            <div className="mx-auto flex flex-1">
+                                                <i><img src="icons/icons8-home.svg" id="img-home" alt="" className="h-6" /></i>
+                                                <span className="text-center  pl-2 sm:pl-1 lg:pl-3" id="btn-home">Home</span>
+                                            </div>
                                         </li>
                                     </Link>
                                     <li id="li-dropdown-apbk" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex sm:bg-transparent cursor-pointer" onMouseEnter={() => { document.getElementById('div-dropdown-apbk').classList.remove('hidden'); }} onMouseLeave={() => { document.getElementById('div-dropdown-apbk').classList.add('hidden'); }} onClick={(e) => {
@@ -153,15 +196,19 @@ const Navbar = ({ ubahMenu }) => {
                                     }}>
                                         <div className="grid grid-cols-1 relative w-full">
                                             <div className="flex flex-row">
-                                                <i><img src="icons/icons8-document-50.svg" alt="" id="img-apbk" className="h-6 sm:hidden md:block" /></i>
-                                                <button className="text-center pl-2" id="btn-apbk">APBK</button>
+                                                <div className="mx-auto flex flex-1">
+                                                    <i><img src="icons/icons8-bookmark-50.svg" id="img-home" alt="" className="h-6" /></i>
+                                                    <span className="text-center pl-2" id="btn-apbk">APBK</span>
+                                                </div>
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden" id="div-dropdown-apbk">
                                                 <ul className="w-full m-1">
                                                     <Link to="/home/apbk/realisasi" onClick={() => { ubahMenu() }} >
+
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
                                                             <span id="btn-apbk-realisasi" className="w-full inline-block" onClick={() => {
                                                             }}>🛂 Realisasi APBK</span> </li>
+
                                                     </Link>
                                                     <Link to="/home/apbk/monitoring" onClick={() => { ubahMenu() }}>
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
@@ -180,7 +227,7 @@ const Navbar = ({ ubahMenu }) => {
                                         <div className="grid grid-cols-1 relative w-full">
                                             <div className="flex flex-row">
                                                 <i><img src="icons/icons8-settings-50.svg" alt="" id="img-config" className="h-6 sm:hidden md:block" /></i>
-                                                <button className="text-center pl-2" id="btn-config">Config</button>
+                                                <button className="text-center pl-2 sm:pl-1 lg:pl-3" id="btn-config">Config</button>
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden" id="div-dropdown-config">
                                                 <ul className="w-full m-1">
@@ -326,7 +373,7 @@ const Navbar = ({ ubahMenu }) => {
                                             <span className="text-center pl-2" id="btn-atvis">Atvis</span>
                                         </li>
                                     </Link>
-                                    <Link onClick={() => { ubahMenu() }} to="/home/realisasi" className="inline-block w-11">
+                                    <Link onClick={() => { ubahMenu() }} to="/home/realisasi" className="inline-block w-full sm:w-11">
                                         <li id="li-dropdown-realisasi" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[190px] flex cursor-pointer sm:py-1 sm:bg-transparent" onClick={(e) => { btnNav(e); }} >
                                             <i><img src="icons/icons8-about-50.svg" id="img-realisasi" alt="ico" className="h-6 sm:hidden md:block" /></i>
                                             <span className="text-center pl-2" id="btn-realisasi">Realisasi Anggaran</span>

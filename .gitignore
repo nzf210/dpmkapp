@@ -11,6 +11,7 @@
 # production
 /build
 /data
+/src/components/sub/filter/Test.jsx
 
 # misc
 .DS_Store

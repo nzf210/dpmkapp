@@ -1,11 +1,14 @@
+import Passtableview from "./sub/Passtableview";
+import Filterkampung from "../filter/Filterkampung";
+
 
 const ConfigUbahPassword = () => {
+
     return (
-        <div>
+        <div className="bg-red-200">
             <div className="h-20"></div>
-            <div>
-                <h1>Ubah Pass</h1>
-            </div>
+            <Filterkampung></Filterkampung>
+            <Passtableview></Passtableview>
         </div>
     )
 }

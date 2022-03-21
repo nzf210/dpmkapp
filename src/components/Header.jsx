@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+
 let a;
 let tw = new Date();
 if (tw.getTimezoneOffset() === 0) (a = tw.getTime() + (7 * 60 * 60 * 1000))
@@ -19,12 +20,11 @@ const Header = () => {
     return (
         < >
             <div className="flex flex-row justify-between px-4 h-9 items-center bg-slate-800">
-                <span className="sm:font-extrabold sm:tracking-wider font-thin text-green-700">DPMK <span className="text-white font-thin sm:font-bold"> Kabupaten
-                    Yahukimo</span></span>
-                <div className="hidden">
+                <span className="sm:font-extrabold sm:tracking-wider font-thin text-green-700">DPMK<span className="text-white font-thin sm:font-bold">Kabupaten Yahukimo</span></span>
+                <div className="">
                     <div className="flex flex-row">
                         <span className="hidden lg:block text-white font-light mr-3">Selamat Datang : </span>
-                        <span className="hidden md:block text-slate-300 font-semibold"> Syahril Syamsuddin</span>
+                        <span className="hidden md:block text-slate-300 font-semibold" id="namauser"></span>
                     </div>
                 </div>
                 <span className="text-blue-200 sm:text-white font-thin sm:font-semibold" id="tanggalwaktu">{tgl}</span>

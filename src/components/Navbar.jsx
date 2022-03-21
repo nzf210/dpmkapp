@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "./Header"
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { CurrencyRuble } from "@mui/icons-material";
 
 axios.defaults.withCredentials = true;
 
@@ -137,7 +138,9 @@ const Navbar = ({ ubahMenu }) => {
     const [nama, setNama] = useState('');
     const [token, setToken] = useState('');
     const [namauser, setNamauser] = useState('');
+    const [expier, setExpier] = useState('');
 
+    const navLink = useNavigate();
 
     useEffect(() => {
         refreshtoken();
@@ -150,16 +153,57 @@ const Navbar = ({ ubahMenu }) => {
             const decode = jwt_decode(respon.data.accestoken);
             console.log(decode);
             setNamauser(decode.nama);
+            setExpier(decode.exp);
         } catch (e) {
             console.log('ddd', e.message);
+            navLink('/');
+
         }
     }
 
+    const axiosJWT = axios.create();
 
-    document.getElementById('namauser').innerText = namauser
+    axiosJWT.interceptors.request.use(async (config) => {
+        const currentdate = new Date();
+        if (expier * 1000 < currentdate.getTime()) {
+            const respon = await axios.get('/token');
+            config.headers.Authorization = `Bearer ${respon.data.accestoken}`;
+            setToken(respon.data.accestoken);
+            const decode = jwt_decode(respon.data.accestoken);
+            console.log(decode);
+            setNamauser(decode.nama);
+            setExpier(decode.exp);
+        }
+        return config;
+    }, (err) => {
+        return Promise.reject(err);
+    }
+    )
+
+    const getUser = async () => {
+        const respon = await axiosJWT.get('/', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        console.log(respon.data);
+    }
+
+    const logOut = async () => {
+        try {
+            await axios.delete('/logout');
+            navLink('/');
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const nmuser = document.getElementById('namauser');
+    if (nmuser) {
+        nmuser.innerText = namauser
+    }
 
     return (
-
         <div className="fixed w-full h-full">
             <nav>
                 <Header />
@@ -175,9 +219,9 @@ const Navbar = ({ ubahMenu }) => {
                                     onClick={() => {
                                         document.getElementById('div-navbar').firstElementChild.classList.toggle('hidden');
                                     }} /></button>
-                                <Link to="/" className="-mt-[4.5px] sm:mt-0 flex space-x-1 hover:bg-blue-700 p-2">
+                                <button onClick={logOut} className="-mt-[4.5px] sm:mt-0 flex space-x-1 hover:bg-blue-700 p-2">
                                     <span className="mr-1 font-semibold text-red-100">LOGOUT</span>  <LogoutIcon />
-                                </Link>
+                                </button>
                             </div>
                         </div>
                         <div id="div-navbar" className="sm:ml-28">

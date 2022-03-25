@@ -14,7 +14,7 @@ const Welcome = () => {
         // </div>
         <>
             <div>
-                <div className="h-20"></div>
+                <div className="h-36"></div>
                 <div>
                     <div className="container w-80 mx-auto h-96 sm:w-[720px] md:w-[920px] sm:h-[500px]    
                        rounded-xl shadow-2xl mt-10 sm:mt-24" id="child-utama">

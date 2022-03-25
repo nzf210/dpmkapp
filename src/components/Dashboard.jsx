@@ -14,12 +14,16 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="w-full h- full">
-            <Navbar ubahMenu={ubahMenu} />
+        <>
+            <div className="fixed w-full">
+                <div className="w-full">
+                    <Navbar ubahMenu={ubahMenu} />
+                </div>
+            </div>
             <div className="w-full h- full">
                 {out}
             </div>
-        </div>
+        </>
     )
 }
 

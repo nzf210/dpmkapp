@@ -4,7 +4,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import { CurrencyRuble } from "@mui/icons-material";
 
 axios.defaults.withCredentials = true;
 
@@ -148,7 +147,7 @@ const Navbar = ({ ubahMenu }) => {
 
     const refreshtoken = async () => {
         try {
-            const respon = await axios.get('token');
+            const respon = await axios.get('/user/token');
             setToken(respon.data.accestoken);
             const decode = jwt_decode(respon.data.accestoken);
             console.log(decode);
@@ -166,7 +165,7 @@ const Navbar = ({ ubahMenu }) => {
     axiosJWT.interceptors.request.use(async (config) => {
         const currentdate = new Date();
         if (expier * 1000 < currentdate.getTime()) {
-            const respon = await axios.get('/token');
+            const respon = await axios.get('/user/token');
             config.headers.Authorization = `Bearer ${respon.data.accestoken}`;
             setToken(respon.data.accestoken);
             const decode = jwt_decode(respon.data.accestoken);
@@ -181,7 +180,7 @@ const Navbar = ({ ubahMenu }) => {
     )
 
     const getUser = async () => {
-        const respon = await axiosJWT.get('/', {
+        const respon = await axiosJWT.get('/user', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -191,11 +190,9 @@ const Navbar = ({ ubahMenu }) => {
 
     const logOut = async () => {
         try {
-            await axios.delete('/logout');
+            await axios.delete('/user/logout');
             navLink('/');
-        } catch (error) {
-            console.log(error)
-        }
+        } catch (error) { console.log(error) }
     }
 
     const nmuser = document.getElementById('namauser');
@@ -204,10 +201,10 @@ const Navbar = ({ ubahMenu }) => {
     }
 
     return (
-        <div className="fixed w-full h-full">
+        <div className="w-full">
             <nav>
                 <Header />
-                <div className="w-full h-full">
+                <div className="">
                     <div className="sm:items-center sm:my-auto border-b-4 border-slate-800 sm:border-b-0 transition-all">
                         <div className="flex">
                             <div className="flex pl-3 bg-slate-600 p-1 w-full pr-1">
@@ -230,8 +227,8 @@ const Navbar = ({ ubahMenu }) => {
                                     <Link to="/home" onClick={() => { ubahMenu('home') }}>
                                         <li id="li-dropdown-home" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-full flex cursor-pointer sm:py-1" onMouseEnter={() => { console.log('home in') }} onMouseLeave={() => { console.log('mouse left') }} onClick={(e) => { btnNav(e) }} >
                                             <div className="mx-auto flex flex-1">
-                                                <i><img src="icons/icons8-home.svg" id="img-home" alt="" className="h-6" /></i>
-                                                <span className="text-center  pl-2 sm:pl-1 lg:pl-3" id="btn-home">Home</span>
+                                                <i><img src="icons/icons8-home.svg" alt="" className="h-6" /></i>
+                                                <span className="text-center  px-2">Home</span>
                                             </div>
                                         </li>
                                     </Link>
@@ -246,13 +243,11 @@ const Navbar = ({ ubahMenu }) => {
                                                 </div>
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden" id="div-dropdown-apbk">
-                                                <ul className="w-full m-1">
-                                                    <Link to="/home/apbk/realisasi" onClick={() => { ubahMenu() }} >
-
+                                                <ul>
+                                                    <Link to="/home/apbk/realisasi" onClick={() => { ubahMenu() }}>
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
                                                             <span id="btn-apbk-realisasi" className="w-full inline-block" onClick={() => {
                                                             }}>🛂 Realisasi APBK</span> </li>
-
                                                     </Link>
                                                     <Link to="/home/apbk/monitoring" onClick={() => { ubahMenu() }}>
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
@@ -271,7 +266,7 @@ const Navbar = ({ ubahMenu }) => {
                                         <div className="grid grid-cols-1 relative w-full">
                                             <div className="flex flex-row">
                                                 <i><img src="icons/icons8-settings-50.svg" alt="" id="img-config" className="h-6 sm:hidden md:block" /></i>
-                                                <button className="text-center pl-2 sm:pl-1 lg:pl-3" id="btn-config">Config</button>
+                                                <button className="text-center px-2" id="btn-config">Config</button>
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden" id="div-dropdown-config">
                                                 <ul className="w-full m-1">

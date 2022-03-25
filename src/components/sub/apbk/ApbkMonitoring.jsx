@@ -1,19 +1,11 @@
-// import Navbar from "../Navbar";
+import Test from '../filter/Test'
 const ApbkMonitoring = () => {
-    console.log(window.Location);
     return (
         <div>
             <div className="h-40"></div>
             <h1>Apbk Monitoring</h1>
+
         </div>
-        // <>
-        //     <div className="fixed w-full">
-        //         <Navbar />
-        //     </div>
-        //     <div>
-        //         <h1>Apbk Monitoring</h1>
-        //     </div>
-        // </>
     )
 }
 

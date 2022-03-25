@@ -1,36 +1,59 @@
 import Header from "./Header";
-import { useNavigate, Link } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment, useState } from 'react';
+import DoDisturbIcon from '@mui/icons-material/DoDisturb';
+import { red } from '@mui/material/colors';
+
+import { useDispatch } from "react-redux";
+import { getKamdis } from '../features/FilterSlice';
 
 const Login = () => {
-    //let nav = Link();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [tahun, setTahun] = useState('Pilih Tahun');
     const [info, setInfo] = useState('');
     const navLink = useNavigate();
 
+    const dispatch = useDispatch();
+
+
+
     const Auth = async () => {
 
+        if (username === '' && password === '') { openModal(); setInfo('Username dan Password Kosong'); return }
+        if (username === '') { openModal(); setInfo('Username Kosong'); return }
+        if (password === '') { openModal(); setInfo('Password Kosong'); return }
+        if (tahun === 'Pilih Tahun') { openModal(); setInfo('Pilih Tahun'); return }
+
         try {
-            await axios.post('login', {
+            await axios.post('/user/login', {
                 username: username,
                 password: password
             });
+            dispatch(getKamdis());
             navLink('/home')
         } catch (e) {
-            if (e) { setInfo(e.response.data.info); console.log(e.response.data.info); }
+            openModal();
+            if (e) { setInfo(e.response.data.info) };
+
         }
     }
+
+    // =========== Modal Part =============
+    const [isOpen, setIsOpen] = useState(false)
+    function closeModal() { setIsOpen(false) }
+    function openModal() { setIsOpen(true) }
+    // =========== Modal Part =============
 
     return (
         <div>
             <div className="fixed w-full"><Header /></div>
             <div className="w-full h-full">
-                <div className="container pb-8 mx-auto h-full">
+                <div className="container pb-8 mx-auto h-full my-auto">
                     <div className="container max-w-full h-[100px] sm:h-64">
-                        <div className="container w-4" />
                     </div>
                     <div className="container w-[90%] rounded-lg shadow-[0_25px_35px_rgba(1,1,1,0.45)] mx-auto sm:w-[750px] md:w-[882px] lg:w-[950px] sm:h-90">
                         <h2 className="text-black text-center font-bold sm:text-left sm:ml-8 pt-2">Login DPMK</h2>
@@ -51,21 +74,21 @@ const Login = () => {
                                 <h3 className="text-center sm:text-left sm:pl-8 font-semibold mt-1">Silahkan Masuk</h3>
                                 <form onSubmit={(e) => { e.preventDefault(); Auth() }} className="flex flex-col items-center sm:items-start sm:pl-8 sm:-pr-14 sm:mt-2">
                                     <div className="flex sm:w-full">
-                                        <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="username" className="sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700 mt-1" />
+                                        <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="username" className="focus:ring-2 focus:ring-cyan-600 sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700 mt-1" />
                                         <img src="icons/user.png" className="h-7 w-7 mt-1 hidden sm:block ml-4" alt="" />
                                     </div>
                                     <div className="flex sm:w-full">
-                                        <input value={password} onChange={(e) => setPassword(e.target.value)} type="text" placeholder="password" className="sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700" />
+                                        <input value={password} onChange={(e) => setPassword(e.target.value)} type="text" placeholder="password" className="focus:ring-2 focus:ring-cyan-600 sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700" />
                                         <img src="icons/login.png" className="h-7 w-7  hidden sm:block ml-4" alt="" />
                                     </div>
                                     <div className="flex sm:w-full">
-                                        <select type="text" placeholder="tahun" className="sm:w-[80%] min-w-min block border-2 border-blue-700 rounded-none mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700 outline-none">
+                                        <select type="text" value={tahun} onChange={(e) => setTahun(e.target.value)} placeholder="tahun" className="focus:ring-2 focus:ring-cyan-600 sm:w-[80%] min-w-min block border-2 border-blue-700 rounded-none mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700 outline-none">
                                             <option className="rounded-none">Pilih Tahun</option>
                                             <option className="rounded-none">2022</option>
                                         </select>
                                         <img src="icons/calendar.png" className="h-7 w-7  hidden sm:block ml-4" alt="" />
                                     </div>
-                                    <button type="submit" id="btn-login" className="w-[50%] sm:w-[60%] min-w-min bg-blue-700 hover:bg-blue-800 active:bg-blue-900 rounded-md sm:rounded-sm sm:h-10 sm:mt-4"
+                                    <button type="submit" id="btn-login" className="focus:ring-2 focus:ring-blue-900 outline-none active:ring-2 active:ring-cyan-600 w-[50%] sm:w-[60%] min-w-min bg-blue-700 hover:bg-blue-800 active:bg-blue-900 rounded-md sm:rounded-sm sm:h-10 sm:mt-4"
                                     >LOGIN</button>
                                 </form>
                             </div>
@@ -73,8 +96,75 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            <div className="container w-52">
+                <div className="mx-auto my-auto bg-red-200">
+                    <Transition appear show={isOpen} as={Fragment}>
+                        <Dialog
+                            as="div"
+                            className="fixed inset-0 z-10 overflow-y-auto rounded-lg"
+                            onClose={closeModal}
+                        >
+                            <div className="min-h-screen px-4 text-center">
+                                <Transition.Child
+                                    as={Fragment}
+                                    enter="ease-out duration-300"
+                                    enterFrom="opacity-0"
+                                    enterTo="opacity-100"
+                                    leave="ease-in duration-200"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                >
+                                    <Dialog.Overlay className="fixed inset-0" />
+                                </Transition.Child>
+                                {/* This element is to trick the browser into centering the modal contents. */}
+                                <span
+                                    className="inline-block h-screen align-middle"
+                                    aria-hidden="true"
+                                >
+                                    &#8203;
+                                </span>
+                                <Transition.Child
+                                    as={Fragment}
+                                    enter="ease-out duration-300"
+                                    enterFrom="opacity-0 scale-95"
+                                    enterTo="opacity-100 scale-100"
+                                    leave="ease-in duration-200"
+                                    leaveFrom="opacity-100 scale-100"
+                                    leaveTo="opacity-0 scale-95"
+                                >
+                                    <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                                        <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900" >
+                                            <div className="mt-2 flex flex-col">
+                                                <i className="mx-auto w-6"><DoDisturbIcon sx={{ color: red[500] }} /></i>
+                                            </div>
+                                        </Dialog.Title>
+                                        <div className="mt-2 flex flex-col">
+                                            <p className="text-lg font-semibold text-gray-500 text-center">
+                                                {info}
+                                            </p>
+                                        </div>
+
+                                        <div className="mt-4 mx-auto ">
+                                            <div className="container mx-auto  w-6 -translate-x-3">
+                                                <button
+                                                    type="button"
+                                                    className="mx-auto inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                                                    onClick={closeModal}
+                                                >
+                                                    Ok
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Transition.Child>
+                            </div>
+                        </Dialog>
+                    </Transition>
+                </div>
+            </div>
         </div>
     )
 }
 
 export default Login
+

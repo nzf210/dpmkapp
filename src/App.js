@@ -58,10 +58,8 @@ function App() {
         <Route path='user' element={<Tambahpass />} />
         <Route path='user/:id' element={<Ubahpass />} />
         <Route path="home" element={<Dashboard />} >
-
           <Route path="apbk/monitoring" element={<ApbkMonitoring />} />
           <Route path="apbk/realisasi" element={<ApbkRealiasai />} />
-
           <Route path="atvis" element={<Atvis />} />
           <Route path="realisasi" element={<RealisasiAnggaran />} />
 
@@ -78,7 +76,6 @@ function App() {
           <Route path="spp/reguler" element={<SppReguler />} />
 
           <Route path="spm/blt" element={<SpmBlt />} />
-
           <Route path="spm/covid" element={<SpmCovid />} />
           <Route path="spm/laporan" element={<SpmLaporan />} />
           <Route path="spm/persetujuan" element={<SpmPersetujuan />} />

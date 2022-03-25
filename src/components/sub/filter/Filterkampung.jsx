@@ -1,21 +1,29 @@
-
+import { useState } from "react";
 import NamaDistrik from "../filter/NamaDistrik";
 import NamaKampung from "../filter/NamaKampung";
-import Test from "./Test";
+
+const distrik = [
+    { id: 0, distrik: '', kampung: '', kd_distrik: 0, kd_kampung: 0 }
+]
 
 const Filterkampung = () => {
+
+    const [kamdis, setstate] = useState(distrik[0]);
+    const setDis = (e) => { setstate(e) };
+
     return (
-        <div>
-            <div className="flex flex-col sm:flex sm:flex-row mt-1 sm:-mt-0.5 space-y-1 sm:space-y-0 mx-auto">
-                <div className="hidden xl:block  text-transparent">.......................................................</div>
-                <div className="hidden md:block  text-transparent">.......................................................</div>
-                <NamaDistrik />
-                <NamaKampung />
-                <div className="hidden xl:block text-transparent">........................................................</div>
-                <div className="hidden md:block  text-transparent">.......................................................</div>
+        <div className="w-full sm:-mt-1">
+            <div className=" container mx-auto">
+                <div className=" container flex-auto sm:grid sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 justify-center items-center grid grid-cols-1">
+                    <div className="mx-auto col-span-2 lg:col-span-4 md:col-span-3 lg:mr-5">
+                        <NamaDistrik kamdis={kamdis} />
+                    </div>
+                    <div className="mx-auto col-span-2 lg:col-span-4 md:col-span-3 lg:ml-5">
+                        <NamaKampung setDis={setDis} setstate={setstate} />
+                    </div>
+                </div>
             </div>
             <div>
-
             </div>
         </div>
     )

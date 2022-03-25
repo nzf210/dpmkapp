@@ -14,7 +14,7 @@ const ConfigUbahPassword = () => {
     const [modalstatus, setModalStatus] = useState(false);
 
     const getUser = async () => {
-        const userdata = await axios.get('http://localhost:3002/user');
+        const userdata = await axios.get('/user');
         setUser(userdata.data);
     }
 
@@ -100,13 +100,11 @@ function Hapuspass({ setModalHapus, setModalStatus }) {
     const hapusUser = async (id_) => {
 
         try {
-            await axios.delete(`http://127.0.0.1:3002/user/${id_}`).then(res => {
+            await axios.delete(`/user/${id_}`).then(res => {
                 console.log(res);
-                //   console.log(res.data);
             });
 
 
-            //    const dt = data;  console.log(dt);
             setModalHapus(false);
             setModalStatus(true);
             let timeout;

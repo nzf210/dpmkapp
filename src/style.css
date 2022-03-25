@@ -809,6 +809,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 1.25rem;
 }
 
+.h-0 {
+  height: 0px;
+}
+
 .h-3 {
   height: 0.75rem;
 }
@@ -2055,10 +2059,6 @@ Ensure the default browser behavior of the `hidden` attribute.
     margin-top: -0.25rem;
   }
 
-  .sm\:mr-0 {
-    margin-right: 0px;
-  }
-
   .sm\:ml-2 {
     margin-left: 0.5rem;
   }
@@ -2159,16 +2159,8 @@ Ensure the default browser behavior of the `hidden` attribute.
     align-items: flex-start;
   }
 
-  .sm\:items-end {
-    align-items: flex-end;
-  }
-
   .sm\:items-center {
     align-items: center;
-  }
-
-  .sm\:justify-end {
-    justify-content: flex-end;
   }
 
   .sm\:space-x-1 > :not([hidden]) ~ :not([hidden]) {

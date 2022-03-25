@@ -7,18 +7,18 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { useSelector } from "react-redux";
 import { mkamdisSelector } from '../../../features/FilterSlice';
 
-const NamaDistrik = ({ kamdis }) => {
+const NamaDistrik = ({ kamdis, nmdis }) => {
 
     const dis = useSelector(mkamdisSelector.selectAll);
     const dt = [{ id: 0, kampung: '', kd_kampung: 0, distrik: '', kd_distrik: 0 }];
     dis.map((d) => { return dt.push(d) })
     const dis_ = dt.map(e => e.distrik);
     const data = dis_.filter((e, i) => dis_.indexOf(e) === i);
-
     const distrik = data;
     const [selected, setSelected] = useState(distrik[0]);
     const [query, setQuery] = useState('');
     const [closeicon, setCloseicon] = useState(false);
+    //const [nmdis, setNmdis] = useState(nmdis);
 
     const filteredDistrik =
         query === '' ? distrik : distrik.filter((dis) =>
@@ -32,8 +32,12 @@ const NamaDistrik = ({ kamdis }) => {
 
     useEffect(() => {
         dataKampung();
-        clearinput();
+        //clearinput();
     }, []);
+
+    // useEffect(() => {
+
+    // }, [nmdis_]);
 
 
     const clearinput = () => {
@@ -43,14 +47,14 @@ const NamaDistrik = ({ kamdis }) => {
 
     function dataKampung(a) {
         const da = dis.filter((e) => e.distrik === a)
-        console.log('func kampung', da)
-
+        const dt = [{ id: 0, kampung: '', kd_kampung: 0, distrik: '', kd_distrik: 0 }];
+        da.map((d) => { return dt.push(d) });
+        nmdis(dt);
     }
 
     return (
-
         <div className="w-72 top-20 cursor-pointer">
-            <Combobox value={selected} onChange={(e) => { setSelected(e); dataKampung(selected) }}>
+            <Combobox value={selected} onChange={(e) => { setSelected(e); dataKampung(e) }}>
                 <div className="mt-1">
                     <div className="flex flex-row w-full text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-teal-300 focus-visible:ring-offset-2 sm:text-sm overflow-hidden">
                         <Combobox.Input placeholder='Nama Distrik ... '
@@ -85,7 +89,7 @@ const NamaDistrik = ({ kamdis }) => {
                                                             <span className={`block truncate ${selected ? 'font-semibold' : 'font-normal'}`}> {dis}</span>
                                                             {selected ? (
                                                                 <span className={`inset-y-0 left-0 flex items-center pl-3 ${active ? 'text-white' : 'text-slate-600'}`} >
-                                                                    <span className='bg-red-200'> {dis.id === 0 ? null : <CheckIcon className="absolute w-5 h-5 left-3 -mt-5 " aria-hidden="true" />} </span>
+                                                                    <span className='bg-red-200'> {dis.distrik === '' ? null : <CheckIcon className="absolute w-5 h-5 left-3 -mt-5 " aria-hidden="true" />} </span>
                                                                 </span>
                                                             ) : null}
                                                         </div>

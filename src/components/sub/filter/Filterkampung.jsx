@@ -9,17 +9,19 @@ const distrik = [
 const Filterkampung = () => {
 
     const [kamdis, setstate] = useState(distrik[0]);
+    const [nmdis_, setNmdis_] = useState([]);
     const setDis = (e) => { setstate(e) };
+    const nmdis = (e) => { setNmdis_(e); }
 
     return (
         <div className="w-full sm:-mt-1">
             <div className=" container mx-auto">
                 <div className=" container flex-auto sm:grid sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 justify-center items-center grid grid-cols-1">
                     <div className="mx-auto col-span-2 lg:col-span-4 md:col-span-3 lg:mr-5">
-                        <NamaDistrik kamdis={kamdis} />
+                        < NamaDistrik kamdis={kamdis} nmdis={nmdis} />
                     </div>
                     <div className="mx-auto col-span-2 lg:col-span-4 md:col-span-3 lg:ml-5">
-                        <NamaKampung setDis={setDis} setstate={setstate} />
+                        < NamaKampung setDis={setDis} setstate={setstate} nmdis_={nmdis_} />
                     </div>
                 </div>
             </div>

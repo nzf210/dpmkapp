@@ -1,5 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 
@@ -7,16 +7,23 @@ import { useSelector } from "react-redux";
 import { mkamdisSelector } from '../../../features/FilterSlice';
 
 
-const NamaKampung = ({ setDis }) => {
+const NamaKampung = ({ setDis, nmdis_ }) => {
 
     const kam = useSelector(mkamdisSelector.selectAll);
-    const dt = [{ id: 0, kampung: '', kd_kampung: 0, distrik: '', kd_distrik: 0 }]
-    kam.map((d) => { return dt.push(d) })
-    const kampung = dt;
+    const dt = [{ id: 0, kampung: '', kd_kampung: 0, distrik: '', kd_distrik: 0 }];
+    kam.map((d) => { return dt.push(d) });
+
+
+    const kampung = nmdis_;
 
     const [selected, setSelected] = useState(kampung[0]);
     const [query, setQuery] = useState('');
     const [closeicon, setCloseicon] = useState(false);
+
+    useEffect(() => {
+        setSelected(nmdis_[0]);
+    }, [nmdis_])
+
 
     const filteredKampung =
         query === '' ? kampung : kampung.filter((dis) =>
@@ -68,7 +75,7 @@ const NamaKampung = ({ setDis }) => {
                                                             > {dis.kampung}</span>
                                                             {selected ? (
                                                                 <span className={`inset-y-0 left-0 flex items-center pl-3 ${active ? 'text-white' : 'text-slate-600'}`} >
-                                                                    <span> <CheckIcon className="absolute w-5 h-5 left-3 -mt-5 " aria-hidden="true" /></span>
+                                                                    <span className='bg-red-200'> {dis.distrik === '' ? null : <CheckIcon className={`absolute w-5 h-5 left-3 -mt-5 ${active ? '' : 'h-0'} `} aria-hidden="true" />} </span>
                                                                 </span>
                                                             ) : null}
                                                         </div>

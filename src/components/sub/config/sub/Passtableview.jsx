@@ -35,7 +35,9 @@ const ConfigUbahPassword = () => {
 
         <div className="mx-auto">
             <div>
-                <Viewuser getUser={getUser}></Viewuser>
+                <div>
+                    <Viewuser getUser={getUser}></Viewuser>
+                </div>
                 <div className="mx-auto">
                     {modalhapus ? <Hapuspass setModalStatus={setModalStatus} setModalHapus={setModalHapus} modalhapus={modalhapus}></Hapuspass> : null}
                     {modalstatus ? <ModalStatus></ModalStatus> : null}
@@ -103,7 +105,6 @@ function Hapuspass({ setModalHapus, setModalStatus }) {
             await axios.delete(`/user/${id_}`).then(res => {
                 console.log(res);
             });
-
 
             setModalHapus(false);
             setModalStatus(true);

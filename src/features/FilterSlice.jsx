@@ -10,8 +10,6 @@ const mkamdisEntity = createEntityAdapter({
     selectId: (kamdis) => kamdis.id
 })
 
-
-
 const filterSlice = createSlice({
     name: "filter",
     initialState: mkamdisEntity.getInitialState(),

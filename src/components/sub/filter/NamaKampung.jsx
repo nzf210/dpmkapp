@@ -42,7 +42,7 @@ const NamaKampung = ({ setDis, nmdis_ }) => {
                         <Combobox.Input placeholder='Nama Kampung ... '
                             className="w-full border-none focus:ring-2 py-2 pl-2 pr-1 text-sm leading-5 text-gray-900 active:ring-0 focus:border-none focus:outline-none focus:ring-cyan-600"
                             displayValue={(kampung) => kampung.kampung}
-                            onChange={(e) => { setQuery(e.target.value); setCloseicon(true); console.log(e.target.value) }}
+                            onChange={(e) => { setQuery(e.target.value); setCloseicon(true); }}
                         />
                         <div className='mt-[5.2px] cursor-pointer' onClick={clearinput} > {closeicon ? <CloseIcon /> : null}  </div>
                         <Combobox.Button className="inset-y-0 right-0 flex items-center">
@@ -65,7 +65,7 @@ const NamaKampung = ({ setDis, nmdis_ }) => {
                                                 key={dis.id}
                                                 className={({ active }) => `cursor-default select-none py-2 pl-10 pr-4 ${active ? 'text-white bg-slate-600' : 'text-gray-900'}`}
                                                 value={dis}
-                                                onChange={() => { console.log('on Change') }}
+
                                             >
                                                 {({ selected, active }) => (
                                                     <>

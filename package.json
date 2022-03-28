@@ -15,6 +15,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.1",
+    "bcrypt": "^5.0.1",
     "formik": "^2.2.9",
     "history": "^5.3.0",
     "jwt-decode": "^3.1.2",

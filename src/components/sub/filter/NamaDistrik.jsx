@@ -18,7 +18,7 @@ const NamaDistrik = ({ kamdis, nmdis }) => {
     const [selected, setSelected] = useState(distrik[0]);
     const [query, setQuery] = useState('');
     const [closeicon, setCloseicon] = useState(false);
-    //const [nmdis, setNmdis] = useState(nmdis);
+
 
     const filteredDistrik =
         query === '' ? distrik : distrik.filter((dis) =>
@@ -35,9 +35,6 @@ const NamaDistrik = ({ kamdis, nmdis }) => {
         //clearinput();
     }, []);
 
-    // useEffect(() => {
-
-    // }, [nmdis_]);
 
 
     const clearinput = () => {

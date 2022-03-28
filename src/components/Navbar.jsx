@@ -5,6 +5,18 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
+
+
+import Home from "../public/icons/icons8-home.svg";
+import Apbk from "../public/icons/icons8-bookmark-50.svg";
+import Config from "../public/icons/icons8-settings-50.svg";
+import Spp from "../public/icons/icons8-file-50.svg";
+import Sp2d from "../public/icons/icons8-speech-bubble-50.svg";
+import Atvis from "../public/icons/icons8-services-50.svg";
+import Realisasii from "../public/icons/icons8-about-50.svg";
+import Spm from "../public/icons/icons8-news-50.svg";
+import Yhk2 from "../public/yhk-2.png";
+
 axios.defaults.withCredentials = true;
 
 
@@ -208,7 +220,7 @@ const Navbar = ({ ubahMenu }) => {
                     <div className="sm:items-center sm:my-auto border-b-4 border-slate-800 sm:border-b-0 transition-all">
                         <div className="flex">
                             <div className="flex pl-3 bg-slate-600 p-1 w-full pr-1">
-                                <img src="yhk-2.png" alt="Logo Yahukimo" className="h-8 w-8" />
+                                <img url src={Yhk2} alt="Logo Yahukimo" className="h-8 w-8" />
                                 <span className="items-center pl-2 my-auto font-extrabold text-white tracking-widest">DPMK</span>
                             </div>
                             <div className="items-center my-auto flex text-center bg-slate-600 h-10 pr-4 pl-2 justify-between space-x-1">
@@ -227,7 +239,7 @@ const Navbar = ({ ubahMenu }) => {
                                     <Link to="/home" onClick={() => { ubahMenu('home') }}>
                                         <li id="li-dropdown-home" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-full flex cursor-pointer sm:py-1" onMouseEnter={() => { console.log('home in') }} onMouseLeave={() => { console.log('mouse left') }} onClick={(e) => { btnNav(e) }} >
                                             <div className="mx-auto flex flex-1">
-                                                <i><img src="icons/icons8-home.svg" alt="" className="h-6" /></i>
+                                                <i><img src={Home} alt="" className="h-6" /></i>
                                                 <span className="text-center  px-2">Home</span>
                                             </div>
                                         </li>
@@ -238,7 +250,7 @@ const Navbar = ({ ubahMenu }) => {
                                         <div className="grid grid-cols-1 relative w-full">
                                             <div className="flex flex-row">
                                                 <div className="mx-auto flex flex-1">
-                                                    <i><img src="icons/icons8-bookmark-50.svg" id="img-home" alt="" className="h-6" /></i>
+                                                    <i><img src={Apbk} id="img-home" alt="" className="h-6" /></i>
                                                     <span className="text-center pl-2" id="btn-apbk">APBK</span>
                                                 </div>
                                             </div>
@@ -265,7 +277,7 @@ const Navbar = ({ ubahMenu }) => {
                                     }}>
                                         <div className="grid grid-cols-1 relative w-full">
                                             <div className="flex flex-row">
-                                                <i><img src="icons/icons8-settings-50.svg" alt="" id="img-config" className="h-6 sm:hidden md:block" /></i>
+                                                <i><img src={Config} alt="" id="img-config" className="h-6 sm:hidden md:block" /></i>
                                                 <button className="text-center px-2" id="btn-config">Config</button>
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden" id="div-dropdown-config">
@@ -293,7 +305,7 @@ const Navbar = ({ ubahMenu }) => {
                                     }}>
                                         <div className="grid grid-cols-1 relative w-full">
                                             <div className="flex flex-row">
-                                                <i><img src="icons/icons8-file-50.svg" alt="" id="img-spp" className="h-6 sm:hidden md:block" /></i>
+                                                <i><img src={Spp} alt="" id="img-spp" className="h-6 sm:hidden md:block" /></i>
                                                 <button className="text-center pl-2" id="btn-spp">SPP</button>
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden" id="div-dropdown-spp">
@@ -334,7 +346,7 @@ const Navbar = ({ ubahMenu }) => {
                                     }}>
                                         <div className="grid grid-cols-1 relative w-full">
                                             <div className="flex flex-row">
-                                                <i><img src="icons/icons8-news-50.svg" alt="" id="img-spm" className="h-6 sm:hidden md:block" /></i>
+                                                <i><img src={Spm} alt="" id="img-spm" className="h-6 sm:hidden md:block" /></i>
                                                 <button className="text-center pl-2" id="btn-spm">SPM</button>
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden" id="div-dropdown-spm">
@@ -376,7 +388,7 @@ const Navbar = ({ ubahMenu }) => {
                                     }}>
                                         <div className="grid grid-cols-1 relative w-full">
                                             <div className="flex flex-row">
-                                                <i><img src="icons/icons8-speech-bubble-50.svg" alt="" id="img-sp2d" className="h-6 sm:hidden md:block" /></i>
+                                                <i><img src={Sp2d} alt="" id="img-sp2d" className="h-6 sm:hidden md:block" /></i>
                                                 <button className="text-center pl-2" id="btn-sp2d">SP2D</button>
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden" id="div-dropdown-sp2d">
@@ -408,13 +420,13 @@ const Navbar = ({ ubahMenu }) => {
                                     </li>
                                     <Link onClick={() => { ubahMenu() }} to="/home/atvis">
                                         <li id="li-dropdown-atvis" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex cursor-pointer sm:py-1 sm:bg-transparent" onClick={(e) => { btnNav(e); }} >
-                                            <i><img src="icons/icons8-services-50.svg" id="img-atvis" alt="" className="h-6 sm:hidden md:block" /></i>
+                                            <i><img src={Atvis} id="img-atvis" alt="" className="h-6 sm:hidden md:block" /></i>
                                             <span className="text-center pl-2" id="btn-atvis">Atvis</span>
                                         </li>
                                     </Link>
                                     <Link onClick={() => { ubahMenu() }} to="/home/realisasi" className="inline-block w-full sm:w-11">
                                         <li id="li-dropdown-realisasi" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[190px] flex cursor-pointer sm:py-1 sm:bg-transparent" onClick={(e) => { btnNav(e); }} >
-                                            <i><img src="icons/icons8-about-50.svg" id="img-realisasi" alt="ico" className="h-6 sm:hidden md:block" /></i>
+                                            <i><img src={Realisasii} id="img-realisasi" alt="ico" className="h-6 sm:hidden md:block" /></i>
                                             <span className="text-center pl-2" id="btn-realisasi">Realisasi Anggaran</span>
                                         </li>
                                     </Link>

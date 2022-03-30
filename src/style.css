@@ -560,16 +560,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   top: 5rem;
 }
 
-.top-36 {
-  top: 9rem;
-}
-
 .top-0 {
   top: 0px;
 }
 
 .bottom-0 {
   bottom: 0px;
+}
+
+.z-50 {
+  z-index: 50;
 }
 
 .z-10 {
@@ -584,8 +584,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   z-index: -10;
 }
 
-.z-50 {
-  z-index: 50;
+.z-30 {
+  z-index: 30;
+}
+
+.-z-20 {
+  z-index: -20;
 }
 
 .z-40 {
@@ -719,10 +723,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .mt-7 {
   margin-top: 1.75rem;
-}
-
-.ml-72 {
-  margin-left: 18rem;
 }
 
 .mt-0\.5 {
@@ -1345,11 +1345,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
 }
 
-.bg-teal-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(13 148 136 / var(--tw-bg-opacity));
-}
-
 .bg-red-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(239 68 68 / var(--tw-bg-opacity));
@@ -1546,14 +1541,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-right: 1.25rem;
 }
 
-.pr-10 {
-  padding-right: 2.5rem;
-}
-
-.pr-2 {
-  padding-right: 0.5rem;
-}
-
 .text-left {
   text-align: left;
 }
@@ -1746,11 +1733,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-red-600 {
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
-}
-
-.text-teal-600 {
-  --tw-text-opacity: 1;
-  color: rgb(13 148 136 / var(--tw-text-opacity));
 }
 
 .text-slate-500 {

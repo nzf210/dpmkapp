@@ -4,10 +4,7 @@ import Login from "./components/Login";
 //import Navbar from "./components/Navbar";
 //import Welcome from "./components/Welcome";
 
-//Temporary
-import Ubahpass from "./components/sub/config/sub/Ubahpass";
-import Tambahpass from "./components/sub/config/sub/Tambahpass";
-//Temporary
+
 
 import ApbkMonitoring from "./components/sub/apbk/ApbkMonitoring";
 import ApbkRealiasai from "./components/sub/apbk/ApbkRealiasai";
@@ -55,8 +52,6 @@ function App() {
       <Routes >
         <Route path='*' element={<NotFound />}></Route>
         <Route path="/" exact element={<Login />} />
-        <Route path='user' element={<Tambahpass />} />
-        <Route path='user/:id' element={<Ubahpass />} />
         <Route path="home" element={<Dashboard />} >
           <Route path="apbk/monitoring" element={<ApbkMonitoring />} />
           <Route path="apbk/realisasi" element={<ApbkRealiasai />} />
@@ -67,6 +62,7 @@ function App() {
           <Route path="config/ubahpassword/:id" element={<ConfigUbahPassword />} />
           <Route path="config/pejabat" element={<ConfigPejabatPengesahan />} />
           <Route path="config/aparat" element={<ConfigAparatKampung />} />
+          <Route path="config/aparat/:id" element={<ConfigAparatKampung />} />
 
           <Route path="spp/add-honor" element={<SppAdd />} />
           <Route path="spp/blt" element={<SppBlt />} />

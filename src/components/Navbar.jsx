@@ -213,7 +213,7 @@ const Navbar = ({ ubahMenu }) => {
     }
 
     return (
-        <div className="w-full">
+        <div className="w-full z-50">
             <nav>
                 <Header />
                 <div className="">

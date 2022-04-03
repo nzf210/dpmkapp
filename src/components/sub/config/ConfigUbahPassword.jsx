@@ -1,11 +1,10 @@
 import MyModalHapus from './ubahpassword/MyModalHapus'
 import Filterkampung from "../filter/Filterkampung";
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import MyModalEdit from './ubahpassword/MyModalEdit'
 import MyModal from './ubahpassword/ModalTambahUser';
-
 
 
 const ConfigUbahPassword = () => {
@@ -13,16 +12,18 @@ const ConfigUbahPassword = () => {
     const [user, setUser] = useState([]);
     const [getUserInfo, setgetUserInfo] = useState(null);
     const [getInfoEdit_, setgetInfoEdit_] = useState(null);
+    const [infoHasil, setInfoHasil] = useState(false);
+
     const getUser = async () => {
-        const userdata = await axios.get('/user');
-        setUser(userdata.data);
+        const usrdata = await axios.get('/user');
+        setUser(usrdata.data);
     }
 
     const setgetInfoEdit = (e) => { setgetInfoEdit_(e); console.log('induk', e) };
 
     useEffect(() => {
         getUser();
-    }, [getUserInfo, getInfoEdit_]
+    }, [getUserInfo, getInfoEdit_, infoHasil]
     );
 
 
@@ -46,7 +47,7 @@ const ConfigUbahPassword = () => {
                                         <input type="text" id="table-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cari pengguna ... " />
                                     </div>
                                     <div>
-                                        <MyModal setgetUserInfo={setgetUserInfo}></MyModal>
+                                        <MyModal setgetUserInfo={setgetUserInfo} setInfoHasil={setInfoHasil}></MyModal>
                                     </div>
                                 </div>
                                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -66,7 +67,7 @@ const ConfigUbahPassword = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {<DataTable user={user} setgetInfoEdit={(e) => setgetInfoEdit(e)} />}
+                                        {<DataTable user={user} setgetInfoEdit={(e) => setgetInfoEdit(e)} setInfoHasil={setInfoHasil} setgetUserInfo={setgetUserInfo} />}
                                     </tbody>
                                 </table>
                             </div>
@@ -75,6 +76,14 @@ const ConfigUbahPassword = () => {
                         </div>
                     </div>
                 </div>
+                {infoHasil ?
+                    <div className={` bg-slate-800 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 ${infoHasil ? 'z-50' : null} `} >
+                        <div className="bg-white px-16 py-14 rounded-md text-center">
+                            <h1 className="text-xl mb-4 font-bold text-slate-500">{getUserInfo}</h1>
+                            <button onClick={() => setInfoHasil(false)} className="bg-red-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold">Ok</button>
+                        </div>
+                    </div>
+                    : null}
             </div>
         </div>
     )
@@ -84,20 +93,44 @@ export default ConfigUbahPassword;
 
 
 
-function DataTable({ user, setgetInfoEdit }) {
+function DataTable({ user, setgetInfoEdit, setInfoHasil, setgetUserInfo }) {
     const navLink = useNavigate();
     const [idEdit, setIdEdit] = useState('');
-    const [idhapus, setIdhapus] = useState('');
-    const hapusdataid = (e) => {
-        navLink(`/home/config/ubahpassword/${e}`);
-        setIdhapus(e)
-    }
+    //const [idhapus, setIdhapus] = useState('');
+
     const editData = (e) => {
         navLink(`/home/config/ubahpassword/${e}`);
         setIdEdit(e);
     }
     const infoUpdate = ((e) => { })
     const setIdEdit_ = (e) => setgetInfoEdit(e);
+
+    const trigerHapusUser = async (ee) => {
+        navLink(`/home/config/ubahpassword/${ee}`);
+
+    }
+
+
+    const hpsUser = async (e) => {
+        try {
+            const res = await axios.delete(`/user/${e}`);
+            console.log('hps', res.data.info);
+            if (res.status === 200) {
+                setgetUserInfo(res.data.info);
+                setInfoHasil(true);
+                function name() {
+                    setInfoHasil(false);
+                }
+                setTimeout(() => name(), 2000);
+
+            }
+        } catch (error) {
+            if (error.response) {
+                setgetUserInfo(error.response.data.info);
+            }
+        }
+    }
+
     return (
         <>
             {user.map((e, i) => (
@@ -115,7 +148,7 @@ function DataTable({ user, setgetInfoEdit }) {
                     <td className="text-center mr-3">
                         <div className="space-x-1 bg-red-100 mr-4 flex flex-row justify-center">
                             <MyModalEdit infoUpdate={(e) => infoUpdate(e)} idEdit={idEdit} editData={() => editData(e.id)} setIdEdit_={(e) => setIdEdit_(e)} />
-                            <MyModalHapus hapusdataid={() => hapusdataid(e.id)} idhapus={idhapus} setgetInfoEdit={(e) => setgetInfoEdit(e)} />
+                            <MyModalHapus setgetInfoEdit={(e) => setgetInfoEdit(e)} trigerHapusUser={() => trigerHapusUser(e.id)} hpsUser={() => hpsUser(e.id)} />
                         </div>
                     </td>
                 </tr>

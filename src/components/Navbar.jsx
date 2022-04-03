@@ -1,10 +1,18 @@
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "./Header"
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
+
+import { DiOpensource } from 'react-icons/di';
+import { DiUbuntu } from 'react-icons/di';
+import { DiSafari } from 'react-icons/di';
+import { IoBuildOutline } from 'react-icons/io5';
+import { MdAccountBalance } from 'react-icons/md';
+import { BsCheck2Square } from 'react-icons/bs';
+import { GrDocumentText } from 'react-icons/gr';
 
 
 import Home from "../public/icons/icons8-home.svg";
@@ -16,19 +24,11 @@ import Atvis from "../public/icons/icons8-services-50.svg";
 import Realisasii from "../public/icons/icons8-about-50.svg";
 import Spm from "../public/icons/icons8-news-50.svg";
 import Yhk2 from "../public/yhk-2.png";
+import iHamberger from "../public/icons/hamburger-menu-icon.png";
 
 axios.defaults.withCredentials = true;
 
 
-// axios.interceptors.request.use(
-//     config => {
-//         config.headers.authorization = `Bearer ${tkn}`;
-//         return config;
-//     },
-//     error => {
-//         return Promise.reject(error);
-//     }
-// );
 
 
 const Navbar = ({ ubahMenu }) => {
@@ -214,7 +214,7 @@ const Navbar = ({ ubahMenu }) => {
 
     return (
         <div className="w-full z-50">
-            <nav>
+            <nav className="z-50">
                 <Header />
                 <div className="">
                     <div className="sm:items-center sm:my-auto border-b-4 border-slate-800 sm:border-b-0 transition-all">
@@ -224,12 +224,12 @@ const Navbar = ({ ubahMenu }) => {
                                 <span className="items-center pl-2 my-auto font-extrabold text-white tracking-widest">DPMK</span>
                             </div>
                             <div className="items-center my-auto flex text-center bg-slate-600 h-10 pr-4 pl-2 justify-between space-x-1">
-                                <button id="menu" className="px-2 w-12 border p-2 sm:hidden block"><img id="img-humberger" src="icons/hamburger-menu-icon.png" alt="menu" className="w-12 h-6"
+                                <button id="menu" className="px-2 w-12 border p-2 sm:hidden block"><img id="img-humberger" src={iHamberger} alt="menu" className="w-12 h-6"
                                     onClick={() => {
                                         document.getElementById('div-navbar').firstElementChild.classList.toggle('hidden');
                                     }} /></button>
                                 <button onClick={logOut} className="-mt-[4.5px] sm:mt-0 flex space-x-1 hover:bg-blue-700 p-2">
-                                    <span className="mr-1 font-semibold text-red-100">LOGOUT</span>  <LogoutIcon />
+                                    <span className="mr-1 font-semibold text-red-100">LOGOUT</span> <LogoutIcon />
                                 </button>
                             </div>
                         </div>
@@ -254,16 +254,16 @@ const Navbar = ({ ubahMenu }) => {
                                                     <span className="text-center pl-2" id="btn-apbk">APBK</span>
                                                 </div>
                                             </div>
-                                            <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden" id="div-dropdown-apbk">
+                                            <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden z-50" id="div-dropdown-apbk">
                                                 <ul>
                                                     <Link to="/home/apbk/realisasi" onClick={() => { ubahMenu() }}>
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-apbk-realisasi" className="w-full inline-block" onClick={() => {
-                                                            }}>🛂 Realisasi APBK</span> </li>
+                                                            <span id="btn-apbk-realisasi flex" className="w-full inline-block" onClick={() => {
+                                                            }}> <DiOpensource className="inline-block -mt-1 " /> Realisasi APBK</span> </li>
                                                     </Link>
                                                     <Link to="/home/apbk/monitoring" onClick={() => { ubahMenu() }}>
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-apbk-monitor" className="w-full inline-block" onClick={() => { }}>🛂 Monitor APBK</span> </li>
+                                                            <span id="btn-apbk-monitor" className="w-full inline-block"><DiOpensource className="inline-block -mt-1 " /> Monitor APBK</span> </li>
                                                     </Link>
                                                 </ul>
                                             </div>
@@ -280,19 +280,19 @@ const Navbar = ({ ubahMenu }) => {
                                                 <i><img src={Config} alt="" id="img-config" className="h-6 sm:hidden md:block" /></i>
                                                 <button className="text-center px-2" id="btn-config">Config</button>
                                             </div>
-                                            <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden" id="div-dropdown-config">
+                                            <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden  z-50" id="div-dropdown-config">
                                                 <ul className="w-full m-1">
                                                     <Link to="/home/config/ubahpassword" onClick={() => { ubahMenu() }}>
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-config-ubahpass" className="w-full inline-block" >🛂 Ubah Password</span> </li>
+                                                            <span id="btn-config-ubahpass" className="w-full inline-block" ><IoBuildOutline className="inline-block -mt-1" /> Ubah Password</span> </li>
                                                     </Link>
                                                     <Link to="/home/config/pejabat" onClick={() => { ubahMenu() }}>
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-config-pejabat" className="w-full inline-block">🛂 Pejabat Pengesahan</span> </li>
+                                                            <span id="btn-config-pejabat" className="w-full inline-block"><IoBuildOutline className="inline-block -mt-1" /> Pejabat Pengesahan</span> </li>
                                                     </Link>
                                                     <Link to="/home/config/aparat" onClick={() => { ubahMenu() }}>
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-config-aparat" className="w-full inline-block" >🛂 Aparat Kampung</span> </li>
+                                                            <span id="btn-config-aparat" className="w-full inline-block" ><IoBuildOutline className="inline-block -mt-1" /> Aparat Kampung</span> </li>
                                                     </Link>
                                                 </ul>
                                             </div>
@@ -308,32 +308,32 @@ const Navbar = ({ ubahMenu }) => {
                                                 <i><img src={Spp} alt="" id="img-spp" className="h-6 sm:hidden md:block" /></i>
                                                 <button className="text-center pl-2" id="btn-spp">SPP</button>
                                             </div>
-                                            <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden" id="div-dropdown-spp">
+                                            <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden  z-50" id="div-dropdown-spp">
                                                 <ul className="w-full m-1">
                                                     <Link to="/home/spp/reguler" onClick={() => { ubahMenu() }}>
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40"
                                                             onClick={() => { }}>
-                                                            <span id="btn-spp-reguler" className="w-full inline-block" >🛂 Reguler</span> </li>
+                                                            <span id="btn-spp-reguler" className="w-full inline-block" ><DiUbuntu className="inline-block -mt-1" /> Reguler</span> </li>
                                                     </Link>
                                                     <Link onClick={() => { ubahMenu() }} to="/home/spp/covid">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-spp-covid" className="w-full inline-block" onClick={(e) => { }}>🛂 Covid 8%</span> </li>
+                                                            <span id="btn-spp-covid" className="w-full inline-block" ><DiUbuntu className="inline-block -mt-1" /> Covid 8%</span> </li>
                                                     </Link>
                                                     <Link onClick={() => { ubahMenu() }} to="/home/spp/blt">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-spp-blt" className="w-full  inline-block" onClick={() => { }}>🛂 B L T</span></li>
+                                                            <span id="btn-spp-blt" className="w-full  inline-block" ><DiUbuntu className="inline-block -mt-1" /> B L T</span></li>
                                                     </Link>
                                                     <Link onClick={() => { ubahMenu() }} to="/home/spp/add-honor">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-spp-add" className="w-full inline-block" onClick={() => { }}>🛂 ADD / Honor</span></li>
+                                                            <span id="btn-spp-add" className="w-full inline-block" ><DiUbuntu className="inline-block -mt-1" />ADD / Honor</span></li>
                                                     </Link>
                                                     <Link onClick={() => { ubahMenu() }} to="/home/spp/persetujuan">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-spp-persetujuan" className="w-full inline-block" onClick={() => { }}>✅ Persetujuan SPP Kampung</span></li>
+                                                            <span id="btn-spp-persetujuan" className="w-full inline-block" > <BsCheck2Square className="inline-block -mt-1" /> Persetujuan SPP Kampung</span></li>
                                                     </Link>
                                                     <Link onClick={() => { ubahMenu() }} to="/home/spp/laporan">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-spp-laporan" className="w-full inline-block" onClick={() => { }}>📃Laporan</span></li>
+                                                            <span id="btn-spp-laporan" className="w-full inline-block" ><GrDocumentText className='inline-block -mt-1 mr-1' />Laporan</span></li>
                                                     </Link>
                                                 </ul>
                                             </div>
@@ -349,33 +349,33 @@ const Navbar = ({ ubahMenu }) => {
                                                 <i><img src={Spm} alt="" id="img-spm" className="h-6 sm:hidden md:block" /></i>
                                                 <button className="text-center pl-2" id="btn-spm">SPM</button>
                                             </div>
-                                            <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden" id="div-dropdown-spm">
+                                            <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden z-50" id="div-dropdown-spm">
                                                 <ul className="w-full m-1">
                                                     <Link onClick={() => { ubahMenu() }} to="/home/spm/reguler">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-spm-reguler" className="w-full inline-block" onClick={() => { }}>🛂 Reguler</span> </li>
+                                                            <span id="btn-spm-reguler" className="w-full inline-block" ><DiSafari className="inline-block -mt-1" /> Reguler</span> </li>
                                                     </Link>
                                                     <Link onClick={() => { ubahMenu() }} to="/home/spm/covid">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-spm-covid" className="w-full inline-block" onClick={(e) => { }}>🛂 Covid 8%</span> </li>
+                                                            <span id="btn-spm-covid" className="w-full inline-block" ><DiSafari className="inline-block -mt-1" /> Covid 8%</span> </li>
                                                     </Link>
 
                                                     <Link onClick={() => { ubahMenu() }} to="/home/spm/blt">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-spm-blt" className="w-full  inline-block" onClick={() => { }}>🛂 B L T</span></li>
+                                                            <span id="btn-spm-blt" className="w-full  inline-block" ><DiSafari className="inline-block -mt-1" /> B L T</span></li>
                                                     </Link>
 
                                                     <Link onClick={() => { ubahMenu() }} to="/home/spm/add-honor">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-spm-add" className="w-full inline-block" onClick={() => { }}>🛂 ADD / Honor</span></li>
+                                                            <span id="btn-spm-add" className="w-full inline-block" ><DiSafari className="inline-block -mt-1" /> ADD / Honor</span></li>
                                                     </Link>
                                                     <Link onClick={() => { ubahMenu() }} to="/home/spm/persetujuan">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-spm-persetujuan" className="w-full inline-block" onClick={() => { }}>✅ Persetujuan SPM Kampung</span></li>
+                                                            <span id="btn-spm-persetujuan" className="w-full inline-block" ><BsCheck2Square className="inline-block -mt-1" />  Persetujuan SPM Kampung</span></li>
                                                     </Link>
                                                     <Link onClick={() => { ubahMenu() }} to="/home/spm/laporan">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-spm-laporan" className="w-full inline-block" onClick={() => { }}>📃 Laporan SPM</span></li>
+                                                            <span id="btn-spm-laporan" className="w-full inline-block" ><GrDocumentText className='inline-block -mt-1 mr-1' /> Laporan SPM</span></li>
                                                     </Link>
                                                 </ul>
                                             </div>
@@ -391,28 +391,28 @@ const Navbar = ({ ubahMenu }) => {
                                                 <i><img src={Sp2d} alt="" id="img-sp2d" className="h-6 sm:hidden md:block" /></i>
                                                 <button className="text-center pl-2" id="btn-sp2d">SP2D</button>
                                             </div>
-                                            <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden" id="div-dropdown-sp2d">
+                                            <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden z-50" id="div-dropdown-sp2d">
                                                 <ul className="w-full m-1">
 
                                                     <Link onClick={() => { ubahMenu() }} to="/home/sp2d/reguler">
-                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" onClick={() => { }}>
-                                                            <span id="btn-sp2d-reguler" className="w-full inline-block">🛂 Reguler</span> </li>
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-sp2d-reguler" className="w-full inline-block"><MdAccountBalance className='inline-block -mt-1' /> Reguler</span> </li>
                                                     </Link>
                                                     <Link onClick={() => { ubahMenu() }} to="/home/sp2d/covid">
-                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" onClick={() => { }}>
-                                                            <span id="btn-sp2d-covid" className="w-full inline-block">🛂 Covid 8%</span> </li>
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-sp2d-covid" className="w-full inline-block"><MdAccountBalance className='inline-block -mt-1' /> Covid 8%</span> </li>
                                                     </Link>
                                                     <Link onClick={() => { ubahMenu() }} to="/home/sp2d/blt">
-                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" onClick={() => { }}>
-                                                            <span id="btn-spd2-reguler" className="w-full inline-block">🛂 B L T</span></li>
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-spd2-reguler" className="w-full inline-block"><MdAccountBalance className='inline-block -mt-1' /> B L T</span></li>
                                                     </Link>
                                                     <Link onClick={() => { ubahMenu() }} to="/home/sp2d/add-honor">
-                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" onClick={() => { }}>
-                                                            <span id="btn-sp2d-add" className="w-full inline-block">🛂 ADD / Honor</span></li>
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-sp2d-add" className="w-full inline-block"><MdAccountBalance className='inline-block -mt-1' /> ADD / Honor</span></li>
                                                     </Link>
                                                     <Link onClick={() => { ubahMenu() }} to="/home/sp2d/laporan">
-                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" onClick={() => { }}>
-                                                            <span id="btn-sp2d-laporan" className="w-full inline-block">📃Laporan SP2D</span></li>
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-sp2d-laporan" className="w-full inline-block"><GrDocumentText className='inline-block -mt-1 mr-1' />Laporan SP2D</span></li>
                                                     </Link>
                                                 </ul>
                                             </div>

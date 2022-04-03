@@ -1,4 +1,5 @@
 import Yhk from '../public/yhk.png';
+import React from 'react';
 
 const Welcome = () => {
     return (

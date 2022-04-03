@@ -14,13 +14,13 @@ axios.defaults.baseURL = 'http://localhost:3002';
 // axios.defaults.baseURL = window.Location; yahiko2547
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <Ro>
-        <App />
-      </Ro>
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <Ro>
+      <App />
+    </Ro>
+  </Provider>
+  ,//</React.StrictMode>,
   document.getElementById('root')
 );
 

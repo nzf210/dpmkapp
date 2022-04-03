@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState, useEffect, useRef } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 
 
 
@@ -15,9 +15,11 @@ export default function MyModalInfo({ datahasil }) {
         } openModal();
     }, [datahasil])
 
+    const nodeRef = useRef(null);
+
     return (
         <div>
-            <Transition appear show={isOpen} as={Fragment}>
+            <Transition appear show={isOpen} as={Fragment} nodeRef={nodeRef}>
                 <Dialog
                     as="div"
                     className="fixed inset-0 z-10 overflow-y-auto"

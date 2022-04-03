@@ -36,14 +36,14 @@ function View() {
 
     const [columns] = useState([
         { title: 'Nama', field: 'nama', },
-        { title: 'Jabatan', field: 'jabatan', editable: false },
+        { title: 'Jabatan', field: 'jabatan', editable: () => false },
         { title: 'No SK', field: 'no_sk' },
         {
             title: 'Tgl SK', field: 'tgl_sk', type: 'date',
             dateSetting: { locale: "id-ID", format: "dd - MM - yyyy" }
         },
-        { title: 'Kampung', field: 'kampung', editable: false },
-        { title: 'Distrik', field: 'distrik', editable: false }
+        { title: 'Kampung', field: 'kampung', editable: () => false },
+        { title: 'Distrik', field: 'distrik', editable: () => false }
     ]);
 
 

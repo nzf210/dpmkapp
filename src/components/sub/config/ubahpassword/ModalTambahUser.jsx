@@ -1,5 +1,5 @@
+import React, { Fragment, useState } from "react";
 import { useFormik } from "formik";
-import { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
 import { mkamdisSelector } from '../../../../features/FilterSlice';
 import * as Yup from "yup";
@@ -7,10 +7,10 @@ import { Transition, Combobox, Dialog } from '@headlessui/react';
 import CloseIcon from '@mui/icons-material/Close';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import axios from "axios";
-import MyModalInfo from './MyModalInfo';
-import { refType } from "@mui/utils";
+// import MyModalInfo from './MyModalInfo';
 
-export default function MyModal({ setgetUserInfo }) {
+
+export default function MyModal({ setgetUserInfo, setInfoHasil }) {
 
     const kam = useSelector(mkamdisSelector.selectAll);
     const dt = [{ id: 0, kampung: '', kd_kampung: 0, distrik: '', kd_distrik: 0 }];
@@ -75,7 +75,7 @@ export default function MyModal({ setgetUserInfo }) {
             }),
         onSubmit: values => {
 
-            if (values.kd_kampung === 0 || values.kd_kampung === '' && values.kd_lvl1 === '2') {
+            if ((values.kd_kampung === 0 || values.kd_kampung === '') && values.kd_lvl1 === '2') {
                 setErdinas(true); return;
             } else {
                 simpanPengguna(values);
@@ -112,7 +112,6 @@ export default function MyModal({ setgetUserInfo }) {
         setCloseicon(false);
     }
 
-    const [datahasil, setDatahasil] = useState('');
 
     const saveuser = async (d) => {
         try {
@@ -133,16 +132,19 @@ export default function MyModal({ setgetUserInfo }) {
             setIsOpen(false);
             clearinput();
             setgetUserInfo(hasil.data.info);
-            setDatahasil(hasil.data.info);
-
+            setInfoHasil(true);
+            function na() { setInfoHasil(false); }
+            setTimeout(() => na(), 2000);
         }
         catch (e) {
             if (e.response) {
                 console.log('xx', e.response.data.info);
-                setDatahasil(`${e.response.data.info}`);
-
+                setgetUserInfo(`err: ${e.response.data.info}`)
+                setIsOpen(true);
+                setInfoHasil(true);
             }
         }
+
     }
 
     return (
@@ -154,7 +156,6 @@ export default function MyModal({ setgetUserInfo }) {
                     className=" font-semibold text-white rounded-md bg-blue-600 hover:bg-blue-700 active:bg-blue-800 shadow-md p-2" >
                     Tambah Pengguna
                 </button>
-                <MyModalInfo datahasil={datahasil} />
             </div>
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={closeModal} >
@@ -246,7 +247,7 @@ export default function MyModal({ setgetUserInfo }) {
                                                 {/* //Combo================================================================================================================================ */}
 
                                                 {dinas ? <div>
-                                                    <div className="relative z-0 mb-6 w-full group">
+                                                    <div className="relative z-20 mb-6 w-full group">
                                                         <Combobox value={selected} onChange={(e) => {
                                                             setSelected(e); setDistrik_(e.distrik);
                                                             formik.values.kd_distrik = e.kd_distrik;

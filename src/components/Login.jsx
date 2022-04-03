@@ -2,12 +2,18 @@ import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { red } from '@mui/material/colors';
 
 import { useDispatch } from "react-redux";
 import { getKamdis } from '../features/FilterSlice';
+
+
+import iLogin from '../public/icons/login.png'
+import iUser from '../public/icons/user.png'
+import iCalender from '../public/icons/calendar.png'
+import iIcon from '../public/image.ico'
 
 const Login = () => {
 
@@ -55,13 +61,13 @@ const Login = () => {
                 <div className="container pb-8 mx-auto h-full my-auto">
                     <div className="container max-w-full h-[100px] sm:h-64">
                     </div>
-                    <div className="container w-[90%] rounded-lg shadow-[0_25px_35px_rgba(1,1,1,0.45)] mx-auto sm:w-[750px] md:w-[882px] lg:w-[950px] sm:h-90">
+                    <div className="container w-[90%] rounded-lg  mx-auto sm:w-[750px] md:w-[882px] lg:w-[950px] sm:h-90 shadow-2xl">
                         <h2 className="text-black text-center font-bold sm:text-left sm:ml-8 pt-2">Login DPMK</h2>
                         <hr className="border-2 border-slate-600 w-[95%] mx-auto mt-1" />
                         <div className="sm:grid sm:grid-cols-2">
                             <div className="container flex flex-col sm:my-10">
                                 <div className="sm:items-start">
-                                    <img src="image.ico" alt="yahukimo.kab" className="w-32 mt-1 mx-auto" />
+                                    <img src={iIcon} alt="yahukimo.kab" className="w-32 mt-1 mx-auto" />
                                     <p className="justify-center text-center mx-auto w-[80%] sm:w-72">Sistem Informasi Keuangan
                                         Kampung
                                         Pemerintah
@@ -75,18 +81,18 @@ const Login = () => {
                                 <form onSubmit={(e) => { e.preventDefault(); Auth() }} className="flex flex-col items-center sm:items-start sm:pl-8 sm:-pr-14 sm:mt-2">
                                     <div className="flex sm:w-full">
                                         <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="username" className="focus:ring-2 focus:ring-cyan-600 sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700 mt-1" />
-                                        <img src="icons/user.png" className="h-7 w-7 mt-1 hidden sm:block ml-4" alt="" />
+                                        <img src={iUser} className="h-7 w-7 mt-1 hidden sm:block ml-4" alt="" />
                                     </div>
                                     <div className="flex sm:w-full">
                                         <input value={password} onChange={(e) => setPassword(e.target.value)} type="text" placeholder="password" className="focus:ring-2 focus:ring-cyan-600 sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700" />
-                                        <img src="icons/login.png" className="h-7 w-7  hidden sm:block ml-4" alt="" />
+                                        <img src={iLogin} className="h-7 w-7  hidden sm:block ml-4" alt="" />
                                     </div>
                                     <div className="flex sm:w-full">
                                         <select type="text" value={tahun} onChange={(e) => setTahun(e.target.value)} placeholder="tahun" className="focus:ring-2 focus:ring-cyan-600 sm:w-[80%] min-w-min block border-2 border-blue-700 rounded-none mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700 outline-none">
                                             <option className="rounded-none">Pilih Tahun</option>
                                             <option className="rounded-none">2022</option>
                                         </select>
-                                        <img src="icons/calendar.png" className="h-7 w-7  hidden sm:block ml-4" alt="" />
+                                        <img src={iCalender} className="h-7 w-7  hidden sm:block ml-4" alt="" />
                                     </div>
                                     <button type="submit" id="btn-login" className="focus:ring-2 focus:ring-blue-900 outline-none active:ring-2 active:ring-cyan-600 w-[50%] sm:w-[60%] min-w-min bg-blue-700 hover:bg-blue-800 active:bg-blue-900 rounded-md sm:rounded-sm sm:h-10 sm:mt-4"
                                     >LOGIN</button>

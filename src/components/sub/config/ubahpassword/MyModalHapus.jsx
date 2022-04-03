@@ -1,26 +1,19 @@
 
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from "axios";
+import React, { Fragment, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function MyModalHapus({ hapusdataid, idhapus, setgetInfoEdit }) {
+
+export default function MyModalHapus({ idhapus, setgetInfoEdit, trigerHapusUser, hpsUser }) {
     const navLink = useNavigate();
     let [isOpen, setIsOpen] = useState(false)
     function closeModal() { setIsOpen(false) }
     function openModal() { setIsOpen(true) }
-    const { id } = useParams();
 
-    const hapusUser = async (e) => {
-        console.log('idHapus', id)
-        try {
-            const resullHapus = await axios.delete(`/user/${e}`);
-            console.log('hps', resullHapus.data.info);
-            setgetInfoEdit(resullHapus.data.info)
+    const hapusUser_ = () => { hpsUser() }
 
-        } catch (error) {
-            console.log(error)
-        }
+    const hapusUser = () => {
+        trigerHapusUser();
     }
 
     return (
@@ -28,7 +21,7 @@ export default function MyModalHapus({ hapusdataid, idhapus, setgetInfoEdit }) {
             <div >
                 <button
                     type="button"
-                    onClick={() => { openModal(); hapusdataid(); navLink(`/home/config/ubahpassword/${idhapus}`) }}
+                    onClick={() => { openModal(); hapusUser() }}
                     className=" font-medium text-red-600 dark:text-red-500 hover:underline" >
                     Hapus
                 </button>
@@ -56,7 +49,7 @@ export default function MyModalHapus({ hapusdataid, idhapus, setgetInfoEdit }) {
                                             </div>
                                             <div className='space-x-2'>
                                                 <button onClick={() => { setIsOpen(false); navLink('/home/config/ubahpassword/') }} type="button" className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
-                                                <button type="button" onClick={hapusUser} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Hapus</button>
+                                                <button type="button" onClick={hapusUser_} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Hapus</button>
                                             </div>
                                         </div>
                                     </div>

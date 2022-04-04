@@ -1,17 +1,27 @@
 import { Outlet } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Welcome from "./Welcome";
+
+import { useDispatch } from "react-redux";
+import { getKamdis } from '../features/FilterSlice';
 
 
 const Dashboard = () => {
     const [out, setOut] = useState(<Welcome />);
+    const dispatch = useDispatch();
+
 
     function ubahMenu(e) {
-        if (e == 'home') {
+        if (e === 'home') {
             setOut(<Welcome />)
         } else { setOut(<Outlet />) }
     }
+
+    useEffect(() => {
+        dispatch(getKamdis());
+        console.log('dashboard')
+    }, []);
 
     return (
         <>

@@ -26,6 +26,12 @@ import Spm from "../public/icons/icons8-news-50.svg";
 import Yhk2 from "../public/yhk-2.png";
 import iHamberger from "../public/icons/hamburger-menu-icon.png";
 
+//Redux
+import { useDispatch } from 'react-redux';
+import { dataUser } from '../features/userLoginSlice';
+//Redux
+
+
 axios.defaults.withCredentials = true;
 
 
@@ -146,9 +152,12 @@ const Navbar = ({ ubahMenu }) => {
         }
     }
 
-    const [nama, setNama] = useState('');
     const [token, setToken] = useState('');
     const [namauser, setNamauser] = useState('');
+    const [kd_kampung, setKdkampung] = useState('');
+    const [kd_distrik, setKddistrik] = useState('');
+    const [kd_lvl1, setKdlvl1] = useState('');
+    const [kd_lvl2, setKdlvl2] = useState('');
     const [expier, setExpier] = useState('');
 
     const navLink = useNavigate();
@@ -157,20 +166,32 @@ const Navbar = ({ ubahMenu }) => {
         refreshtoken();
     }, []);
 
+
+
     const refreshtoken = async () => {
         try {
             const respon = await axios.get('/user/token');
             setToken(respon.data.accestoken);
             const decode = jwt_decode(respon.data.accestoken);
             console.log(decode);
-            setNamauser(decode.nama);
             setExpier(decode.exp);
+            setNamauser(decode.nama);
+            setKddistrik(decode.kd_distrik);
+            setKdkampung(decode.kd_kampung);
+            setKdlvl1(decode.kd_lvl1);
+            setKdlvl2(decode.kd_lvl2);
         } catch (e) {
-            console.log('ddd', e.message);
+            console.log('error refresh token', e.message);
             navLink('/');
-
         }
     }
+
+    //Redux Data
+    const dispatch = useDispatch();
+
+    useEffect(() => dispatch(dataUser({ namauser, kd_lvl1, kd_lvl2, kd_kampung, kd_distrik }))
+        , [refreshtoken])
+    //Redux Data
 
     const axiosJWT = axios.create();
 
@@ -208,12 +229,18 @@ const Navbar = ({ ubahMenu }) => {
     }
 
     const nmuser = document.getElementById('namauser');
-    if (nmuser) {
-        nmuser.innerText = namauser
+    if (nmuser !== null) {
+        nmuser.innerText = namauser;
     }
 
     return (
         <div className="w-full z-50">
+            <div className="hidden" >
+                <span>{kd_kampung}</span>
+                <span>{kd_distrik}</span>
+                <span>{kd_lvl1}</span>
+                <span>{kd_lvl2}</span>
+            </div>
             <nav className="z-50">
                 <Header />
                 <div className="">

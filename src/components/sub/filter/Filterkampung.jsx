@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NamaDistrik from "../filter/NamaDistrik";
 import NamaKampung from "../filter/NamaKampung";
+import { useSelector } from 'react-redux';
 
 const distrik = [
     { id: 0, distrik: '', kampung: '', kd_distrik: 0, kd_kampung: 0 }
@@ -12,6 +13,9 @@ const Filterkampung = () => {
     const [nmdis_, setNmdis_] = useState([]);
     const setDis = (e) => { setstate(e) };
     const nmdis = (e) => { setNmdis_(e); }
+    const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2 } = useSelector(state => state.userLogin);
+
+    console.log('first nama', nama, kd_distrik, kd_kampung, kd_lvl1, kd_lvl2);
 
     return (
         <div className="w-full sm:-mt-1 z-30">

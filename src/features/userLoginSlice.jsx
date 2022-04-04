@@ -10,7 +10,9 @@ const userLoginSlice = createSlice({
         kd_lvl1: "",
         kd_lvl2: "",
         kd_kampung: "",
-        kd_distrik: ""
+        kd_distrik: "",
+        userId: ''
+
     },
     reducers: {
         dataUser: (state, action) => {
@@ -19,6 +21,7 @@ const userLoginSlice = createSlice({
             state.kd_lvl2 = action.payload.kd_lvl2;
             state.kd_kampung = action.payload.kd_kampung;
             state.kd_distrik = action.payload.kd_distrik;
+            state.userId = action.payload.userId;
         }
     }
 });

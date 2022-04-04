@@ -7,7 +7,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { useSelector } from "react-redux";
 import { mkamdisSelector } from '../../../features/FilterSlice';
 
-const NamaDistrik = ({ kamdis, nmdis }) => {
+const NamaDistrik = ({ kamdis, nmdis, disable }) => {
 
     const dis = useSelector(mkamdisSelector.selectAll);
     const dt = [{ id: 0, kampung: '', kd_kampung: 0, distrik: '', kd_distrik: 0 }];
@@ -19,13 +19,12 @@ const NamaDistrik = ({ kamdis, nmdis }) => {
     const [query, setQuery] = useState('');
     const [closeicon, setCloseicon] = useState(false);
 
-
     const filteredDistrik =
         query === '' ? distrik : distrik.filter((dis) =>
             dis.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')));
 
     useEffect(() => {
-        if (kamdis !== 'undefined') {
+        if (kamdis !== undefined) {
             setSelected(kamdis.distrik);
         } return
     }, [kamdis]);
@@ -51,7 +50,7 @@ const NamaDistrik = ({ kamdis, nmdis }) => {
 
     return (
         <div className="w-72 top-20 cursor-pointer">
-            <Combobox value={selected} onChange={(e) => { setSelected(e); dataKampung(e) }}>
+            <Combobox value={selected} onChange={(e) => { setSelected(e); dataKampung(e) }} disabled={disable}>
                 <div className="mt-1">
                     <div className="flex flex-row w-full text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-teal-300 focus-visible:ring-offset-2 sm:text-sm overflow-hidden">
                         <Combobox.Input placeholder='Nama Distrik ... '

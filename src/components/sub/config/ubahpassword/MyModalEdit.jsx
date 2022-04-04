@@ -95,6 +95,7 @@ export default function MyModalEdit({ editData, setIdEdit_ }) {
         }
     }
 
+
     return (
         <>
             <div key="modaledit">
@@ -102,7 +103,8 @@ export default function MyModalEdit({ editData, setIdEdit_ }) {
                     <button
                         type="button"
                         onClick={() => { openModal(); editData(); }}
-                        className=" font-medium text-blue-600 dark:text-blue-500 hover:underline" >
+                        className=" font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
                         Ubah
                     </button>
                     <Suspense fallback={<p>Data Sedang di muat ... </p>}> <MyModalInfo datahasil={datahasil} /> </Suspense>

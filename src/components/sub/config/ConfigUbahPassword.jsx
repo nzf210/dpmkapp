@@ -5,10 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import MyModalEdit from './ubahpassword/MyModalEdit'
 import MyModal from './ubahpassword/ModalTambahUser';
+import { useSelector } from 'react-redux';
 
 
 const ConfigUbahPassword = () => {
 
+    const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, userId } = useSelector(state => state.userLogin);
     const [user, setUser] = useState([]);
     const [getUserInfo, setgetUserInfo] = useState(null);
     const [getInfoEdit_, setgetInfoEdit_] = useState(null);
@@ -16,21 +18,30 @@ const ConfigUbahPassword = () => {
 
     const getUser = async () => {
         const usrdata = await axios.get('/user');
-        setUser(usrdata.data);
+        if (kd_lvl1 === 2) {
+            if (kd_lvl2 === 2) {
+                const da = usrdata.data.filter((e) => e.id === userId)
+                setUser(da);
+            } else {
+                const da = usrdata.data.filter((e) => e.kd_kampung === kd_kampung)
+                setUser(da);
+            }
+        } else {
+            setUser(usrdata.data);
+        }
     }
 
     const setgetInfoEdit = (e) => { setgetInfoEdit_(e); console.log('induk', e) };
 
     useEffect(() => {
         getUser();
-    }, [getUserInfo, getInfoEdit_, infoHasil]
-    );
+    }, [getUserInfo, getInfoEdit_, infoHasil]);
 
 
     return (
         <div className="w-full">
             <div className="h-20"></div>
-            <Filterkampung></Filterkampung>
+            {/* <Filterkampung></Filterkampung> */}
             <div>
                 <div className="w-full mx-auto overflow-x-auto" >
                     <div className="mx-auto w-full xl:w-[70%] lg:w-[80%] md:w-[90%] overflow-x-auto bg-red-200">
@@ -67,7 +78,7 @@ const ConfigUbahPassword = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {<DataTable user={user} setgetInfoEdit={(e) => setgetInfoEdit(e)} setInfoHasil={setInfoHasil} setgetUserInfo={setgetUserInfo} />}
+                                        {<DataTable user={user} setgetInfoEdit={(e) => setgetInfoEdit(e)} setInfoHasil={setInfoHasil} setgetUserInfo={setgetUserInfo} kd_lvl2={kd_lvl2} />}
                                     </tbody>
                                 </table>
                             </div>
@@ -93,7 +104,7 @@ export default ConfigUbahPassword;
 
 
 
-function DataTable({ user, setgetInfoEdit, setInfoHasil, setgetUserInfo }) {
+function DataTable({ user, setgetInfoEdit, setInfoHasil, setgetUserInfo, kd_lvl2 }) {
     const navLink = useNavigate();
     const [idEdit, setIdEdit] = useState('');
     //const [idhapus, setIdhapus] = useState('');
@@ -148,7 +159,7 @@ function DataTable({ user, setgetInfoEdit, setInfoHasil, setgetUserInfo }) {
                     <td className="text-center mr-3">
                         <div className="space-x-1 bg-red-100 mr-4 flex flex-row justify-center">
                             <MyModalEdit infoUpdate={(e) => infoUpdate(e)} idEdit={idEdit} editData={() => editData(e.id)} setIdEdit_={(e) => setIdEdit_(e)} />
-                            <MyModalHapus setgetInfoEdit={(e) => setgetInfoEdit(e)} trigerHapusUser={() => trigerHapusUser(e.id)} hpsUser={() => hpsUser(e.id)} />
+                            {kd_lvl2 === 2 ? null : <MyModalHapus setgetInfoEdit={(e) => setgetInfoEdit(e)} trigerHapusUser={() => trigerHapusUser(e.id)} hpsUser={() => hpsUser(e.id)} />}
                         </div>
                     </td>
                 </tr>

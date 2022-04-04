@@ -52,7 +52,7 @@ function App() {
     <div>
       <Routes >
         <Route path='*' element={<NotFound />}></Route>
-        <Route path="/" exact element={<Login />} />
+        <Route exact path="/" element={<Login />} />
         <Route path="home" element={<Dashboard />} >
           <Route path="apbk/monitoring" element={<ApbkMonitoring />} />
           <Route path="apbk/realisasi" element={<ApbkRealiasai />} />

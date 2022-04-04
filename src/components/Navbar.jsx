@@ -158,6 +158,7 @@ const Navbar = ({ ubahMenu }) => {
     const [kd_distrik, setKddistrik] = useState('');
     const [kd_lvl1, setKdlvl1] = useState('');
     const [kd_lvl2, setKdlvl2] = useState('');
+    const [userId, setUserId] = useState('');
     const [expier, setExpier] = useState('');
 
     const navLink = useNavigate();
@@ -180,6 +181,7 @@ const Navbar = ({ ubahMenu }) => {
             setKdkampung(decode.kd_kampung);
             setKdlvl1(decode.kd_lvl1);
             setKdlvl2(decode.kd_lvl2);
+            setUserId(decode.userId);
         } catch (e) {
             console.log('error refresh token', e.message);
             navLink('/');
@@ -189,7 +191,7 @@ const Navbar = ({ ubahMenu }) => {
     //Redux Data
     const dispatch = useDispatch();
 
-    useEffect(() => dispatch(dataUser({ namauser, kd_lvl1, kd_lvl2, kd_kampung, kd_distrik }))
+    useEffect(() => dispatch(dataUser({ namauser, kd_lvl1, kd_lvl2, kd_kampung, kd_distrik, userId }))
         , [refreshtoken])
     //Redux Data
 

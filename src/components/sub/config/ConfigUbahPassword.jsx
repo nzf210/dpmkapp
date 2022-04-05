@@ -44,7 +44,7 @@ const ConfigUbahPassword = () => {
             {/* <Filterkampung></Filterkampung> */}
             <div>
                 <div className="w-full mx-auto overflow-x-auto" >
-                    <div className="mx-auto w-full xl:w-[70%] lg:w-[80%] md:w-[90%] overflow-x-auto bg-red-200">
+                    <div className="mx-auto w-full xl:w-[70%] lg:w-[80%] md:w-[90%] overflow-x-auto ">
                         <div className="mx-auto">
                             <div className="overflow-x-auto shadow-md sm:rounded-lg">
                                 <div className="p-4 flex flex-row justify-between">
@@ -157,7 +157,7 @@ function DataTable({ user, setgetInfoEdit, setInfoHasil, setgetUserInfo, kd_lvl2
                     <td className="px-2 py-1">{e.distrik}</td>
                     <td className="px-2 py-1">{e.kampung}</td>
                     <td className="text-center mr-3">
-                        <div className="space-x-1 bg-red-100 mr-4 flex flex-row justify-center">
+                        <div className="space-x-1  mr-4 flex flex-row justify-center">
                             <MyModalEdit infoUpdate={(e) => infoUpdate(e)} idEdit={idEdit} editData={() => editData(e.id)} setIdEdit_={(e) => setIdEdit_(e)} />
                             {kd_lvl2 === 2 ? null : <MyModalHapus setgetInfoEdit={(e) => setgetInfoEdit(e)} trigerHapusUser={() => trigerHapusUser(e.id)} hpsUser={() => hpsUser(e.id)} />}
                         </div>

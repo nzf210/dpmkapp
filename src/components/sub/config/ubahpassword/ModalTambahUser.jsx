@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
 import { mkamdisSelector } from '../../../../features/FilterSlice';
@@ -7,10 +7,31 @@ import { Transition, Combobox, Dialog } from '@headlessui/react';
 import CloseIcon from '@mui/icons-material/Close';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import axios from "axios";
-// import MyModalInfo from './MyModalInfo';
+
+
+
+
 
 
 export default function MyModal({ setgetUserInfo, setInfoHasil }) {
+
+    const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, userId } = useSelector(state => state.userLogin);
+
+    // const [kd_kampung_, setKdDistrik_] = useState('0');
+    // const [kd_distrik_, setKdKampung_] = useState('0');
+    // const [kd_lvl1_, setKdlvl1_] = useState('');
+
+    // useEffect(() => {
+    //     if (kd_lvl1 === 2) {
+    //         setKdDistrik_(kd_distrik);
+    //         setKdKampung_(kd_kampung);
+    //         setKdlvl1_(kd_lvl1);
+    //     }
+    //     return () => {
+
+    //     };
+    // }, []);
+
 
     const kam = useSelector(mkamdisSelector.selectAll);
     const dt = [{ id: 0, kampung: '', kd_kampung: 0, distrik: '', kd_distrik: 0 }];
@@ -26,61 +47,61 @@ export default function MyModal({ setgetUserInfo, setInfoHasil }) {
     const [closeicon, setCloseicon] = useState(false);
     const [dinas, setDinas] = useState(false);
     const [erdinas, setErdinas] = useState(false);
+    const [btnenable, setBtnEnable] = useState(true);
 
     const [distrik_, setDistrik_] = useState('');
     const [kd_lvl2_key, setKd_lvl2_key] = useState('');
 
+    useEffect(() => {
+        if (kd_lvl2 !== 2) {
+            setBtnEnable(false);
+        }
+    }, [])
 
-    const formik = useFormik({
-        initialValues: {
-            nama: "",
-            email: "",
-            username: "",
-            password: "",
-            ulangpassword: "",
-            nohp: "",
-            kd_lvl1: "",
-            kd_lvl2: "",
-            kd_kampung: "0",
-            kd_distrik: "0"
-        },
-        validationSchema:
 
-            Yup.object({
-                nama: Yup.string()
-                    .min(2, "Nama Minimal 2 Karakter")
-                    .required("Nama Wajib di isi"),
-                username: Yup.string()
-                    .min(2, "Nama Minimal 2 Karakter")
-                    .required("Username Wajib di isi"),
-                email: Yup.string()
-                    .email("Format Email Salah")
-                    .required("Email Wajib di isi"),
-                password: Yup.string()
-                    .min(1, "Password Minimal 4 Karakter")
-                    .required("Password Wajib di isi"),
-                ulangpassword: Yup.string()
-                    .oneOf([Yup.ref("password")], "Password dan Ulangpassword tidak Cocok")
-                    .required("Wajib di isi, sama dengan password "),
-                nohp: Yup.number()
-                    .min(8, "Minimal 8 Karakter")
-                    .required("No Hp Wajib di Isi"),
-                kd_lvl1: Yup.string()
-                    .matches(/[1-4]/, 'Pilih Level Instansi')
-                    .required('Pilih Level Instansi'),
-                kd_lvl2: Yup.string()
-                    .matches(/[1-4]/, 'Pilih Level Pengguna')
-                    .required('Pilih Level Pengguna')
+    let formik = null;
 
-            }),
-        onSubmit: values => {
-
-            if ((values.kd_kampung === 0 || values.kd_kampung === '') && values.kd_lvl1 === '2') {
-                setErdinas(true); return;
-            } else {
+    if (kd_lvl1 === 2) {
+        formik = useFormik({
+            initialValues: {
+                nama: "",
+                email: "",
+                username: "",
+                password: "",
+                ulangpassword: "",
+                nohp: "",
+                kd_lvl1: kd_lvl1,
+                kd_lvl2: "",
+                kd_kampung: kd_kampung,
+                kd_distrik: kd_distrik
+            },
+            validationSchema:
+                Yup.object({
+                    nama: Yup.string()
+                        .min(2, "Nama Minimal 2 Karakter")
+                        .required("Nama Wajib di isi"),
+                    username: Yup.string()
+                        .min(2, "Nama Minimal 2 Karakter")
+                        .required("Username Wajib di isi"),
+                    email: Yup.string()
+                        .email("Format Email Salah")
+                        .required("Email Wajib di isi"),
+                    password: Yup.string()
+                        .min(1, "Password Minimal 4 Karakter")
+                        .required("Password Wajib di isi"),
+                    ulangpassword: Yup.string()
+                        .oneOf([Yup.ref("password")], "Password dan Ulangpassword tidak Cocok")
+                        .required("Wajib di isi, sama dengan password "),
+                    nohp: Yup.number()
+                        .min(8, "Minimal 8 Karakter")
+                        .required("No Hp Wajib di Isi"),
+                    kd_lvl2: Yup.string()
+                        .matches(/[1-4]/, 'Pilih Level Pengguna')
+                        .required('Pilih Level Pengguna')
+                }),
+            onSubmit: values => {
                 simpanPengguna(values);
-
-                setErdinas(false);
+                console.log('lvl 2', values);
                 formik.resetForm({
                     nama: "",
                     email: "",
@@ -88,17 +109,78 @@ export default function MyModal({ setgetUserInfo, setInfoHasil }) {
                     password: "",
                     ulangpassword: "",
                     nohp: "",
-                    kd_lvl1: null,
-                    kd_lvl2: null,
-                    kd_kampung: "0",
-                    kd_distrik: "0"
+                    kd_lvl2: null
                 })
-            }
-        },
-    });
+
+            },
+        });
+
+    } else {
+        formik = useFormik({
+            initialValues: {
+                nama: "",
+                email: "",
+                username: "",
+                password: "",
+                ulangpassword: "",
+                nohp: "",
+                kd_lvl1: "",
+                kd_lvl2: "",
+                kd_kampung: null,
+                kd_distrik: null
+            },
+            validationSchema:
+                Yup.object({
+                    nama: Yup.string()
+                        .min(2, "Nama Minimal 2 Karakter")
+                        .required("Nama Wajib di isi"),
+                    username: Yup.string()
+                        .min(2, "Nama Minimal 2 Karakter")
+                        .required("Username Wajib di isi"),
+                    email: Yup.string()
+                        .email("Format Email Salah")
+                        .required("Email Wajib di isi"),
+                    password: Yup.string()
+                        .min(1, "Password Minimal 4 Karakter")
+                        .required("Password Wajib di isi"),
+                    ulangpassword: Yup.string()
+                        .oneOf([Yup.ref("password")], "Password dan Ulangpassword tidak Cocok")
+                        .required("Wajib di isi, sama dengan password "),
+                    nohp: Yup.number()
+                        .min(8, "Minimal 8 Karakter")
+                        .required("No Hp Wajib di Isi"),
+                    kd_lvl1: Yup.string()
+                        .matches(/[1-4]/, 'Pilih Level Instansi')
+                        .required('Pilih Level Instansi'),
+                    kd_lvl2: Yup.string()
+                        .matches(/[1-4]/, 'Pilih Level Pengguna')
+                        .required('Pilih Level Pengguna')
+
+                }),
+            onSubmit: values => {
+                if ((values.kd_kampung === 0 || values.kd_kampung === '') && values.kd_lvl1 === '2') {
+                    setErdinas(true); return;
+                } else {
+                    simpanPengguna(values);
+                    setErdinas(false);
+                    formik.resetForm({
+                        nama: "",
+                        email: "",
+                        username: "",
+                        password: "",
+                        ulangpassword: "",
+                        nohp: "",
+                        kd_lvl1: null,
+                        kd_lvl2: null,
+                        kd_kampung: 0,
+                        kd_distrik: 0
+                    })
+                }
+            },
+        });
+    }
 
     const simpanPengguna = (e) => {
-        //  console.log(e.username, e.password, e.email, e.kd_lvl1, e.kd_lvl2, e.nohp, e.kd_kampung, e.kd_distrik);
         saveuser(e);
     }
 
@@ -111,7 +193,6 @@ export default function MyModal({ setgetUserInfo, setInfoHasil }) {
         setSelected(kampung[0]);
         setCloseicon(false);
     }
-
 
     const saveuser = async (d) => {
         try {
@@ -153,7 +234,9 @@ export default function MyModal({ setgetUserInfo, setInfoHasil }) {
                 <button
                     type="button"
                     onClick={openModal}
-                    className=" font-semibold text-white rounded-md bg-blue-600 hover:bg-blue-700 active:bg-blue-800 shadow-md p-2" >
+                    className="font-semibold text-white rounded-md bg-blue-600 hover:bg-blue-700 active:bg-blue-800 shadow-md p-2"
+                    disabled={btnenable}
+                >
                     Tambah Pengguna
                 </button>
             </div>
@@ -215,7 +298,7 @@ export default function MyModal({ setgetUserInfo, setInfoHasil }) {
                                                     <label htmlFor="email" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
                                                     <span> {formik.errors.email && formik.touched.email && (<p className="text-red-400 font-thin">{formik.errors.email}</p>)}</span>
                                                 </div>
-                                                <div className="relative z-0 mb-6 w-full group">
+                                                {kd_lvl1 !== 2 ? <div className="relative z-0 mb-6 w-full group">
                                                     <select name="kd_lvl1" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=""
                                                         value={formik.values.kd_lvl1}
                                                         onChange={(e) => {
@@ -224,35 +307,32 @@ export default function MyModal({ setgetUserInfo, setInfoHasil }) {
                                                             } else { setDinas(true) };
                                                         }}
                                                     >
-                                                        <option onClick={(e) => { }} value={parseInt(0)} >...</option>
-                                                        <option onClick={(e) => { setDinas(false); }} value={parseInt(1)}>Dinas DPMK</option>
-                                                        <option onClick={(e) => { setDinas(true); }} value={parseInt(2)}>Kampung</option>
-
+                                                        <option onClick={(e) => { }} value={0} >...</option>
+                                                        <option onClick={(e) => { setDinas(false); }} value={1}>Dinas DPMK</option>
+                                                        <option onClick={(e) => { setDinas(true); }} value={2}>Kampung</option>
                                                     </select>
                                                     <label htmlFor="kd_lvl1" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Instansi</label>
                                                     <span>{formik.errors.kd_lvl1 && formik.touched.kd_lvl1 && (<p className="text-red-300 font-thin">{formik.errors.kd_lvl1}</p>)}</span>
-                                                </div>
+                                                </div> : null}
                                                 <div className="relative z-0 mb-6 w-full group">
                                                     <select name="kd_lvl2" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " key={kd_lvl2_key}
                                                         value={formik.values.kd_lvl2}
                                                         onChange={(e) => { formik.handleChange(e); }}
                                                     >
-                                                        <option onClick={(e) => { setKd_lvl2_key(e.target.value); }} value={parseInt(0)} >...</option>
-                                                        <option onClick={(e) => { setKd_lvl2_key(e.target.value) }} value="1">Admin</option>
-                                                        <option onClick={(e) => { setKd_lvl2_key(e.target.value) }} value="2">Operator</option>
+                                                        <option onClick={(e) => { setKd_lvl2_key(e.target.value); }} value={0} >...</option>
+                                                        <option onClick={(e) => { setKd_lvl2_key(e.target.value) }} value={1}>Admin</option>
+                                                        <option onClick={(e) => { setKd_lvl2_key(e.target.value) }} value={2}>Operator</option>
                                                     </select>
                                                     <label htmlFor="kd_lvl2" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Level Pengguna</label>
                                                     <span>{formik.errors.kd_lvl2 && formik.touched.kd_lvl2 && (<p className="text-red-300 font-thin">{formik.errors.kd_lvl2}</p>)}</span>
                                                 </div>
                                                 {/* //Combo================================================================================================================================ */}
-
                                                 {dinas ? <div>
                                                     <div className="relative z-20 mb-6 w-full group">
                                                         <Combobox value={selected} onChange={(e) => {
                                                             setSelected(e); setDistrik_(e.distrik);
                                                             formik.values.kd_distrik = e.kd_distrik;
                                                             formik.values.kd_kampung = e.kd_kampung;
-
                                                         }} >
                                                             <div className="mt-1">
                                                                 <div className="flex flex-row w-full text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-teal-300 focus-visible:ring-offset-2 sm:text-sm overflow-hidden">
@@ -282,7 +362,6 @@ export default function MyModal({ setgetUserInfo, setInfoHasil }) {
                                                                                             key={dis.id}
                                                                                             className={({ active }) => `cursor-default select-none py-2 pl-10 pr-4 ${active ? 'text-white bg-slate-600' : 'text-gray-900'}`}
                                                                                             value={dis}
-
                                                                                         >
                                                                                             {({ selected, active }) => (
                                                                                                 <>

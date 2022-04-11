@@ -126,8 +126,8 @@ export default function MyModal({ setgetUserInfo, setInfoHasil }) {
                 nohp: "",
                 kd_lvl1: "",
                 kd_lvl2: "",
-                kd_kampung: null,
-                kd_distrik: null
+                kd_kampung: 0,
+                kd_distrik: 0
             },
             validationSchema:
                 Yup.object({

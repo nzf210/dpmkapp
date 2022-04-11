@@ -191,7 +191,7 @@ const Navbar = ({ ubahMenu }) => {
     //Redux Data
     const dispatch = useDispatch();
 
-    useEffect(() => dispatch(dataUser({ namauser, kd_lvl1, kd_lvl2, kd_kampung, kd_distrik, userId }))
+    useEffect(() => dispatch(dataUser({ namauser, kd_lvl1, kd_lvl2, kd_kampung, kd_distrik, userId, token }))
         , [refreshtoken])
     //Redux Data
 
@@ -237,12 +237,12 @@ const Navbar = ({ ubahMenu }) => {
 
     return (
         <div className="w-full z-50">
-            <div className="hidden" >
+            {/* <div className="hidden" >
                 <span>{kd_kampung}</span>
                 <span>{kd_distrik}</span>
                 <span>{kd_lvl1}</span>
                 <span>{kd_lvl2}</span>
-            </div>
+            </div> */}
             <nav className="z-50">
                 <Header />
                 <div className="">

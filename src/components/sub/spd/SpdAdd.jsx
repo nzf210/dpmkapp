@@ -1,17 +1,18 @@
 // import React from 'react';
-// const Sp2dAdd = () => {
+// const SpdAdd = () => {
 //     return (
 
 
 //         <div>
 //             <div className="h-40"></div>
-//             <h1>Sp2dAdd</h1>
+//             <h1>SpdAdd</h1>
 //         </div>
 
 //     )
 // }
 
-// export default Sp2dAdd
+// export default SpdAdd
+
 
 import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
@@ -22,7 +23,7 @@ import { useSelector } from 'react-redux';
 //Redux
 import axios from 'axios';
 
-const Sp2dAdd = () => {
+const SpdAdd = () => {
 
     const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
     const [data_, setData_] = useState([]);
@@ -71,7 +72,7 @@ const Sp2dAdd = () => {
         field: 'distrik', title: 'Distrik', editable: () => false
     },
     {
-        field: 'sts', title: 'Status', editable: () => false, render: (row) => row.sts ? <div className='bg-yellow-200 rounded-md p-2 text-center -translate-x-3'>Proses SPM</div> : null, align: 'center'
+        field: 'sts', title: 'Status', editable: () => false, render: (row) => row.sts ? <div className='bg-yellow-200 rounded-md p-2 text-center -translate-x-3'>Verifikasi Laporan / APBK</div> : null, align: 'center'
     },
     ]
     const kolom_ = [{
@@ -91,7 +92,7 @@ const Sp2dAdd = () => {
         field: 'distrik', title: 'Distrik', editable: () => false
     },
     {
-        field: 'sts', title: 'Status', editable: () => false, render: (row) => <div className='bg-green-400 rounded-md p-2 text-center -translate-x-3'>SP2D Terbit</div>, align: 'center'
+        field: 'sts', title: 'Status', editable: () => false, render: (row) => <div className='bg-green-400 rounded-md p-2 text-center -translate-x-3'>Cetak SPD</div>, align: 'center'
     },
     ]
 
@@ -196,7 +197,7 @@ const Sp2dAdd = () => {
                         <div className='relative container -z-40 mx-auto'>
                             <div className='absolute min-w-full mx-auto z-10'>
                                 <MaterialTable
-                                    title="Pending SPP"
+                                    title="Proses Verifkasi Laporan / APBK"
                                     options={options}
                                     icons={tblIcon}
                                     data={data_}
@@ -210,7 +211,7 @@ const Sp2dAdd = () => {
                                     icons={tblIcon}
                                     columns={kolom_}
                                     data={data_2}
-                                    title="CETAK SPM"
+                                    title="CETAK SPD"
                                     localization={localisation}
                                     editable={editable_}
                                 />
@@ -226,4 +227,4 @@ const Sp2dAdd = () => {
     )
 }
 
-export default Sp2dAdd
+export default SpdAdd

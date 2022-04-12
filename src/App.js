@@ -14,6 +14,14 @@ import ConfigPejabatPengesahan from "./components/sub/config/ConfigPejabatPenges
 import ConfigUbahPassword from "./components/sub/config/ConfigUbahPassword";
 /* CONFIG */
 
+/* SPD */
+import SpdAdd from "./components/sub/spd/SpdAdd";
+import SpdBlt from "./components/sub/spd/SpdBlt";
+import SpdCovid from "./components/sub/spd/SpdCovid";
+import SpdLaporan from "./components/sub/spd/SpdLaporan";
+import SpdReguler from "./components/sub/spd/SpdReguler";
+/* SPD */
+
 /* SP2D */
 import Sp2dAdd from "./components/sub/sp2d/Sp2dAdd";
 import Sp2dBlt from "./components/sub/sp2d/Sp2dBlt";
@@ -82,6 +90,12 @@ function App() {
           <Route path="sp2d/laporan" element={<Sp2dLaporan />} />
           <Route path="sp2d/add-honor" element={<Sp2dAdd />} />
           <Route path="sp2d/reguler" element={<Sp2dReguler />} />
+
+          <Route path="spd/blt" element={<SpdBlt />} />
+          <Route path="spd/covid" element={<SpdCovid />} />
+          <Route path="spd/laporan" element={<SpdLaporan />} />
+          <Route path="spd/add-honor" element={<SpdAdd />} />
+          <Route path="spd/reguler" element={<SpdReguler />} />
         </Route>
       </Routes>
     </div>

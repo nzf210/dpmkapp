@@ -53,6 +53,9 @@ const ConfigPejabatPengesahan = () => {
     {
         field: 'distrik', title: 'Distrik', editable: () => false
     },
+    {
+        field: 'sts', title: 'Status', editable: () => false, render: (row) => row.sts ? <div className='bg-green-400 rounded-md p-2 text-center -translate-x-3'>Aktif</div> : null, align: 'center'
+    },
     ]
 
 
@@ -123,32 +126,31 @@ const ConfigPejabatPengesahan = () => {
     }
     /* Hapus Data Pejabat Pengesahan */
 
+    const actions = [{
+        icon: 'delete',
+        tooltip: 'Hapus data'
+    }]
+
     const option = {
         rowStyle: (rowData) => ({
-            backgroundColor:
-                rowData.sts === true ? "#6ABAC9" : "#FFF",
-            text: rowData.sts === true ? "#6ABAC9" : "#FFF",
+            // backgroundColor:
+            //     rowData.sts === true ? 'rgb(176, 196, 222)' : "#FFF",
+            fontWeight:
+                rowData.sts === true ? 600 : 300,
+
         }),
         pageSizeOptions: [5], filtering: kd_lvl1 === 2 ? false : true, paging: false, addRowPosition: "first", actionsColumnIndex: -1,
         showSelectAllCheckbox: false, showTextRowsSelected: false,
         selection: true,
         selectionProps: barisData => ({
             disabled: barisData.sts === true,
-        })
-    }
-    const option_ = {
-        rowStyle: (rowData) => ({
-            backgroundColor:
-                rowData.sts === true ? "#6ABAC9" : "#FFF",
-            text: rowData.sts === true ? "#6ABAC9" : "#FFF",
         }),
-        pageSizeOptions: [5], filtering: kd_lvl1 === 2 ? false : true, paging: false, addRowPosition: "first", actionsColumnIndex: -1,
-        showSelectAllCheckbox: false, showTextRowsSelected: false,
-        selection: true,
-        selectionProps: barisData => ({
-            disabled: barisData.sts === true,
-        })
+        headerStyle: {
+            backgroundColor: '', fontWeight: 800
+        },
+        maxBodyHeight: 500,
     }
+
     let editable = {};
     if (kd_lvl1 === 2) {
         editable = {
@@ -220,6 +222,25 @@ const ConfigPejabatPengesahan = () => {
         }
     }
 
+    const localisation = {
+        header: {
+            actions: ['Aksi']
+        },
+
+        body: {
+            emptyDataSourceMessage: ('sedang memuat data ... '),
+            addTooltip: ('tambah data'),
+            editTooltip: ('ubah data'),
+            deleteTooltip: ('hapus data'),
+            editRow: {
+                deleteText: 'Anda yakin menghapus data ini ?',
+                cancelTooltip: ('Batal'),
+                saveTooltip: ('Simpan')
+            }
+        }
+
+    }
+
 
     return (
         <div>
@@ -227,6 +248,7 @@ const ConfigPejabatPengesahan = () => {
                 <div className='mx-auto'>
                     <div className='container mx-auto'>
                         <div className='relative container -z-40 mx-auto'>
+                            <p className='font-thin text-slate-700'>* Note: Status Aktif dan text Bold adalah Pejabat yang tampil dalam dokument</p>
                             <div className='absolute min-w-full mx-auto z-10'>
                                 <MaterialTable
                                     title="Kepala Kampung"
@@ -236,16 +258,18 @@ const ConfigPejabatPengesahan = () => {
                                     data={data_}
                                     editable={editable}
                                     onSelectionChange={onSelectionChange}
+                                    localization={localisation}
                                 />
                                 <br />
                                 <MaterialTable
                                     columns={kolom}
                                     title="Bendahara Kampung"
                                     icons={tblIcon}
-                                    options={option_}
+                                    options={option}
                                     data={data_2}
                                     editable={editable_}
                                     onSelectionChange={onSelectionChange_}
+                                    localization={localisation}
                                 />
                             </div>
                             <div className='absolute min-w-full mx-auto pt-[440px] z-0'>

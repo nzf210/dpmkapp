@@ -8,6 +8,7 @@ import jwt_decode from "jwt-decode";
 
 import { DiOpensource } from 'react-icons/di';
 import { DiUbuntu } from 'react-icons/di';
+import { DiCompass } from 'react-icons/di';
 import { DiSafari } from 'react-icons/di';
 import { IoBuildOutline } from 'react-icons/io5';
 import { MdAccountBalance } from 'react-icons/md';
@@ -15,11 +16,13 @@ import { BsCheck2Square } from 'react-icons/bs';
 import { GrDocumentText } from 'react-icons/gr';
 
 
+
 import Home from "../public/icons/icons8-home.svg";
 import Apbk from "../public/icons/icons8-bookmark-50.svg";
 import Config from "../public/icons/icons8-settings-50.svg";
 import Spp from "../public/icons/icons8-file-50.svg";
 import Sp2d from "../public/icons/icons8-speech-bubble-50.svg";
+import Spd from "../public/icons/icons8-opened-folder-50.svg";
 import Atvis from "../public/icons/icons8-services-50.svg";
 import Realisasii from "../public/icons/icons8-about-50.svg";
 import Spm from "../public/icons/icons8-news-50.svg";
@@ -49,6 +52,7 @@ const Navbar = ({ ubahMenu }) => {
                 document.getElementById('li-dropdown-spm').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-spp').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-sp2d').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-spd').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-atvis').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-realisasi').classList.add('sm:bg-transparent');
                 break;
@@ -62,6 +66,7 @@ const Navbar = ({ ubahMenu }) => {
                 document.getElementById('li-dropdown-spm').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-spp').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-sp2d').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-spd').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-atvis').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-realisasi').classList.add('sm:bg-transparent');
                 break;
@@ -75,6 +80,7 @@ const Navbar = ({ ubahMenu }) => {
                 document.getElementById('li-dropdown-spm').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-spp').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-sp2d').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-spd').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-atvis').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-realisasi').classList.add('sm:bg-transparent');
                 break;
@@ -92,6 +98,7 @@ const Navbar = ({ ubahMenu }) => {
                 document.getElementById('li-dropdown-spm').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-spp').classList.remove('sm:bg-transparent');
                 document.getElementById('li-dropdown-sp2d').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-spd').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-atvis').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-realisasi').classList.add('sm:bg-transparent');
                 break;
@@ -107,10 +114,26 @@ const Navbar = ({ ubahMenu }) => {
                 document.getElementById('li-dropdown-spm').classList.remove('sm:bg-transparent');
                 document.getElementById('li-dropdown-spp').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-sp2d').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-spd').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-atvis').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-realisasi').classList.add('sm:bg-transparent');
                 break;
-            // case 'btn-sp2d':
+            // case 'btn-spd':
+            case 'btn-spd-reguler':
+            case 'btn-spd-covid':
+            case 'btn-spd-blt':
+            case 'btn-spd-add':
+            case 'btn-spd-laporan':
+                document.getElementById('li-dropdown-home').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-apbk').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-config').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-spm').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-spp').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-sp2d').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-spd').classList.remove('sm:bg-transparent');
+                document.getElementById('li-dropdown-atvis').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-realisasi').classList.add('sm:bg-transparent');
+                break;
             // case 'img-sp2d':
             case 'btn-sp2d-reguler':
             case 'btn-sp2d-covid':
@@ -123,6 +146,7 @@ const Navbar = ({ ubahMenu }) => {
                 document.getElementById('li-dropdown-spm').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-spp').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-sp2d').classList.remove('sm:bg-transparent');
+                document.getElementById('li-dropdown-spd').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-atvis').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-realisasi').classList.add('sm:bg-transparent');
                 break;
@@ -134,6 +158,7 @@ const Navbar = ({ ubahMenu }) => {
                 document.getElementById('li-dropdown-spm').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-spp').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-sp2d').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-spd').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-atvis').classList.remove('sm:bg-transparent');
                 document.getElementById('li-dropdown-realisasi').classList.add('sm:bg-transparent');
                 break;
@@ -145,6 +170,7 @@ const Navbar = ({ ubahMenu }) => {
                 document.getElementById('li-dropdown-spm').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-spp').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-sp2d').classList.add('sm:bg-transparent');
+                document.getElementById('li-dropdown-spd').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-atvis').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-realisasi').classList.remove('sm:bg-transparent');
                 break;
@@ -410,7 +436,43 @@ const Navbar = ({ ubahMenu }) => {
                                             </div>
                                         </div>
                                     </li>
-                                    <li id="li-dropdown-sp2d" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex sm:bg-transparent cursor-pointer" onMouseEnter={() => {
+                                    <li id="li-dropdown-spd" className={` ${kd_lvl1 === 2 ? 'hidden' : null} items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex sm:bg-transparent cursor-pointer`} onMouseEnter={() => {
+                                        document.getElementById('div-dropdown-spd').classList.remove('hidden');
+                                    }} onMouseLeave={() => { document.getElementById('div-dropdown-spd').classList.add('hidden'); }} onClick={(e) => {
+                                        btnNav(e);
+                                    }}>
+                                        <div className="grid grid-cols-1 relative w-full">
+                                            <div className="flex flex-row">
+                                                <i><img src={Spd} alt="" id="img-spd" className="h-6 sm:hidden md:block" /></i>
+                                                <button className="text-center pl-2" id="btn-spd">SPD</button>
+                                            </div>
+                                            <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden z-50" id="div-dropdown-spd">
+                                                <ul className="w-full m-1">
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/reguler">
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-spd-reguler" className="w-full inline-block"><DiCompass className='inline-block -mt-1' /> Reguler</span> </li>
+                                                    </Link>
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/covid">
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-spd-covid" className="w-full inline-block"><DiCompass className='inline-block -mt-1' /> Covid 8%</span> </li>
+                                                    </Link>
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/blt">
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-spd-reguler" className="w-full inline-block"><DiCompass className='inline-block -mt-1' /> B L T</span></li>
+                                                    </Link>
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/add-honor">
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-spd-add" className="w-full inline-block"><DiCompass className='inline-block -mt-1' /> ADD / Honor</span></li>
+                                                    </Link>
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/laporan">
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-spd-laporan" className="w-full inline-block"><GrDocumentText className='inline-block -mt-1 mr-1' />Laporan SPD</span></li>
+                                                    </Link>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li id="li-dropdown-sp2d" className={`${kd_lvl1 === 2 ? 'hidden' : null} items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex sm:bg-transparent cursor-pointer`} onMouseEnter={() => {
                                         document.getElementById('div-dropdown-sp2d').classList.remove('hidden');
                                     }} onMouseLeave={() => { document.getElementById('div-dropdown-sp2d').classList.add('hidden'); }} onClick={(e) => {
                                         btnNav(e);
@@ -422,7 +484,6 @@ const Navbar = ({ ubahMenu }) => {
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden z-50" id="div-dropdown-sp2d">
                                                 <ul className="w-full m-1">
-
                                                     <Link onClick={() => { ubahMenu() }} to="/home/sp2d/reguler">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
                                                             <span id="btn-sp2d-reguler" className="w-full inline-block"><MdAccountBalance className='inline-block -mt-1' /> Reguler</span> </li>
@@ -447,18 +508,19 @@ const Navbar = ({ ubahMenu }) => {
                                             </div>
                                         </div>
                                     </li>
-                                    <Link onClick={() => { ubahMenu() }} to="/home/atvis">
-                                        <li id="li-dropdown-atvis" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex cursor-pointer sm:py-1 sm:bg-transparent" onClick={(e) => { btnNav(e); }} >
+                                    <Link onClick={() => { ubahMenu() }} to="/home/atvis" className={`${kd_lvl1 === 2 ? 'hidden' : null}`} >
+                                        <li id="li-dropdown-atvis" className=" items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex cursor-pointer sm:py-1 sm:bg-transparent" onClick={(e) => { btnNav(e); }} >
                                             <i><img src={Atvis} id="img-atvis" alt="" className="h-6 sm:hidden md:block" /></i>
                                             <span className="text-center pl-2" id="btn-atvis">Atvis</span>
                                         </li>
                                     </Link>
-                                    <Link onClick={() => { ubahMenu() }} to="/home/realisasi" className="inline-block w-full sm:w-11">
+                                    <Link onClick={() => { ubahMenu() }} to="/home/realisasi" className={`${kd_lvl1 === 2 ? 'hidden' : null} inline-block w-full sm:w-11`}>
                                         <li id="li-dropdown-realisasi" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[190px] flex cursor-pointer sm:py-1 sm:bg-transparent" onClick={(e) => { btnNav(e); }} >
                                             <i><img src={Realisasii} id="img-realisasi" alt="ico" className="h-6 sm:hidden md:block" /></i>
                                             <span className="text-center pl-2" id="btn-realisasi">Realisasi Anggaran</span>
                                         </li>
                                     </Link>
+
                                 </ul>
                             </div>
                         </div>

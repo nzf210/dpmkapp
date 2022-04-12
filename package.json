@@ -1,7 +1,7 @@
 {
   "name": "dpmk-app",
   "version": "0.1.0",
-  "homepage": "https://appin.id",
+  "homepage": "https://dpmkapp.vercel.app/",
   "private": true,
   "dependencies": {
     "@emotion/cache": "^11.7.1",

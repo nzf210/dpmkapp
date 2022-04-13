@@ -351,6 +351,42 @@ const Navbar = ({ ubahMenu }) => {
                                             </div>
                                         </div>
                                     </li>
+                                    <li id="li-dropdown-spd" className={` ${kd_lvl1 === 2 ? 'hidden' : null} items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex sm:bg-transparent cursor-pointer`} onMouseEnter={() => {
+                                        document.getElementById('div-dropdown-spd').classList.remove('hidden');
+                                    }} onMouseLeave={() => { document.getElementById('div-dropdown-spd').classList.add('hidden'); }} onClick={(e) => {
+                                        btnNav(e);
+                                    }}>
+                                        <div className="grid grid-cols-1 relative w-full">
+                                            <div className="flex flex-row">
+                                                <i><img src={Spd} alt="" id="img-spd" className="h-6 sm:hidden md:block" /></i>
+                                                <button className="text-center pl-2" id="btn-spd">SPD</button>
+                                            </div>
+                                            <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden z-50" id="div-dropdown-spd">
+                                                <ul className="w-full m-1">
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/reguler">
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-spd-reguler" className="w-full inline-block"><DiCompass className='inline-block -mt-1' /> Reguler</span> </li>
+                                                    </Link>
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/covid">
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-spd-covid" className="w-full inline-block"><DiCompass className='inline-block -mt-1' /> Covid 8%</span> </li>
+                                                    </Link>
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/blt">
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-spd-reguler" className="w-full inline-block"><DiCompass className='inline-block -mt-1' /> B L T</span></li>
+                                                    </Link>
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/add-honor">
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-spd-add" className="w-full inline-block"><DiCompass className='inline-block -mt-1' /> ADD / Honor</span></li>
+                                                    </Link>
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/laporan">
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-spd-laporan" className="w-full inline-block"><GrDocumentText className='inline-block -mt-1 mr-1' />Laporan SPD</span></li>
+                                                    </Link>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
                                     <li id="li-dropdown-spp" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex sm:bg-transparent cursor-pointer" onMouseEnter={() => {
                                         document.getElementById('div-dropdown-spp').classList.remove('hidden');
                                     }} onMouseLeave={() => { document.getElementById('div-dropdown-spp').classList.add('hidden'); }} onClick={(e) => {
@@ -429,42 +465,6 @@ const Navbar = ({ ubahMenu }) => {
                                                     <Link onClick={() => { ubahMenu() }} to="/home/spm/laporan">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
                                                             <span id="btn-spm-laporan" className="w-full inline-block" ><GrDocumentText className='inline-block -mt-1 mr-1' /> Laporan SPM</span></li>
-                                                    </Link>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li id="li-dropdown-spd" className={` ${kd_lvl1 === 2 ? 'hidden' : null} items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex sm:bg-transparent cursor-pointer`} onMouseEnter={() => {
-                                        document.getElementById('div-dropdown-spd').classList.remove('hidden');
-                                    }} onMouseLeave={() => { document.getElementById('div-dropdown-spd').classList.add('hidden'); }} onClick={(e) => {
-                                        btnNav(e);
-                                    }}>
-                                        <div className="grid grid-cols-1 relative w-full">
-                                            <div className="flex flex-row">
-                                                <i><img src={Spd} alt="" id="img-spd" className="h-6 sm:hidden md:block" /></i>
-                                                <button className="text-center pl-2" id="btn-spd">SPD</button>
-                                            </div>
-                                            <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden z-50" id="div-dropdown-spd">
-                                                <ul className="w-full m-1">
-                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/reguler">
-                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
-                                                            <span id="btn-spd-reguler" className="w-full inline-block"><DiCompass className='inline-block -mt-1' /> Reguler</span> </li>
-                                                    </Link>
-                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/covid">
-                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
-                                                            <span id="btn-spd-covid" className="w-full inline-block"><DiCompass className='inline-block -mt-1' /> Covid 8%</span> </li>
-                                                    </Link>
-                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/blt">
-                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
-                                                            <span id="btn-spd-reguler" className="w-full inline-block"><DiCompass className='inline-block -mt-1' /> B L T</span></li>
-                                                    </Link>
-                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/add-honor">
-                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
-                                                            <span id="btn-spd-add" className="w-full inline-block"><DiCompass className='inline-block -mt-1' /> ADD / Honor</span></li>
-                                                    </Link>
-                                                    <Link onClick={() => { ubahMenu() }} to="/home/spd/laporan">
-                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
-                                                            <span id="btn-spd-laporan" className="w-full inline-block"><GrDocumentText className='inline-block -mt-1 mr-1' />Laporan SPD</span></li>
                                                     </Link>
                                                 </ul>
                                             </div>

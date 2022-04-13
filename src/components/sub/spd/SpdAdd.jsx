@@ -1,22 +1,28 @@
-// import React from 'react';
-// const SpdAdd = () => {
-//     return (
-
-
-//         <div>
-//             <div className="h-40"></div>
-//             <h1>SpdAdd</h1>
-//         </div>
-
-//     )
-// }
-
-// export default SpdAdd
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
+import BackupIcon from '@mui/icons-material/Backup';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 
 import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import tblIcon from '../../TableIcon';
+
+/* MOdal Import */
+import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import Typography from '@mui/material/Typography';
+/* MOdal Import */
+
+/* DAte Picker */
+import TextField from '@mui/material/TextField';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Stack from '@mui/material/Stack';
+import indo from 'date-fns/locale/id';
+/* DAte Picker */
 
 //Redux
 import { useSelector } from 'react-redux';
@@ -24,85 +30,59 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 const SpdAdd = () => {
+    const date = new Date();
 
     const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
     const [data_, setData_] = useState([]);
     const [data_2, setData_2] = useState([]);
     const [changests, setChangests] = useState('');
+    const [tgl, setTgl] = useState(date);
+    const [dataselect, setDataSelect] = useState('');
+
 
 
     const data = async () => {
         try {
             const respon = await axios.get('/anggaran');
-            if (kd_lvl1 === 2) {
-                const tes = respon.data.filter((e) => e);
-                setData_(tes.filter((e) => e.sts === true && e.kd_kampung === kd_kampung));
-                setData_2(tes.filter((e) => e.sts === false && e.kd_kampung === kd_kampung));
-            } else {
-                setData_(respon.data.filter(e => e.sts === true));
-                setData_2(respon.data.filter(e => e.sts === false));
-            }
-            console.log('data Anggaran', respon.data)
+            setData_(respon.data.filter(e => e.sts_spd === true && e.kd_keg === 4));
+            setData_2(respon.data.filter(e => e.sts_spd === false && e.kd_keg === 4));
+
         } catch (e) {
             console.log('error refresh token', e.message);
         }
     }
-
 
     useEffect(
         () => data(),
         [changests]
     )
 
-
-    const kolom = [{
-        field: 'thp_advis', title: 'Kegiatan'
-    },
-    {
-        field: 'pagu', title: 'Pagu'
-    },
-    {
-        field: 'tgl', title: 'Tgl SPM', type: "date", dateSetting: { locale: "id-ID" }
-
-    },
-    {
-        field: 'kampung', title: 'Kampung', editable: () => false
-    },
-    {
-        field: 'distrik', title: 'Distrik', editable: () => false
-    },
-    {
-        field: 'sts', title: 'Status', editable: () => false, render: (row) => row.sts ? <div className='bg-yellow-200 rounded-md p-2 text-center -translate-x-3'>Verifikasi Laporan / APBK</div> : null, align: 'center'
-    },
+    const kolom = [
+        { field: 'thp_advis', title: 'Kegiatan' },
+        { field: 'pagu', title: 'Pagu' },
+        { field: 'no_spd', title: 'No SPD' },
+        { field: 'tgl_spd', title: 'Tgl SPD', type: "date", dateSetting: { locale: "id-ID" } },
+        { field: 'kampung', title: 'Kampung', editable: () => false },
+        { field: 'distrik', title: 'Distrik', editable: () => false },
+        { field: 'sts_spd', title: 'Status', editable: () => false, render: (row) => row.sts_spd ? <div className='bg-green-400 rounded-md p-2 text-center -translate-x-3'>SPD Terbit</div> : null, align: 'center' },
     ]
     const kolom_ = [{
         field: 'thp_advis', title: 'Kegiatan'
     },
-    {
-        field: 'pagu', title: 'Pagu'
-    },
-    {
-        field: 'tgl', title: 'Tgl SP2D', type: "date", dateSetting: { locale: "id-ID" }
-
-    },
-    {
-        field: 'kampung', title: 'Kampung', editable: () => false
-    },
-    {
-        field: 'distrik', title: 'Distrik', editable: () => false
-    },
-    {
-        field: 'sts', title: 'Status', editable: () => false, render: (row) => <div className='bg-green-400 rounded-md p-2 text-center -translate-x-3'>Cetak SPD</div>, align: 'center'
-    },
+    { field: 'pagu', title: 'Pagu' },
+    { field: 'tgl', title: 'Tgl Verf APBK', type: "date", dateSetting: { locale: "id-ID" } },
+    { field: 'kampung', title: 'Kampung', editable: () => false },
+    { field: 'distrik', title: 'Distrik', editable: () => false },
+    { field: 'sts', title: 'Status', editable: () => false, render: (row) => <div className='bg-yellow-200 rounded-md p-2 text-center -translate-x-3'>Proses SPD</div>, align: 'center' },
     ]
 
 
     const options = {
-        pageSizeOptions: [5], filtering: kd_lvl1 === 2 ? false : true, paging: false, addRowPosition: "first", actionsColumnIndex: -1,
-        showSelectAllCheckbox: false, showTextRowsSelected: false,
-        selectionProps: barisData => ({
-            disabled: barisData.sts === true,
-        }),
+        pageSizeOptions: [5], filtering: true, paging: false, addRowPosition: "first", actionsColumnIndex: -1,
+        showSelectAllCheckbox: true, showTextRowsSelected: false, selection: true,
+        // selectionProps: barisData => ({
+        //     disabled: barisData.sts === true,
+        // }),
         headerStyle: {
             backgroundColor: '', fontWeight: 800
         },
@@ -111,13 +91,12 @@ const SpdAdd = () => {
 
     const options_ = {
         rowStyle: (rowData) => ({
-
             fontWeight:
                 rowData.sts === true ? 600 : 300,
 
         }),
-        pageSizeOptions: [5, 10, 25, 50, 100], filtering: kd_lvl1 === 2 ? false : true, addRowPosition: "first", actionsColumnIndex: -1,
-        showSelectAllCheckbox: false, showTextRowsSelected: false,
+        pageSizeOptions: [5, 10, 25, 50, 100], filtering: true, addRowPosition: "first", actionsColumnIndex: -1,
+        showSelectAllCheckbox: true, showTextRowsSelected: false,
         selection: true,
 
         headerStyle: {
@@ -147,47 +126,104 @@ const SpdAdd = () => {
 
     }
 
-    let editable = {};
-    if (kd_lvl1 === 2) {
-        editable = {
-            undefined
-        }
-
-    } else {
-        editable = {
-            onRowUpdate: (dataBaru, dataLama) => new Promise((reso, rej) => {
-                //updateData(dataBaru, 1);
-                console.log('data', dataBaru);
-                reso();
-            }),
-            onRowDelete: (dataLama) => new Promise((reso, rej) => {
-                console.log('data', dataLama);
-                //hapusDataPejabat(dataLama);
-                reso();
-            })
-        }
-    }
-    let editable_ = {};
-    if (kd_lvl1 === 2) {
-        editable = {
-
-        }
-
-    } else {
-        editable = {
-            onRowUpdate: (dataBaru, dataLama) => new Promise((reso, rej) => {
-                //updateData(dataBaru, 1);
-                console.log('data', dataBaru);
-                reso();
-            }),
-            onRowDelete: (dataLama) => new Promise((reso, rej) => {
-                console.log('data', dataLama);
-                //hapusDataPejabat(dataLama);
-                reso();
-            })
-        }
+    let editable = {
+        onRowUpdate: (dataBaru, dataLama) => new Promise((reso, rej) => {
+            //updateData(dataBaru, 1);
+            console.log('data', dataBaru);
+            reso();
+        }),
+        onRowDelete: (dataLama) => new Promise((reso, rej) => {
+            console.log('data', dataLama);
+            //hapusDataPejabat(dataLama);
+            reso();
+        })
     }
 
+    let editable_ = {
+        onRowUpdate: (dataBaru, dataLama) => new Promise((reso, rej) => {
+            //updateData(dataBaru, 1);
+            console.log('data', dataBaru);
+            reso();
+        }),
+        onRowDelete: (dataLama) => new Promise((reso, rej) => {
+            console.log('data', dataLama);
+            //hapusDataPejabat(dataLama);
+            reso();
+        })
+    }
+
+
+    /* Funtiom Update Data */
+    const updateDataChecklist = async (e, ee) => {
+        try {
+            e.map(async (f) => {
+                const update = await axios.patch('/anggaran', {
+                    id: f.id,
+                    tgl_spd: `${ee.getFullYear()}/${ee.getMonth()}/${ee.getDay()}`,
+                    sts_spd: 1,
+                    no_spd: ee.toLocaleDateString()
+                })
+                setChangests(date);
+                console.log(update.data.info);
+                console.log('date', tgl, 'datt', date.toLocaleDateString(), `${ee.getFullYear()}/${ee.getMonth()}/${ee.getDay()}`)
+            }
+            )
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    /* Funtiom Update Data */
+
+
+    /* Aktion Data Pada saat Select */
+    const onSelectionChange = (e) => setDataSelect(e);
+    const onSelectionChange_ = (e) => setDataSelect(e);
+    const onRowSelected = (e) => console.log('select', e);
+    const onClickTerbitSPD = () => updateDataChecklist(dataselect, tgl);
+    const cetakSpd = (e) => console.log('Cetak spd', e);
+
+    /* Aktion Data Pada saat Select */
+
+
+    /* Actio Untuk Tambah Tombol dan Event */
+    const action = [
+        {
+            icon: () => <div className='flex'><button onClick={cetakSpd} className="mr-2 -translate-y-2" > <LocalPrintshopIcon /></button></div>,
+            tooltip: 'Cetak SPD ... ',
+            onClick: ''
+        },
+        {
+            icon: () => <div className='flex'><button onClick={cetakSpd} className="mr-2 -translate-y-2" > <PictureAsPdfIcon /></button></div>,
+            tooltip: 'Preview SPD ... ',
+            onClick: ''
+        },
+
+
+    ]
+    const action_ = [{
+        icon: () => <div className='flex'><button onClick={onClickTerbitSPD} className="mr-2 -translate-y-2" > <BackupIcon /></button>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Stack spacing={3}>
+                    <DatePicker
+                        inputFormat="dd-MM-yyyy"
+                        mask="__-__-____"
+                        views={['day']}
+                        label="Tgl SPD"
+                        value={tgl}
+                        onChange={(newValue) => {
+                            setTgl(newValue);
+                        }}
+                        renderInput={(params) => <TextField {...params} helperText={null} />}
+                    />
+                </Stack>
+            </LocalizationProvider>
+        </div>,
+        tooltip: 'Terbitkan SPD ... ',
+        onClick: ''
+    }]
+    /* Actio Untuk Tambah Tombol dan Event */
 
     return (
         <div>
@@ -197,27 +233,32 @@ const SpdAdd = () => {
                         <div className='relative container -z-40 mx-auto'>
                             <div className='absolute min-w-full mx-auto z-10'>
                                 <MaterialTable
-                                    title="Proses Verifkasi Laporan / APBK"
+                                    title="SPD Terbit  "
                                     options={options}
                                     icons={tblIcon}
                                     data={data_}
                                     localization={localisation}
                                     columns={kolom}
+                                    editable={editable}
+                                    onSelectionChange={onSelectionChange}
+                                    actions={action}
                                 />
                                 <br />
-                                {kd_lvl1 !== 2 ? <p className='text-blue-700'>*Note:  </p> : null}
+                                {kd_lvl1 !== 2 ? <p className='text-blue-700'>*Note: Silahkan Pilih Kegiatan untuk Penerbitan SPD </p> : null}
                                 <MaterialTable
                                     options={options_}
                                     icons={tblIcon}
                                     columns={kolom_}
                                     data={data_2}
-                                    title="CETAK SPD"
+                                    title="SPD Dalam Proses"
                                     localization={localisation}
-                                    editable={editable_}
+                                    // editable={editable_}
+                                    onSelectionChange={onSelectionChange_}
+                                    actions={action_}
+                                    onRowSelected={onRowSelected}
                                 />
                             </div>
                             <div className='absolute min-w-full mx-auto pt-[440px] z-0'>
-
                             </div>
                         </div>
                     </div>
@@ -228,3 +269,53 @@ const SpdAdd = () => {
 }
 
 export default SpdAdd
+
+
+
+function TransitionsModal() {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+
+    return (
+        <div>
+            {/* <Button onClick={handleOpen}>Open modal</Button> */}
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={open}>
+                    <Box sx={style}>
+                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                            Text in a modal
+                        </Typography>
+                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                        </Typography>
+                    </Box>
+                </Fade>
+            </Modal>
+        </div>
+    );
+}
+

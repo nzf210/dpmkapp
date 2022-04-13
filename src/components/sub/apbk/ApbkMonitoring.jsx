@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import tblIcon from '../../TableIcon';
 
+
+
 //Redux
 import { useSelector } from 'react-redux';
 //Redux
@@ -26,7 +28,6 @@ const ApbkMonitoring = () => {
                 setData_(respon.data.filter(e => e.sts === true));
                 setData_2(respon.data.filter(e => e.sts === false));
             }
-            console.log('data Anggaran', respon.data)
         } catch (e) {
             console.log('error refresh token', e.message);
         }
@@ -80,6 +81,21 @@ const ApbkMonitoring = () => {
     },
     ]
 
+    /* Funtiom Update Data */
+    const updateDataChecklist = async (e) => {
+        try {
+            const date = new Date();
+            const update = await axios.patch('/anggaran', {
+                id: e.id,
+                tgl: date,
+                sts: 1
+            })
+            setChangests(date);
+        } catch (error) {
+            console.log('error update ... ', error)
+        }
+    }
+    /* Funtiom Update Data */
 
     const options = {
         pageSizeOptions: [5], filtering: kd_lvl1 === 2 ? false : true, paging: false, addRowPosition: "first", actionsColumnIndex: -1,
@@ -118,7 +134,7 @@ const ApbkMonitoring = () => {
         },
 
         body: {
-            emptyDataSourceMessage: ('sedang memuat data ... '),
+            emptyDataSourceMessage: ('sedang memuat data atau data sudah tidak tersedia'),
             addTooltip: ('tambah data'),
             editTooltip: ('ubah data'),
             deleteTooltip: ('hapus data'),
@@ -172,6 +188,10 @@ const ApbkMonitoring = () => {
         }
     }
 
+    /* Aktion Data Pada saat Select */
+    const onSelectionChange = (rows) => rows.map((e) => updateDataChecklist(e));
+    /* Aktion Data Pada saat Select */
+
 
     return (
         <div>
@@ -198,10 +218,10 @@ const ApbkMonitoring = () => {
                                     title="Daftar APBK Proses Verifikasi "
                                     localization={localisation}
                                     editable={editable_}
+                                    onSelectionChange={onSelectionChange}
                                 />
                             </div>
                             <div className='absolute min-w-full mx-auto pt-[440px] z-0'>
-
                             </div>
                         </div>
                     </div>
@@ -212,3 +232,4 @@ const ApbkMonitoring = () => {
 }
 
 export default ApbkMonitoring
+

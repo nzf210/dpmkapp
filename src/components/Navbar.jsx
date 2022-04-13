@@ -189,11 +189,6 @@ const Navbar = ({ ubahMenu }) => {
 
     const navLink = useNavigate();
 
-    useEffect(() => {
-        refreshtoken();
-    }, []);
-
-
 
     const refreshtoken = async () => {
         try {
@@ -214,6 +209,9 @@ const Navbar = ({ ubahMenu }) => {
         }
     }
 
+    useEffect(() => {
+        refreshtoken();
+    }, []);
     //Redux Data
     const dispatch = useDispatch();
 

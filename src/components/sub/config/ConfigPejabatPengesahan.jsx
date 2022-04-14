@@ -34,28 +34,13 @@ const ConfigPejabatPengesahan = () => {
 
     // console.log('datadata lebve', kd_lvl1, 'data', data(), 'dattttt ')
 
-    const kolom = [{
-        field: 'nama', title: 'Nama'
-    },
-    {
-        field: 'jabatan', title: 'Jabatan', editable: () => false
-    },
-    {
-        field: 'no_sk', title: 'No SK'
-    },
-    {
-        field: 'tgl_sk', title: 'Tgl SK', type: "date", dateSetting: { locale: "id-ID" }
-
-    },
-    {
-        field: 'kampung', title: 'Kampung', editable: () => false
-    },
-    {
-        field: 'distrik', title: 'Distrik', editable: () => false
-    },
-    {
-        field: 'sts', title: 'Status', editable: () => false, render: (row) => row.sts ? <div className='bg-green-400 rounded-md p-2 text-center -translate-x-3'>Aktif</div> : null, align: 'center'
-    },
+    const kolom = [
+        { field: 'nama', title: 'Nama' }, { field: 'jabatan', title: 'Jabatan', editable: () => false },
+        { field: 'no_sk', title: 'No SK' },
+        { field: 'tgl_sk', title: 'Tgl SK', type: "date", dateSetting: { locale: "id-ID" } },
+        { field: 'kampung', title: 'Kampung', editable: () => false },
+        { field: 'distrik', title: 'Distrik', editable: () => false },
+        { field: 'sts', title: 'Status', editable: () => false, render: (row) => row.sts ? <div className='bg-green-400 rounded-md p-2 text-center -translate-x-3'>Aktif</div> : null, align: 'center' },
     ]
 
 
@@ -211,7 +196,7 @@ const ConfigPejabatPengesahan = () => {
     } else {
         editable_ = {
             onRowUpdate: (dataBaru, dataLama) => new Promise((reso, rej) => {
-                updateData(dataBaru);
+                updateData(dataBaru, 3);
                 reso();
             }),
             onRowDelete: (dataLama) => new Promise((reso, rej) => {

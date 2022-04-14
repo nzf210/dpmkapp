@@ -11,8 +11,15 @@ axios.defaults.withCredentials = true;
 
 //axios.defaults.baseURL = 'http://localhost:3002';
 // axios.defaults.baseURL = 'http://202.157.176.42:3002';
-axios.defaults.baseURL = 'https://appin.id';
+//axios.defaults.baseURL = 'https://appin.id';
 // axios.defaults.baseURL = window.Location; yahiko2547
+
+if (process.env !== 'production') {
+  axios.defaults.baseURL = 'http://localhost:3002';
+} else {
+  axios.defaults.baseURL = 'https://appin.id';
+}
+
 
 ReactDOM.render(
   // <React.StrictMode>

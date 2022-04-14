@@ -58,8 +58,9 @@ const SpdAdd = () => {
     )
 
     const kolom = [
-        { field: 'thp_advis', title: 'Kegiatan' },
-        { field: 'pagu', title: 'Pagu' },
+        { field: 'thp_advis', title: 'Kegiatan', editable: () => false },
+        { field: 'pagu', title: 'Pagu', editable: () => false, type: 'currency', currencySetting: { currencyCode: "IDR" } },
+        { field: 'nama', title: 'Bendahara' },
         { field: 'no_spd', title: 'No SPD' },
         { field: 'tgl_spd', title: 'Tgl SPD', type: "date", dateSetting: { locale: "id-ID" } },
         { field: 'kampung', title: 'Kampung', editable: () => false },
@@ -118,7 +119,7 @@ const SpdAdd = () => {
             editTooltip: ('ubah data'),
             deleteTooltip: ('hapus data'),
             editRow: {
-                deleteText: 'Anda yakin menghapus data ini ?',
+                deleteText: 'Anda yakin menghapus data ini, akan menghapus data SPD, SPP, SPM, SP2D ?',
                 cancelTooltip: ('Batal'),
                 saveTooltip: ('Simpan')
             }
@@ -127,14 +128,41 @@ const SpdAdd = () => {
     }
 
     let editable = {
-        onRowUpdate: (dataBaru, dataLama) => new Promise((reso, rej) => {
-            //updateData(dataBaru, 1);
-            console.log('data', dataBaru);
+        onRowUpdate: (e, dataLama) => new Promise(async (reso, rej) => {
+            console.log('data edit', e);
+            try {
+                const update = await axios.patch('/anggaran', {
+                    id: e.id,
+                    tgl_spd: e.tgl_spd,
+                    no_spd: e.no_spd
+                })
+                setChangests(date);
+                console.log('Update SPD', update.data.info);
+            } catch (error) {
+                console.log(error)
+            }
             reso();
         }),
-        onRowDelete: (dataLama) => new Promise((reso, rej) => {
-            console.log('data', dataLama);
-            //hapusDataPejabat(dataLama);
+        onRowDelete: (e) => new Promise(async (reso, rej) => {
+            console.log('data edit 2', e);
+            try {
+                const update = await axios.patch('/anggaran', {
+                    id: e.id,
+                    tgl_spd: '1900-01-01',
+                    tgl_spp: '1900-01-01',
+                    tgl_spm: '1900-01-01',
+                    tgl_sp2d: '1900-01-01',
+                    sts_spd: 0,
+                    sts_spp: 0,
+                    sts_spm: 0,
+                    sts_sp2d: 0,
+                })
+                setChangests(date);
+                console.log('Update SPD', update.data.info);
+
+            } catch (error) {
+                console.log(error)
+            }
             reso();
         })
     }
@@ -142,11 +170,11 @@ const SpdAdd = () => {
     let editable_ = {
         onRowUpdate: (dataBaru, dataLama) => new Promise((reso, rej) => {
             //updateData(dataBaru, 1);
-            console.log('data', dataBaru);
+            console.log('data edit_', dataBaru);
             reso();
         }),
         onRowDelete: (dataLama) => new Promise((reso, rej) => {
-            console.log('data', dataLama);
+            console.log('data edit 2_', dataLama);
             //hapusDataPejabat(dataLama);
             reso();
         })
@@ -156,24 +184,47 @@ const SpdAdd = () => {
     /* Funtiom Update Data */
     const updateDataChecklist = async (e, ee) => {
         try {
-            e.map(async (f) => {
+            const no = await axios.get('/nodok');
+            const nodok_ = parseInt(no.data[0].no_spd);
+            let nomor = '';
+            e.map(async (f, i) => {
+                let nodok = parseInt((nodok_ + 1) + i)
+                switch (true) {
+                    case (nodok < 10):
+                        nomor = `000${nodok}/SPD-DPMK/2022`;
+                        console.log('<9', nomor);
+                        break;
+                    case (9 < nodok < 100):
+                        nomor = `00${nodok}/SPD-DPMK/2022`
+                        console.log('>9', nomor);
+                        break;
+                    case (99 > nodok > 1000):
+                        nomor = `0${nodok}/SPD-DPMK/2022`
+                        console.log('>99');
+                        break;
+                    case (999 > nodok > 9999):
+                        nomor = `${nodok}/SPD-DPMK/2022`
+                        console.log('>999');
+                        break;
+                    default:
+                        break;
+                }
+
                 const update = await axios.patch('/anggaran', {
                     id: f.id,
-                    tgl_spd: `${ee.getFullYear()}/${ee.getMonth()}/${ee.getDay()}`,
+                    tgl_spd: ee.toISOString().slice(0, 10),
                     sts_spd: 1,
-                    no_spd: ee.toLocaleDateString()
+                    no_spd: nomor
                 })
                 setChangests(date);
                 console.log(update.data.info);
-                console.log('date', tgl, 'datt', date.toLocaleDateString(), `${ee.getFullYear()}/${ee.getMonth()}/${ee.getDay()}`)
             }
             )
+
         } catch (error) {
             console.log(error)
         }
     }
-
-
     /* Funtiom Update Data */
 
 
@@ -183,6 +234,7 @@ const SpdAdd = () => {
     const onRowSelected = (e) => console.log('select', e);
     const onClickTerbitSPD = () => updateDataChecklist(dataselect, tgl);
     const cetakSpd = (e) => console.log('Cetak spd', e);
+    const previewSpd = (e) => console.log('Preview spd', e);
 
     /* Aktion Data Pada saat Select */
 
@@ -195,7 +247,7 @@ const SpdAdd = () => {
             onClick: ''
         },
         {
-            icon: () => <div className='flex'><button onClick={cetakSpd} className="mr-2 -translate-y-2" > <PictureAsPdfIcon /></button></div>,
+            icon: () => <div className='flex'><button onClick={previewSpd} className="mr-2 -translate-y-2" > <PictureAsPdfIcon /></button></div>,
             tooltip: 'Preview SPD ... ',
             onClick: ''
         },

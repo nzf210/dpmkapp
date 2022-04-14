@@ -7,13 +7,6 @@ import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import tblIcon from '../../TableIcon';
 
-/* MOdal Import */
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Typography from '@mui/material/Typography';
-/* MOdal Import */
 
 /* DAte Picker */
 import TextField from '@mui/material/TextField';
@@ -29,6 +22,14 @@ import { useSelector } from 'react-redux';
 //Redux
 import axios from 'axios';
 
+/* Data PDF */
+import SpdDoc from './SpdDoc';
+import { PDFRenderer, PDFViewer, PDFDownloadLink, renderToFile } from '@react-pdf/renderer';
+import { Button } from '@mui/material';
+
+/* Data PDF */
+
+
 const SpdAdd = () => {
     const date = new Date();
 
@@ -38,15 +39,15 @@ const SpdAdd = () => {
     const [changests, setChangests] = useState('');
     const [tgl, setTgl] = useState(date);
     const [dataselect, setDataSelect] = useState('');
-
-
+    const [dataselectspd, setDataSelectspd] = useState([]);
+    const [viewprint, setviewprint] = useState(false);
 
     const data = async () => {
         try {
             const respon = await axios.get('/anggaran');
-            setData_(respon.data.filter(e => e.sts_spd === true && e.kd_keg === 4));
-            setData_2(respon.data.filter(e => e.sts_spd === false && e.kd_keg === 4));
-
+            console.log('data spd', respon.data)
+            setData_(respon.data.filter(e => e.sts_spd === true && e.kd_keg === 4 && e.sts === true));
+            setData_2(respon.data.filter(e => e.sts_spd === false && e.kd_keg === 4 && e.sts === true));
         } catch (e) {
             console.log('error refresh token', e.message);
         }
@@ -57,9 +58,11 @@ const SpdAdd = () => {
         [changests]
     )
 
+
+
     const kolom = [
         { field: 'thp_advis', title: 'Kegiatan', editable: () => false },
-        { field: 'pagu', title: 'Pagu', editable: () => false, type: 'currency', currencySetting: { currencyCode: "IDR" } },
+        { field: 'pagu', title: 'Pagu', editable: () => false, type: 'currency', currencySetting: { currencyCode: "IDR" }, align: 'center' },
         { field: 'nama', title: 'Bendahara' },
         { field: 'no_spd', title: 'No SPD' },
         { field: 'tgl_spd', title: 'Tgl SPD', type: "date", dateSetting: { locale: "id-ID" } },
@@ -70,7 +73,7 @@ const SpdAdd = () => {
     const kolom_ = [{
         field: 'thp_advis', title: 'Kegiatan'
     },
-    { field: 'pagu', title: 'Pagu' },
+    { field: 'pagu', title: 'Pagu', editable: () => false, type: 'currency', currencySetting: { currencyCode: "IDR" }, align: 'center' },
     { field: 'tgl', title: 'Tgl Verf APBK', type: "date", dateSetting: { locale: "id-ID" } },
     { field: 'kampung', title: 'Kampung', editable: () => false },
     { field: 'distrik', title: 'Distrik', editable: () => false },
@@ -79,7 +82,7 @@ const SpdAdd = () => {
 
 
     const options = {
-        pageSizeOptions: [5], filtering: true, paging: false, addRowPosition: "first", actionsColumnIndex: -1,
+        filtering: true, paging: false, addRowPosition: "first", actionsColumnIndex: -1,
         showSelectAllCheckbox: true, showTextRowsSelected: false, selection: true,
         // selectionProps: barisData => ({
         //     disabled: barisData.sts === true,
@@ -91,21 +94,16 @@ const SpdAdd = () => {
     }
 
     const options_ = {
-        rowStyle: (rowData) => ({
-            fontWeight:
-                rowData.sts === true ? 600 : 300,
-
-        }),
+        rowStyle: (rowData) => ({ fontWeight: rowData.sts === true ? 600 : 300, }),
         pageSizeOptions: [5, 10, 25, 50, 100], filtering: true, addRowPosition: "first", actionsColumnIndex: -1,
         showSelectAllCheckbox: true, showTextRowsSelected: false,
         selection: true,
-
         headerStyle: {
             backgroundColor: '', fontWeight: 800
         },
-        selectionProps: brs => ({
-            disabled: kd_lvl2 === 2 ? true : false,
-        })
+        // selectionProps: brs => ({
+        //     disabled: brs.sts,
+        // })
     }
 
     const localisation = {
@@ -132,9 +130,7 @@ const SpdAdd = () => {
             console.log('data edit', e);
             try {
                 const update = await axios.patch('/anggaran', {
-                    id: e.id,
-                    tgl_spd: e.tgl_spd,
-                    no_spd: e.no_spd
+                    id: e.id, tgl_spd: e.tgl_spd, no_spd: e.no_spd
                 })
                 setChangests(date);
                 console.log('Update SPD', update.data.info);
@@ -147,15 +143,7 @@ const SpdAdd = () => {
             console.log('data edit 2', e);
             try {
                 const update = await axios.patch('/anggaran', {
-                    id: e.id,
-                    tgl_spd: '1900-01-01',
-                    tgl_spp: '1900-01-01',
-                    tgl_spm: '1900-01-01',
-                    tgl_sp2d: '1900-01-01',
-                    sts_spd: 0,
-                    sts_spp: 0,
-                    sts_spm: 0,
-                    sts_sp2d: 0,
+                    id: e.id, tgl_spd: '1900-01-01', tgl_spp: '1900-01-01', tgl_spm: '1900-01-01', tgl_sp2d: '1900-01-01', sts_spd: 0, sts_spp: 0, sts_spm: 0, sts_sp2d: 0,
                 })
                 setChangests(date);
                 console.log('Update SPD', update.data.info);
@@ -209,12 +197,8 @@ const SpdAdd = () => {
                     default:
                         break;
                 }
-
                 const update = await axios.patch('/anggaran', {
-                    id: f.id,
-                    tgl_spd: ee.toISOString().slice(0, 10),
-                    sts_spd: 1,
-                    no_spd: nomor
+                    id: f.id, tgl_spd: ee.toISOString().slice(0, 10), sts_spd: 1, no_spd: nomor
                 })
                 setChangests(date);
                 console.log(update.data.info);
@@ -227,35 +211,32 @@ const SpdAdd = () => {
     }
     /* Funtiom Update Data */
 
-
     /* Aktion Data Pada saat Select */
-    const onSelectionChange = (e) => setDataSelect(e);
+    const onSelectionChange = (e) => setDataSelectspd(e);
     const onSelectionChange_ = (e) => setDataSelect(e);
     const onRowSelected = (e) => console.log('select', e);
     const onClickTerbitSPD = () => updateDataChecklist(dataselect, tgl);
-    const cetakSpd = (e) => console.log('Cetak spd', e);
-    const previewSpd = (e) => console.log('Preview spd', e);
-
+    const cetakSpd = (e) => '<SPDDocq />'
+        ;
+    const previewSpd = (e) => setviewprint(true);
     /* Aktion Data Pada saat Select */
-
 
     /* Actio Untuk Tambah Tombol dan Event */
     const action = [
         {
-            icon: () => <div className='flex'><button onClick={cetakSpd} className="mr-2 -translate-y-2" > <LocalPrintshopIcon /></button></div>,
-            tooltip: 'Cetak SPD ... ',
+            icon: () => <><PDFDownloadLink document={<SpdDoc dataselectspd={dataselectspd} />} fileName={`doc_spd_${new Date().toLocaleTimeString().slice(0, 16)}`}><button type='button' /><LocalPrintshopIcon /></PDFDownloadLink></>,
+            tooltip: 'Download Dok SPD',
             onClick: ''
         },
         {
-            icon: () => <div className='flex'><button onClick={previewSpd} className="mr-2 -translate-y-2" > <PictureAsPdfIcon /></button></div>,
+            icon: () => <div className='flex'><button onClick={() => previewSpd()} className="mr-2" > <PictureAsPdfIcon /></button></div>,
             tooltip: 'Preview SPD ... ',
             onClick: ''
         },
 
-
     ]
     const action_ = [{
-        icon: () => <div className='flex'><button onClick={onClickTerbitSPD} className="mr-2 -translate-y-2" > <BackupIcon /></button>
+        icon: () => <div className='flex'><button onClick={onClickTerbitSPD} className='mr-2 translate-y-2'><BackupIcon /></button>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <Stack spacing={3}>
                     <DatePicker
@@ -279,6 +260,20 @@ const SpdAdd = () => {
 
     return (
         <div>
+            <div className='container w-full mx-auto items-center justify-center'>
+                <div className='mx-auto'>
+                    <div className='mx-auto justify-center items-center relative'>
+                        <span className={`absolute right-0 text-red-500 bg-slate-400 rounded-full cursor-pointer z-20 w-4 m-4 -translate-x-1/2 items-center text-center ${viewprint ? '' : 'hidden'} `}
+                            onClick={() => setviewprint(false)}> X </span>
+                        <div className='mx-auto'>
+                            {viewprint ?
+                                <PDFViewer
+                                    style={{ width: "100%", height: "100vh", alignItems: 'center', alignSelf: 'center' }}
+                                ><SpdDoc dataselectspd={dataselectspd} /></PDFViewer> : null}
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className='pt-32'>
                 <div className='mx-auto'>
                     <div className='container mx-auto'>
@@ -296,7 +291,7 @@ const SpdAdd = () => {
                                     actions={action}
                                 />
                                 <br />
-                                {kd_lvl1 !== 2 ? <p className='text-blue-700'>*Note: Silahkan Pilih Kegiatan untuk Penerbitan SPD </p> : null}
+                                <p className='text-blue-700'>*Note: Silahkan Pilih Kegiatan untuk Penerbitan SPD </p>
                                 <MaterialTable
                                     options={options_}
                                     icons={tblIcon}
@@ -307,7 +302,6 @@ const SpdAdd = () => {
                                     // editable={editable_}
                                     onSelectionChange={onSelectionChange_}
                                     actions={action_}
-                                    onRowSelected={onRowSelected}
                                 />
                             </div>
                             <div className='absolute min-w-full mx-auto pt-[440px] z-0'>
@@ -316,58 +310,9 @@ const SpdAdd = () => {
                     </div>
                 </div>
             </div>
+
         </div>
     )
 }
 
 export default SpdAdd
-
-
-
-function TransitionsModal() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
-
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-    };
-
-    return (
-        <div>
-            {/* <Button onClick={handleOpen}>Open modal</Button> */}
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                <Fade in={open}>
-                    <Box sx={style}>
-                        <Typography id="transition-modal-title" variant="h6" component="h2">
-                            Text in a modal
-                        </Typography>
-                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography>
-                    </Box>
-                </Fade>
-            </Modal>
-        </div>
-    );
-}
-

@@ -9,9 +9,9 @@ import {
 } from "@react-pdf/renderer";
 import Yhk from '../../../public/yhk.png';
 
-const SppDoc = ({ dataselectspd }) => {
+const SppDoc = ({ dataselectspp }) => {
     useEffect(() => {
-        console.log("spd dok", dataselectspd);
+        console.log("spd dok", dataselectspp);
     }, []);
 
     const ColoredLine = ({ color }) => (
@@ -73,8 +73,8 @@ const SppDoc = ({ dataselectspd }) => {
 
     return (
         <Document key="doc-spd">
-            {dataselectspd &&
-                dataselectspd.map((e, i) => (
+            {dataselectspp &&
+                dataselectspp.map((e, i) => (
                     <Page
                         size="A4"
                         key={`doc-spd-${i}`}
@@ -105,7 +105,7 @@ const SppDoc = ({ dataselectspd }) => {
                                         fontSize: 12
                                     }}
                                 >
-                                    DISTRIK {dataselectspd.distrik}
+                                    DISTRIK {dataselectspp.distrik}
                                 </Text>
                                 <Text
                                     style={{
@@ -115,7 +115,7 @@ const SppDoc = ({ dataselectspd }) => {
                                         fontSize: 12
                                     }}
                                 >
-                                    KAMPUNG {dataselectspd.kampung}
+                                    KAMPUNG {dataselectspp.kampung}
                                 </Text>
                             </View>
                             <ColoredLine color="black" />

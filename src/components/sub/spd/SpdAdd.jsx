@@ -31,12 +31,12 @@ import { Button } from '@mui/material';
 
 
 const SpdAdd = () => {
-    const date = new Date();
 
     const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
     const [data_, setData_] = useState([]);
     const [data_2, setData_2] = useState([]);
     const [changests, setChangests] = useState('');
+    const date = new Date();
     const [tgl, setTgl] = useState(date);
     const [dataselect, setDataSelect] = useState('');
     const [dataselectspd, setDataSelectspd] = useState([]);
@@ -57,8 +57,6 @@ const SpdAdd = () => {
         () => data(),
         [changests]
     )
-
-
 
     const kolom = [
         { field: 'thp_advis', title: 'Kegiatan', editable: () => false },
@@ -110,7 +108,6 @@ const SpdAdd = () => {
         header: {
             actions: ['Aksi']
         },
-
         body: {
             emptyDataSourceMessage: ('sedang memuat data ... '),
             addTooltip: ('tambah data'),
@@ -235,6 +232,8 @@ const SpdAdd = () => {
         },
 
     ]
+
+    /* Actio Untuk Tambah Tombol dan Event */
     const action_ = [{
         icon: () => <div className='flex'><button onClick={onClickTerbitSPD} className='mr-2 translate-y-2'><BackupIcon /></button>
             <LocalizationProvider dateAdapter={AdapterDateFns}>

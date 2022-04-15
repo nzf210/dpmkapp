@@ -5,7 +5,7 @@ const SppBlt = () => {
 
         <div>
             <div className="h-40"></div>
-            <h1>SppBlt</h1>
+            <h1>Sp3B</h1>
         </div>
 
     )

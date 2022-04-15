@@ -13,7 +13,7 @@ const ConfigAparatPengesahan = () => {
             <div className="h-20"></div>
             <Filterkampung />
 
-            <div className="container mx-auto bg-red-500">
+            <div className="container mx-auto">
                 <div className="mt-4">
                     <View />
                 </div>

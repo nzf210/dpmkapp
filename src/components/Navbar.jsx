@@ -351,7 +351,7 @@ const Navbar = ({ ubahMenu }) => {
                                             </div>
                                         </div>
                                     </li>
-                                    <li id="li-dropdown-spd" className={` ${kd_lvl1 === 2 ? 'hidden' : null} items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex sm:bg-transparent cursor-pointer`} onMouseEnter={() => {
+                                    <li id="li-dropdown-spd" className={`hidden items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] sm:bg-transparent cursor-pointer`} onMouseEnter={() => {
                                         document.getElementById('div-dropdown-spd').classList.remove('hidden');
                                     }} onMouseLeave={() => { document.getElementById('div-dropdown-spd').classList.add('hidden'); }} onClick={(e) => {
                                         btnNav(e);
@@ -395,7 +395,7 @@ const Navbar = ({ ubahMenu }) => {
                                         <div className="grid grid-cols-1 relative w-full">
                                             <div className="flex flex-row">
                                                 <i><img src={Spp} alt="" id="img-spp" className="h-6 sm:hidden md:block" /></i>
-                                                <button className="text-center pl-2" id="btn-spp">SPP</button>
+                                                <button className="text-center pl-2" id="btn-spp"> S P 3 B </button>
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden  z-50" id="div-dropdown-spp">
                                                 <ul className="w-full m-1">
@@ -416,11 +416,11 @@ const Navbar = ({ ubahMenu }) => {
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
                                                             <span id="btn-spp-add" className="w-full inline-block" ><DiUbuntu className="inline-block -mt-1" />ADD / Honor</span></li>
                                                     </Link>
-                                                    <Link onClick={() => { ubahMenu() }} to="/home/spp/persetujuan">
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spp/persetujuan" className="hidden">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
                                                             <span id="btn-spp-persetujuan" className="w-full inline-block" > <BsCheck2Square className="inline-block -mt-1" /> Persetujuan SPP Kampung</span></li>
                                                     </Link>
-                                                    <Link onClick={() => { ubahMenu() }} to="/home/spp/laporan">
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spp/laporan" className="hidden">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
                                                             <span id="btn-spp-laporan" className="w-full inline-block" ><GrDocumentText className='inline-block -mt-1 mr-1' />Laporan</span></li>
                                                     </Link>
@@ -436,7 +436,7 @@ const Navbar = ({ ubahMenu }) => {
                                         <div className="grid grid-cols-1 relative w-full">
                                             <div className="flex flex-row">
                                                 <i><img src={Spm} alt="" id="img-spm" className="h-6 sm:hidden md:block" /></i>
-                                                <button className="text-center pl-2" id="btn-spm">SPM</button>
+                                                <button className="text-center pl-2" id="btn-spm">S K K B</button>
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden z-50" id="div-dropdown-spm">
                                                 <ul className="w-full m-1">
@@ -458,11 +458,11 @@ const Navbar = ({ ubahMenu }) => {
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
                                                             <span id="btn-spm-add" className="w-full inline-block" ><DiSafari className="inline-block -mt-1" /> ADD / Honor</span></li>
                                                     </Link>
-                                                    <Link onClick={() => { ubahMenu() }} to="/home/spm/persetujuan">
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spm/persetujuan" className="hidden">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
                                                             <span id="btn-spm-persetujuan" className="w-full inline-block" ><BsCheck2Square className="inline-block -mt-1" />  Persetujuan SPM Kampung</span></li>
                                                     </Link>
-                                                    <Link onClick={() => { ubahMenu() }} to="/home/spm/laporan">
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/spm/laporan" className="hidden">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
                                                             <span id="btn-spm-laporan" className="w-full inline-block" ><GrDocumentText className='inline-block -mt-1 mr-1' /> Laporan SPM</span></li>
                                                     </Link>

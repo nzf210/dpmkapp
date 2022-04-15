@@ -1,75 +1,37 @@
-import React, { useEffect } from 'react';
-//import MaterialTable from '@material-table/core';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import MaterialTable from 'material-table';
-import { forwardRef } from 'react';
+import tableIcons from '../../../TableIcon';
 
-import AddBox from '@material-ui/icons/AddBox';
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import Check from '@material-ui/icons/Check';
-import ChevronLeft from '@material-ui/icons/ChevronLeft';
-import ChevronRight from '@material-ui/icons/ChevronRight';
-import Clear from '@material-ui/icons/Clear';
-import DeleteOutline from '@material-ui/icons/DeleteOutline';
-import Edit from '@material-ui/icons/Edit';
-import FilterList from '@material-ui/icons/FilterList';
-import FirstPage from '@material-ui/icons/FirstPage';
-import LastPage from '@material-ui/icons/LastPage';
-import Remove from '@material-ui/icons/Remove';
-import SaveAlt from '@material-ui/icons/SaveAlt';
-import Search from '@material-ui/icons/Search';
-import ViewColumn from '@material-ui/icons/ViewColumn';
-
-const tableIcons = {
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
-    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-    SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
-    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
-};
-
+//Redux
+import { useSelector } from 'react-redux';
+//Redux
 
 function View() {
 
-    const { useState } = React;
     const [loading, setLoading] = useState(false);
     const [infoedit, setInfoEdit] = useState(false);
     const [data, setData] = useState([]);
     const [trdlload, setTrdlload] = useState('');
 
-    useEffect(() => {
-        let e = true;
-        const dataBamuskam = async () => {
-            setLoading(true);
-            try {
-                if (e) {
-                    const data_ = await axios.get('/mbams');
-                    setData([...data_.data]);
-                    setLoading(false);
-                }
-            } catch (error) {
-                console.log(error);
-                setLoading(true);
+    const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
+
+    const data_ = async () => {
+        try {
+            const respon = await axios.get('/mbams');
+            if (kd_lvl1 === 2) {
+                setData(respon.data.filter((e) => e.id_kam === kd_kampung))
+            } else {
+                setData(respon.data.filter(e => e));
             }
+        } catch (e) {
+            console.log('error refresh token', e.message);
         }
-        dataBamuskam();
-        return () => {
-            e = false;
-            setLoading(false);
-        }
-    }, [data, trdlload]);
+    }
+
+    useEffect(() => {
+        data_();
+    }, [trdlload]);
 
 
     const [columns] = useState([
@@ -78,61 +40,67 @@ function View() {
         { title: 'No SK', field: 'no_sk' },
         {
             title: 'Tgl SK', field: 'tgl_sk', type: 'date',
-            dateSetting: { locale: "id-ID", format: "dd - MM - yyyy" }
+            dateSetting: { locale: "id-ID", format: "dd-MM-yyyy" }
         },
         { title: 'Kampung', field: 'kampung', editable: () => false },
         { title: 'Distrik', field: 'distrik', editable: () => false }
     ]);
 
 
-    const onChangePage = {
+    let editable = () => '';
 
-    }
+    if (kd_lvl1 === 1)
+        editable =
+        {
+            onRowUpdate: (newData, oldData) =>
+                new Promise((resolve, reject) => {
+                    async function dt() {
+                        try {
+                            await axios.patch(`/mbams`, {
+                                id: newData.id,
+                                nama: newData.nama,
+                                tgl_sk: newData.tgl_sk,
+                                no_sk: newData.no_sk
+                            })
+                            setTrdlload(new Date());
+                            setInfoEdit(true);
+                        } catch (error) {
+                            console.log(error)
+                        }
+                    }
+                    function tg() {
+                        setTimeout(() => setInfoEdit(false), 2000)
+                    }
+                    dt(); tg(); resolve();
+                })
+        }
+
+
 
     return (
-        <div className='container mx-auto'>
-            <div className='relative -z-20'>
-                {infoedit ? <p> Data Berhasil Di Ubah... </p> : null}
-                <div className='absolute'>
-                    <MaterialTable
-                        icons={tableIcons}
-                        title={loading ? 'Mohon Tunggu Sedang Memuat Data ... ' : "Data Bamuskam"}
-                        onChangePage={onChangePage}
-                        options={{
-                            exportButton: true,
-                            pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 10, actionsColumnIndex: 0
-                        }}
-                        columns={columns}
-                        data={data}
-                        editable={{
-                            onRowUpdate: (newData, oldData) =>
-                                new Promise((resolve, reject) => {
-                                    setTimeout(() => {
-                                        const dataUpdate = [...data];
-                                        const index = oldData.tableData.id;
-                                        dataUpdate[index] = newData;
-                                        async function dt() {
-                                            try {
-                                                await axios.patch(`/mbams`, {
-                                                    id: newData.id,
-                                                    nama: newData.nama,
-                                                    tgl_sk: newData.tgl_sk,
-                                                    no_sk: newData.no_sk
-                                                })
-                                                setTrdlload(newData.id);
-                                                setInfoEdit(true);
-                                            } catch (error) {
-                                                console.log(error)
-                                            }
-                                        }
-                                        setTimeout(() => setInfoEdit(false), 2000)
-                                        dt();
-                                        setData([...dataUpdate])
-                                        resolve();
-                                    }, 500);
-                                })
-                        }}
-                    />
+        <div>
+            <div>
+                <div className='mx-auto'>
+                    <div className='container mx-auto'>
+                        <div className='relative container -z-40 mx-auto'>
+                            <div className='absolute min-w-full mx-auto z-10'>
+                                {infoedit ? <p> Data Berhasil Di Ubah... </p> : null}
+                                <MaterialTable
+                                    icons={tableIcons}
+                                    title={loading ? 'Mohon Tunggu Sedang Memuat Data ... ' : "Data Bamuskam"}
+                                    options={{
+                                        exportButton: true,
+                                        pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 10, actionsColumnIndex: 0,
+                                        editable: false
+                                    }}
+                                    columns={columns}
+                                    data={data}
+                                    editable={editable}
+
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

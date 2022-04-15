@@ -5,7 +5,7 @@ const SppLaporan = () => {
 
         <div>
             <div className="h-40"></div>
-            <h1>SppLaporan</h1>
+            <h1>Sp3BLaporan</h1>
         </div>
 
     )

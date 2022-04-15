@@ -4,7 +4,6 @@ import Yhk from '../../../public/yhk.png';
 
 
 
-
 const SpdDoc = ({ dataselectspd }) => {
     useEffect(() => {
         console.log('spd dok', dataselectspd)

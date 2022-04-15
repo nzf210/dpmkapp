@@ -35,12 +35,49 @@ const ConfigPejabatPengesahan = () => {
     // console.log('datadata lebve', kd_lvl1, 'data', data(), 'dattttt ')
 
     const kolom = [
-        { field: 'nama', title: 'Nama' }, { field: 'jabatan', title: 'Jabatan', editable: () => false },
-        { field: 'no_sk', title: 'No SK' },
-        { field: 'tgl_sk', title: 'Tgl SK', type: "date", dateSetting: { locale: "id-ID" } },
+        { field: 'nama', title: 'Nama' }, {
+            field: 'jabatan', title: 'Jabatan', editable: () => false, cellStyle: {
+                whiteSpace: 'nowrap',
+                width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
+            },
+            headerStyle: {
+                whiteSpace: 'nowrap',
+                width: '15%',
+            },
+        },
         { field: 'kampung', title: 'Kampung', editable: () => false },
         { field: 'distrik', title: 'Distrik', editable: () => false },
-        { field: 'sts', title: 'Status', editable: () => false, render: (row) => row.sts ? <div className='bg-green-400 rounded-md p-2 text-center -translate-x-3'>Aktif</div> : null, align: 'center' },
+        {
+            field: 'no_sk', title: 'No SK', cellStyle: {
+                whiteSpace: 'nowrap',
+                width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
+            },
+            headerStyle: {
+                whiteSpace: 'nowrap',
+                width: '15%',
+            },
+        },
+        {
+            field: 'tgl_sk', title: 'Tgl SK', type: "date", dateSetting: { locale: "id-ID" }, cellStyle: {
+                whiteSpace: 'nowrap',
+                width: '8%', height: '10px', paddingTop: 1, paddingBottom: 1
+            },
+            headerStyle: {
+                whiteSpace: 'nowrap',
+                width: '15%',
+            },
+        },
+        {
+            field: 'sts', title: 'Status', editable: () => false, render: (row) => row.sts ? <div className='bg-green-400 rounded-md p-2 text-center -translate-x-3'>Aktif</div> : null, align: 'center',
+            cellStyle: {
+                whiteSpace: 'nowrap',
+                width: '10%', height: '10px', paddingTop: 1, paddingBottom: 1
+            },
+            headerStyle: {
+                whiteSpace: 'nowrap',
+                width: '15%',
+            },
+        },
     ]
 
 
@@ -122,6 +159,7 @@ const ConfigPejabatPengesahan = () => {
             //     rowData.sts === true ? 'rgb(176, 196, 222)' : "#FFF",
             fontWeight:
                 rowData.sts === true ? 600 : 300,
+            height: 8, fontSize: 10,
 
         }),
         pageSizeOptions: [5], filtering: kd_lvl1 === 2 ? false : true, paging: false, addRowPosition: "first", actionsColumnIndex: -1,
@@ -131,7 +169,11 @@ const ConfigPejabatPengesahan = () => {
             disabled: barisData.sts === true,
         }),
         headerStyle: {
-            backgroundColor: '', fontWeight: 800
+            fontWeight: 600,
+            height: 10,
+            maxHeight: 10,
+            paddingBottom: 0,
+            paddingTop: -13, position: 'sticky', marginTop: -14
         },
         maxBodyHeight: 500,
     }
@@ -229,7 +271,7 @@ const ConfigPejabatPengesahan = () => {
 
     return (
         <div>
-            <div className='pt-32'>
+            <div className='pt-20'>
                 <div className='mx-auto'>
                     <div className='container mx-auto'>
                         <div className='relative container -z-40 mx-auto'>

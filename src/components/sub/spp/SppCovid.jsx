@@ -5,7 +5,7 @@ const SppCovid = () => {
 
         <div>
             <div className="h-40"></div>
-            <h1>SppCovid</h1>
+            <h1>Sp3BCovid</h1>
         </div>
 
     )

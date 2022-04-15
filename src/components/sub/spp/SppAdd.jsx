@@ -204,12 +204,11 @@ const SppAdd = () => {
     ]
 
     /* Funtiom Update Data */
-    const updateDataChecklist = async (e, ee) => {
+    const updateDataChecklist = async (e, ee, eee) => {
         try {
             e.map(async (f, i) => {
                 const no = await axios.get(`/nodok/${f.kd_kampung}`);
                 const nodok_ = parseInt(no.data[0].no_spp);
-                console.log(no);
                 let nomor = '';
                 let nodok = parseInt((nodok_ + 1))
                 switch (true) {
@@ -233,9 +232,9 @@ const SppAdd = () => {
                         break;
                 }
                 const update = await axios.patch('/anggaran', {
-                    id: f.id, tgl_spp: ee.toISOString().slice(0, 10), sts_spp: 1, no_spp: nomor
+                    id: f.id, tgl_spp: ee.toISOString().slice(0, 10), sts_spp: eee, no_spp: nomor
                 })
-                setChangests(date);
+                setChangests(new Date().toISOString());
                 console.log(update.data.info);
             }
             )
@@ -329,14 +328,25 @@ const SppAdd = () => {
     }
 
     const editable = {
-        onRowUpdate: (dataBaru, dataLama) => new Promise((reso, rej) => {
-            //updateData(dataBaru, 1);
-            console.log('data', dataBaru);
+        // isEditable: rowData => rowData.sts_spm === false, // only name(a) rows would be editable
+        isEditHidden: rowData => rowData.sts_spm === true,
+        // isDeletable: rowData => rowData.sts_spm === false, // only name(b) rows would be deletable,
+        isDeleteHidden: rowData => rowData.sts_spm === true,
+
+        onRowUpdate: (f, dataLama) => new Promise(async (reso, rej) => {
+            const update = await axios.patch('/anggaran', {
+                id: f.id, tgl_spp: f.tgl_spp, no_spp: f.no_spp
+            })
+            setChangests(new Date().toISOString());
+            console.log('update ', update.data.info)
             reso();
         }),
-        onRowDelete: (dataLama) => new Promise((reso, rej) => {
-            console.log('data', dataLama);
-            //hapusDataPejabat(dataLama);
+        onRowDelete: (f) => new Promise(async (reso, rej) => {
+            const del = await axios.patch('/anggaran', {
+                id: f.id, tgl_spp: '1900-01-01', no_spp: `Dihapus ${new Date().toLocaleString()}`, no_spm: '', tgl_spp: '1900-01-01', sts_spp: false, no_sp2d: '', tgl_sp2d: '1900-01-01',
+            })
+            setChangests(new Date().toISOString());
+            console.log('Delete ', del.data.info)
             reso();
         })
     }
@@ -371,10 +381,9 @@ const SppAdd = () => {
     /* Aktion Data Pada saat Select */
     const onSelectionChange = (e) => setDataSelectspp(e);
     const onSelectionChange_ = (e) => setDataSelect(e);
-    const onClickTerbitSPP = () => updateDataChecklist(dataselect, tgl);
+    const onClickTerbitSPP = () => updateDataChecklist(dataselect, tgl, 1);
     const previewSpd = (e) => setviewprint(true);
     /* Aktion Data Pada saat Select */
-
 
     /* Actio Untuk Tambah Tombol dan Event */
     const action_ = [{

@@ -40,11 +40,11 @@ const SppAdd = () => {
             const respon = await axios.get('/anggaran');
             if (kd_lvl1 === 2) {
                 const tes = respon.data.filter((e) => e);
-                setData_(tes.filter((e) => e.sts_spp === true && e.kd_kampung === kd_kampung && e.sts === true));
-                setData_2(tes.filter((e) => e.sts_spp === false && e.kd_kampung === kd_kampung && e.sts === true));
+                setData_(tes.filter((e) => e.sts_spp === true && e.kd_kampung === kd_kampung && e.sts === true && e.kd_keg === 4));
+                setData_2(tes.filter((e) => e.sts_spp === false && e.kd_kampung === kd_kampung && e.sts === true && e.kd_keg === 4));
             } else {
-                setData_(respon.data.filter(e => e.sts_spp === true && e.sts === true));
-                setData_2(respon.data.filter(e => e.sts_spp === false && e.sts === true));
+                setData_(respon.data.filter(e => e.sts_spp === true && e.sts === true && e.kd_keg === 4));
+                setData_2(respon.data.filter(e => e.sts_spp === false && e.sts === true && e.kd_keg === 4));
             }
             console.log('data Anggaran', respon.data)
         } catch (e) {
@@ -119,7 +119,7 @@ const SppAdd = () => {
                 width: '10%',
             },
         }, {
-            field: 'sts', title: 'Status', editable: () => false, render: (row) => row.sts ? <div className='bg-green-400 rounded-md p-2 text-center -translate-x-3'>Sudah Verifikasi</div> : null, align: 'center',
+            field: 'sts', title: 'Status', editable: () => false, render: (row) => row.sts ? <div className='bg-green-400 rounded-md p-2 text-center -translate-x-3'>SP2SPD</div> : null, align: 'center',
             cellStyle: {
                 whiteSpace: 'nowrap',
                 width: '10%', height: '10px', paddingTop: 1, paddingBottom: 1
@@ -394,7 +394,7 @@ const SppAdd = () => {
                         inputFormat="dd-MM-yyyy"
                         mask="__-__-____"
                         views={['day']}
-                        label="Tgl SPD"
+                        label="Tgl SP2SPD"
                         value={tgl}
                         onChange={(newValue) => {
                             setTgl(newValue);
@@ -412,7 +412,7 @@ const SppAdd = () => {
     return (
         <div>
             <div className='container w-full mx-auto items-center justify-center'>
-                <div className='mx-auto'>
+                <div className='mx-auto fixed z-20 w-[70%]'>
                     <div className='mx-auto justify-center items-center relative'>
                         <span className={`absolute right-0 text-red-500 bg-slate-400 rounded-full cursor-pointer z-20 w-4 m-4 -translate-x-1/2 items-center text-center ${viewprint ? '' : 'hidden'} `}
                             onClick={() => setviewprint(false)}> X </span>

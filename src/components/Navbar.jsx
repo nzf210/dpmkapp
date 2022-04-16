@@ -351,6 +351,7 @@ const Navbar = ({ ubahMenu }) => {
                                             </div>
                                         </div>
                                     </li>
+
                                     <li id="li-dropdown-spd" className={`hidden items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] sm:bg-transparent cursor-pointer`} onMouseEnter={() => {
                                         document.getElementById('div-dropdown-spd').classList.remove('hidden');
                                     }} onMouseLeave={() => { document.getElementById('div-dropdown-spd').classList.add('hidden'); }} onClick={(e) => {
@@ -387,6 +388,7 @@ const Navbar = ({ ubahMenu }) => {
                                             </div>
                                         </div>
                                     </li>
+
                                     <li id="li-dropdown-spp" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex sm:bg-transparent cursor-pointer" onMouseEnter={() => {
                                         document.getElementById('div-dropdown-spp').classList.remove('hidden');
                                     }} onMouseLeave={() => { document.getElementById('div-dropdown-spp').classList.add('hidden'); }} onClick={(e) => {
@@ -395,7 +397,7 @@ const Navbar = ({ ubahMenu }) => {
                                         <div className="grid grid-cols-1 relative w-full">
                                             <div className="flex flex-row">
                                                 <i><img src={Spp} alt="" id="img-spp" className="h-6 sm:hidden md:block" /></i>
-                                                <button className="text-center pl-2" id="btn-spp"> SP2SPD </button>
+                                                <button className="text-center pl-2" id="btn-spp">SP2SPD </button>
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden  z-50" id="div-dropdown-spp">
                                                 <ul className="w-full m-1">
@@ -436,7 +438,7 @@ const Navbar = ({ ubahMenu }) => {
                                         <div className="grid grid-cols-1 relative w-full">
                                             <div className="flex flex-row">
                                                 <i><img src={Spm} alt="" id="img-spm" className="h-6 sm:hidden md:block" /></i>
-                                                <button className="text-center pl-2" id="btn-spm">S K K B</button>
+                                                <button className="text-center pl-2" id="btn-spm">S K B K </button>
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden z-50" id="div-dropdown-spm">
                                                 <ul className="w-full m-1">
@@ -470,6 +472,7 @@ const Navbar = ({ ubahMenu }) => {
                                             </div>
                                         </div>
                                     </li>
+
                                     <li id="li-dropdown-sp2d" className={`${kd_lvl1 === 2 ? 'hidden' : null} items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-[90px] flex sm:bg-transparent cursor-pointer`} onMouseEnter={() => {
                                         document.getElementById('div-dropdown-sp2d').classList.remove('hidden');
                                     }} onMouseLeave={() => { document.getElementById('div-dropdown-sp2d').classList.add('hidden'); }} onClick={(e) => {

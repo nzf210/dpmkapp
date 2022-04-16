@@ -85,7 +85,7 @@ Font.register({
     ],
 })
 
-const SppDoc = ({ dataselectspp }) => {
+const SpmDoc = ({ dataselectspp }) => {
     useEffect(() => {
         console.log("spd dok", dataselectspp);
     }, []);
@@ -157,7 +157,7 @@ const SppDoc = ({ dataselectspp }) => {
     });
 
     return (
-        <Document key="doc-spd">
+        <Document key="doc-spm">
             {dataselectspp &&
                 dataselectspp.map((e, i) => (
                     <>
@@ -219,7 +219,7 @@ const SppDoc = ({ dataselectspp }) => {
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 49, width: 260, }}>2. Nama Distrik</Text>
                                     <Text style={{ paddingTop: -15, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -30, paddingLeft: 270, }}>{e.distrik}</Text>
+                                    <Text style={{ paddingTop: -30, paddingLeft: 270, }}>{camelize(e.distrik)}</Text>
                                 </View>
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 49, width: 260, }}>3. Nama Kepala Kampung</Text>
@@ -475,4 +475,4 @@ const SppDoc = ({ dataselectspp }) => {
     );
 };
 
-export default SppDoc;
+export default SpmDoc;

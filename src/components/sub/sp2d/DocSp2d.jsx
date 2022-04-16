@@ -85,7 +85,7 @@ Font.register({
     ],
 })
 
-const SppDoc = ({ dataselectspp }) => {
+const Sp2dDoc = ({ dataselectspp }) => {
     useEffect(() => {
         console.log("spd dok", dataselectspp);
     }, []);
@@ -157,13 +157,13 @@ const SppDoc = ({ dataselectspp }) => {
     });
 
     return (
-        <Document key="doc-spd">
+        <Document key="doc-sp2d">
             {dataselectspp &&
                 dataselectspp.map((e, i) => (
                     <>
                         <Page
                             size="A4"
-                            key={`doc-spd-${i}`}
+                            key={`doc-sp2d-${i}`}
                             style={{
                                 paddingTop: "15px",
                                 paddingLeft: "50px",
@@ -219,7 +219,7 @@ const SppDoc = ({ dataselectspp }) => {
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 49, width: 260, }}>2. Nama Distrik</Text>
                                     <Text style={{ paddingTop: -15, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -30, paddingLeft: 270, }}>{e.distrik}</Text>
+                                    <Text style={{ paddingTop: -30, paddingLeft: 270, }}>{camelize(e.distrik)}</Text>
                                 </View>
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 49, width: 260, }}>3. Nama Kepala Kampung</Text>
@@ -291,7 +291,7 @@ const SppDoc = ({ dataselectspp }) => {
                             >Halaman 1 dari 2</Text>
                         </Page>
                         <Page size="A4" orientation="landscape"
-                            key={`doc-spd-2-${i}`}
+                            key={`doc-sp2d-2-${i}`}
                             style={{
                                 paddingTop: "15px",
                                 paddingLeft: "50px",
@@ -475,4 +475,4 @@ const SppDoc = ({ dataselectspp }) => {
     );
 };
 
-export default SppDoc;
+export default Sp2dDoc;

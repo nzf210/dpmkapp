@@ -142,7 +142,7 @@ const SpmDoc = ({ dataselectspp }) => {
         text4: {
             fontSize: "10px"
         },
-        pageNumber: { position: "absolute", fontSize: 12, bottom: 30, left: 0, right: 0, textAlign: "center", color: "grey" },
+        pageNumber: { position: "absolute", fontSize: 12, bottom: 20, left: 0, right: 0, textAlign: "center", color: "grey" },
         HMmenimbang: { display: 'flex', position: 'relative' },
         HMmenimbang2: { display: 'flex', position: 'relative', marginTop: 3 },
         menimbang: { fontSize: 12, paddingTop: 10, maxWidth: 160, minWidth: 160, },
@@ -189,100 +189,154 @@ const SpmDoc = ({ dataselectspp }) => {
                                 </View>
                                 <ColoredLine color="black" />
                             </View>
-                            <View>
-                                <Text style={style.text3}>NOMOR: {e.no_spp}</Text>
-                                <Text style={{
-                                    paddingTop: 10, fontSize: 12, textAlign: 'center', fontFamily: 'Roboto', fontWeight: 'semibold'
-                                }}>SURAT PERMOHONAN PENERBITAN SURAT PENCAIRAN DANA</Text>
-                                <Text style={style.text3}>TAHUN ANGGARAN 2022</Text>
-                                <View style={style.HMmenimbang}>
-                                    <Text style={style.menimbang}>Menimbang</Text>
-                                    <Text style={style.titik2}>:</Text>
-                                    <Text style={style.isiMenimbang}>
-                                        Baik untuk melaksanakan anggaran sub kegiatan tahun anggaran 2022 berdasarkan anggaran pendapatan dan belanja kampung yang telah ditetapkan, perlu menerbitkan surat pencairan dengan menerbitkan Surat Permohonan Penerbitan Surat Pencairan Dana (SP2SPD) Tahun Anggaran 2022
-                                    </Text>
-                                </View>
-                                <View style={style.HMmenimbang2}>
-                                    <Text style={style.menimbang2}>Mengingat</Text>
-                                    <Text style={style.titik22}>:</Text>
-                                    <Text style={style.isiMenimbang2}>1. Peraturan Bupati Nomor 28 Tahun 2022 Tanggal 07 April 2022, Tentang Tambahan Penghasilan Aparat Kampung;</Text>
-                                    <Text style={style.isiMenimbang22}>2. Surat Keputusan Bupati Yahukimo Nomor 38 Tahun 2022 Tanggal 28 Januari 2022 Tentang Alokasi Dana Desa Tahun 2022</Text>
-                                </View>
+                            <View style={{ fontSize: 12, marginTop: -3 }}>
+                                <Text style={{ textDecoration: 'underline', fontWeight: 'semibold', textAlign: 'center' }}>SURAT PERNYATAN</Text>
+                                <Text style={{ fontWeight: 'semibold', textAlign: 'center' }}>SURAT KELENGKAPAN BERKAS KAMPUNG (SKBK)</Text>
+                                <Text style={style.text3}>NOMOR: {e.no_spm}</Text>
                             </View>
-                            <Text style={style.text5}>YANG BERMOHON :</Text>
-                            <View style={{ fontSize: 12 }}>
-                                <View >
-                                    <Text style={{ paddingLeft: 50, width: 260, paddingTop: 10 }} >1. Nama Kampung</Text>
-                                    <Text style={{ paddingTop: -15, paddingLeft: 260, fontSize: 12, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingLeft: 270, fontSize: 12, paddingTop: -30 }}>{e.kampung}</Text>
-                                </View>
-                                <View style={{ marginTop: -30 }}>
-                                    <Text style={{ paddingLeft: 49, width: 260, }}>2. Nama Distrik</Text>
-                                    <Text style={{ paddingTop: -15, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -30, paddingLeft: 270, }}>{camelize(e.distrik)}</Text>
-                                </View>
-                                <View style={{ marginTop: -30 }}>
-                                    <Text style={{ paddingLeft: 49, width: 260, }}>3. Nama Kepala Kampung</Text>
-                                    <Text style={{ paddingTop: -15, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -30, paddingLeft: 270, fontWeight: 'bold' }}>{camelize(e.nama_kepala)}</Text>
-                                </View>
-                                <View style={{ marginTop: -30 }}>
-                                    <Text style={{ paddingLeft: 49, width: 260, }}>4. Nama Bendahara Kampung</Text>
-                                    <Text style={{ paddingTop: -15, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -30, paddingLeft: 270, fontWeight: 'bold' }}>{camelize(e.nama)}</Text>
-                                </View>
-                                <View style={{ marginTop: -30 }}>
-                                    <Text style={{ paddingLeft: 50, width: 260 }}>5. Jumlah Permohonan Dana Rp.</Text>
-                                    <Text style={{ paddingTop: -15, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -32, paddingLeft: 270, fontWeight: 'bold' }}>Rp {currency(e.pagu)},-</Text>
-                                </View>
-                                <View style={{ marginTop: -30 }}>
-                                    <Text style={{ paddingLeft: 50, width: 260, }}>6. Untuk Kebutuhan</Text>
-                                    <Text style={{ paddingTop: -15, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -32, paddingLeft: 270, }}>{e.tahap}</Text>
-                                </View>
-                                <View style={{ marginTop: -30 }}>
-                                    <Text style={{ paddingLeft: 50, width: 260, fontWeight: 'bold' }}>7. Ikhtisar Permohonan Dana</Text>
-                                </View>
-                                <View >
-                                    <Text style={{ paddingLeft: 70, width: 260, }}>a. Jumlah Pagu ADD </Text>
-                                    <Text style={{ paddingTop: -17, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -32, paddingLeft: 270, }}>Rp 134.000.000</Text>
-                                </View>
-                                <View style={{ marginTop: -30 }}>
-                                    <Text style={{ paddingLeft: 70, width: 260, }}>b. Akumulasi Sebelumnya </Text>
-                                    <Text style={{ paddingTop: -17, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -32, paddingLeft: 270, }}>Rp 0.00</Text>
-                                </View>
-                                <View style={{ marginTop: -30 }}>
-                                    <Text style={{ paddingLeft: 70, width: 260, }}>c. Sisa Dana yang belum dicairkan </Text>
-                                    <Text style={{ paddingTop: -17, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -32, paddingLeft: 270, }}>Rp 134.400.00</Text>
-                                </View>
-                                <View style={{ marginTop: -30 }}>
-                                    <Text style={{ paddingLeft: 70, width: 260, }}>d. Jumlah dana yang diminta saat ini </Text>
-                                    <Text style={{ paddingTop: -32, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -47, paddingLeft: 270, }}>Rp {currency(e.pagu)},-</Text>
-                                </View>
-                                <View style={{ marginTop: -30 }}>
-                                    <Text style={{ paddingLeft: 70, width: 260, }}>e. Sisa Jumlah Dana ADD yang belum di Cairkan </Text>
-                                    <Text style={{ paddingTop: -32, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -47, paddingLeft: 270, }}>Rp 134.400.00</Text>
-                                </View>
-                                <View style={{ marginTop: -30 }}>
-                                    <Text style={{ paddingLeft: 50, width: 260, }}>8. Ketentuan - Ketentuan Lainnya</Text>
-                                    <Text style={{ paddingTop: -15, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -30, paddingLeft: 270, fontWeight: 'semibold' }}>{e.opt1}</Text>
-                                </View>
-                                <View style={{ marginTop: -10 }}>
-                                    <View style={{ width: 260, alignSelf: 'flex-end' }}>
-                                        <Text style={{ textAlign: 'center' }}>Ditetapkan di {camelize(e.kampung)}</Text>
-                                        <Text style={{ textAlign: 'center', marginTop: -3 }}>Pada Tanggal {moment(e.tgl_spp).locale('id').format("DD MMMM YYYY")}</Text>
-                                        <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Kepala Kampung</Text>
-                                        <Text style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 50, fontSize: 13, textDecoration: 'underline' }}>{e.nama_kepala}</Text>
+                            <View style={{ fontSize: 12, marginTop: 2 }}>
+                                <Text>Kami yang bertandatangan dibawah ini Adalah Benar Kepala Kampung dan Bendahara yang berhak Mencairkan {e.persen} Tahun 2022 :</Text>
+                            </View>
+                            <View style={{ fontSize: 11.7, marginTop: 2 }}>
+                                <View style={{ lineHeight: 1.3 }}>
+                                    <View style={{ marginTop: 0 }}>
+                                        <Text style={{ paddingLeft: 75, width: 200, }}>Nama</Text>
+                                        <Text style={{ paddingTop: -15, paddingLeft: 200, width: 2, maxWidth: 2 }}>:</Text>
+                                        <Text style={{ paddingTop: -30, paddingLeft: 210, fontWeight: 'bold' }}>{e.nama_kepala}</Text>
+                                    </View>
+                                    <View style={{ marginTop: -30 }}>
+                                        <Text style={{ paddingLeft: 75, width: 200, }}>Jabatan</Text>
+                                        <Text style={{ paddingTop: -15, paddingLeft: 200, width: 2, maxWidth: 2 }}>:</Text>
+                                        <Text style={{ paddingTop: -30, paddingLeft: 210, }}>KEPALA KAMPUNG {e.kampung}</Text>
+                                    </View>
+                                    <View style={{ marginTop: -40 }}>
+                                        <Text style={{ paddingLeft: 75, width: 200, paddingTop: 10 }} >Nama</Text>
+                                        <Text style={{ paddingTop: -15, paddingLeft: 200, fontSize: 12, width: 2, maxWidth: 2 }}>:</Text>
+                                        <Text style={{ paddingTop: -30, paddingLeft: 210, fontWeight: 'bold' }}>{e.nama}</Text>
+                                    </View>
+                                    <View style={{ marginTop: -30 }}>
+                                        <Text style={{ paddingLeft: 75, width: 200, }}>Jabatan</Text>
+                                        <Text style={{ paddingTop: -15, paddingLeft: 200, width: 2, maxWidth: 2 }}>:</Text>
+                                        <Text style={{ paddingTop: -30, paddingLeft: 210, }}>BENDAHARA KAMPUNG {e.kampung}</Text>
+                                    </View>
+                                    <View style={{ marginTop: -30 }}>
+                                        <Text style={{ paddingLeft: 75, width: 200, }}>Nama Bank</Text>
+                                        <Text style={{ paddingTop: -15, paddingLeft: 200, width: 2, maxWidth: 2 }}>:</Text>
+                                        <Text style={{ paddingTop: -30, paddingLeft: 210, }}>Bank Papua Cabang Dekai</Text>
+                                    </View>
+                                    <View style={{ marginTop: -30 }}>
+                                        <Text style={{ paddingLeft: 75, width: 200, }}>NO Rekening</Text>
+                                        <Text style={{ paddingTop: -15, paddingLeft: 200, width: 2, maxWidth: 2 }}>:</Text>
+                                        <Text style={{ paddingTop: -30, paddingLeft: 210, }}>{e.no_rek}</Text>
+                                    </View>
+                                    <View style={{ marginTop: -30 }}>
+                                        <Text style={{ paddingLeft: 75, width: 200, }}>Nama Rekening</Text>
+                                        <Text style={{ paddingTop: -15, paddingLeft: 200, width: 2, maxWidth: 2 }}>:</Text>
+                                        <Text style={{ paddingTop: -30, paddingLeft: 210, }}>{e.rek}</Text>
+                                    </View>
+                                    <View style={{ marginTop: -30 }}>
+                                        <Text style={{ paddingLeft: 75, width: 200 }}>Nilai Dana</Text>
+                                        <Text style={{ paddingTop: -15, paddingLeft: 200, width: 2, maxWidth: 2 }}>:</Text>
+                                        <Text style={{ paddingTop: -32, paddingLeft: 210, }}>Rp {currency(e.pagu)},-</Text>
+                                    </View>
+                                    <View style={{ marginTop: -30 }}>
+                                        <Text style={{ paddingLeft: 75, width: 200, }}>Terbilang</Text>
+                                        <Text style={{ paddingTop: -15, paddingLeft: 200, width: 2, maxWidth: 2 }}>:</Text>
+                                        <Text style={{ paddingTop: -32, paddingLeft: 210, fontFamily: 'Raleway', fontWeight: "thin", fontStyle: 'italic' }}>Tiga Puluh Tiga Juta Enam Ratus Ribu Rupiah</Text>
                                     </View>
                                 </View>
+                                <View style={{ marginTop: -30 }}>
+                                    <Text style={{ width: 200, }}>Telah Melengkapi Syarat</Text>
+                                    <Text style={{ paddingTop: -15, paddingLeft: 200, width: 2, maxWidth: 2 }}>:</Text>
+                                </View>
+                                <View style={{ flexDirection: 'column', lineHeight: 1.1 }}>
+                                    <View style={{ marginTop: -17, flexDirection: 'row', paddingHorizontal: 2, minWidth: 4 }}>
+                                        <Text style={{ width: 7, color: 'white' }}>11 </Text>
+                                        <Text style={{ width: 7, }}>1.</Text>
+                                        <Text style={{ width: 7, color: 'white' }}>111</Text>
+                                        <Text style={{ width: '95%' }}>Surat Permohonan Penerbitan Surat Pencairan Dana (SP2SPD) dengan NOMOR {e.no_spp} Tanggal {moment(e.tgl_spp).locale('id').format("DD MMMM YYYY")}</Text>
+                                    </View>
+                                    <View style={{ marginTop: 0, flexDirection: 'row', paddingHorizontal: 2, minWidth: 4 }}>
+                                        <Text style={{ width: 7, color: 'white' }}>11 </Text>
+                                        <Text style={{ width: 7, }}>2.</Text>
+                                        <Text style={{ width: 7, color: 'white' }}>111</Text>
+                                        <Text style={{ width: '95%' }}>Fotocopy Surat Keputusan (SK) Pengangkatan Kepala Kampung dengan Nomor : {e.no_sk_kepala}</Text>
+                                    </View>
+                                    <View style={{ marginTop: 0, flexDirection: 'row', paddingHorizontal: 2, minWidth: 4 }}>
+                                        <Text style={{ width: 7, color: 'white' }}>11 </Text>
+                                        <Text style={{ width: 7, }}>3.</Text>
+                                        <Text style={{ width: 7, color: 'white' }}>111</Text>
+                                        <Text style={{ width: '95%' }}>Kartu Tanda Penduduk (Asli), Melampirkan Fotocopyan KTP kepala Kampung dan Bendahara sebanyak 2 (Dua) Rangkap</Text>
+                                    </View>
+                                    <View style={{ marginTop: 0, flexDirection: 'row', paddingHorizontal: 2, minWidth: 4 }}>
+                                        <Text style={{ width: 7, color: 'white' }}>11 </Text>
+                                        <Text style={{ width: 7, }}>4.</Text>
+                                        <Text style={{ width: 7, color: 'white' }}>111</Text>
+                                        <Text style={{ width: '95%' }}>Surat Pergantian Bendahara (jika dilakukan pergantian) Nomor : {e.no_sk}</Text>
+                                    </View>
+                                    <View style={{ marginTop: 0, flexDirection: 'row', paddingHorizontal: 2, minWidth: 4 }}>
+                                        <Text style={{ width: 7, color: 'white' }}>11 </Text>
+                                        <Text style={{ width: 7, }}>5.</Text>
+                                        <Text style={{ width: 7, color: 'white' }}>111</Text>
+                                        <Text style={{ width: '95%' }}>Pas Photo Ukuran 3 x 4 untuk Kepala Kampung dan Bendahara sebanyak 2 Lembar </Text>
+                                    </View>
+                                    <View>
+                                        <Text><Text style={{ fontWeight: 'semibold' }}>Serta bertanggung jawab penuh atas segala pengeluaran di Rekening dengan Nama dan Nomor Rekening diatas, Apabila dikemudian hari ditemukan ketidaksesuaian antara Nama yang tertera di surat Pengantar pencairan dan Pihak yang melakukan pencairan di Bank, maka Dinas terkait tidak terlibat dan tidak bertanggung jawab atas proses pencairan tersebut.</Text> Serta menyatakan dengan sesungguhnya bahwa, setelah menerima {e.persen} Tahun 2022 akan melaksanakan ketentuan sebagai berikut :</Text>
+                                    </View>
+                                    <View style={{ marginTop: 0, flexDirection: 'row', paddingHorizontal: 2, minWidth: 4 }}>
+                                        <Text style={{ width: 7, color: 'white' }}>11 </Text>
+                                        <Text style={{ width: 7, }}>1.</Text>
+                                        <Text style={{ width: 7, color: 'white' }}>111</Text>
+                                        <Text>Akan segera kembali ke kampung untuk melaksanakan program sesuai Dengan Anggaran Pendapatan dan Belanja Kampung (APBK) yang telah ditetapkan; dan Berdasarkan Surat Perintah Pembayaran (SPP) Tahun 2022. </Text>
+                                    </View>
+                                    <View style={{ marginTop: 0, flexDirection: 'row', paddingHorizontal: 2, minWidth: 4 }}>
+                                        <Text style={{ width: 7, color: 'white' }}>11 </Text>
+                                        <Text style={{ width: 7, }}>2.</Text>
+                                        <Text style={{ width: 7, color: 'white' }}>111</Text>
+                                        <Text>Akan membuat laporan pertanggungjawaban kegiatan dengan menggunakan Aplikasi Sistem Keuangan Desa (SISKEUDES) yang dibuat oleh Badan Pemeriksan Keuangan Pembangunan (BPKP) sesuai dengan Rekomendasi Komisi Pemberantasan Korupsi (KPK);</Text>
+                                    </View>
+                                    <View style={{ marginTop: 0, flexDirection: 'row', paddingHorizontal: 2, minWidth: 4 }}>
+                                        <Text style={{ width: 7, color: 'white' }}>11 </Text>
+                                        <Text style={{ width: 7, }}>3.</Text>
+                                        <Text style={{ width: 7, color: 'white' }}>111</Text>
+                                        <Text>Akan menyetor Pajak sesuai dengan ketentuan, yang tertera pada penerimaan buku Pajak pada Aplikasi Siskeudes</Text>
+                                    </View>
+                                    <View style={{ marginTop: 0, flexDirection: 'row', paddingHorizontal: 2, minWidth: 4 }}>
+                                        <Text style={{ width: 7, color: 'white' }}>11 </Text>
+                                        <Text style={{ width: 7, }}>4.</Text>
+                                        <Text style={{ width: 7, color: 'white' }}>111</Text>
+                                        <Text>Apabila dikemudian hari terjadi penyalahgunaan/penyimpang Dana Desa, maka KAMI siap mempertanggungjawabkan di hadapan hukum. </Text>
+                                    </View>
+                                    <View style={{ marginTop: 0, flexDirection: 'row', paddingHorizontal: 2, minWidth: 4 }}>
+                                        <Text style={{ width: 7, color: 'white' }}>11 </Text>
+                                        <Text style={{ width: 7, }}>1.</Text>
+                                        <Text style={{ width: 7, color: 'white' }}>111</Text>
+                                        <Text>Akan membuat laporan pertanggungjawaban Dana Desa berdasarkan peraturan yang berlaku;</Text>
+                                    </View>
+                                    <Text>Demikian surat pernyataan ini dibuat, dan akan dipergunakan sebagaimana mestinya. </Text>
+
+                                    <View style={{ width: 720, fontSize: 11, alignItems: 'flex-start', marginTop: 10 }}>
+
+                                        <Text style={{ textAlign: 'right', width: "70%" }}>{camelize(e.kampung)}, {moment(e.tgl_spp).locale('id').format("DD MMMM YYYY")}</Text>
+                                        <View style={{ width: 720, alignSelf: 'center', marginLeft: -30, marginBottom: -20 }}>
+                                            <View style={{ flexDirection: 'row', width: '80%' }}>
+                                                <View style={{ flexDirection: 'column', minHeight: 80, width: "50%" }}>
+                                                    <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Kepala Kampung</Text>
+                                                    <Text style={{ marginTop: 21, marginBottom: -13, marginLeft: 180 }}>Materai 10.000</Text>
+                                                    <Text style={{ textAlign: 'center', fontWeight: 'bold', textDecoration: 'underline', marginTop: 35 }}>{e.nama_kepala}</Text>
+                                                </View>
+                                                <View style={{ flexDirection: 'column', minHeight: 80, width: "40%" }}>
+                                                    <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Bendahara Kampung</Text>
+                                                    <Text style={{ marginTop: 21, marginBottom: -13, color: 'white' }}>Materai 10.000</Text>
+                                                    <Text style={{ textAlign: 'center', fontWeight: 'bold', textDecoration: 'underline', marginTop: 35 }}>{e.nama_kepala}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    </View>
+
+                                </View>
                             </View>
+
                             <Text
                                 style={style.pageNumber}
                             // render={({ pageNumber, totalPages }) =>
@@ -290,8 +344,8 @@ const SpmDoc = ({ dataselectspp }) => {
                             // }
                             >Halaman 1 dari 2</Text>
                         </Page>
-                        <Page size="A4" orientation="landscape"
-                            key={`doc-spd-2-${i}`}
+                        <Page size="A4"
+                            key={`doc-spm-2-${i}`}
                             style={{
                                 paddingTop: "15px",
                                 paddingLeft: "50px",

@@ -213,19 +213,19 @@ const SppAdd = () => {
                 let nodok = parseInt((nodok_ + 1))
                 switch (true) {
                     case (nodok < 10):
-                        nomor = `000${nodok}/SP3B-${f.kampung}/2022`;
+                        nomor = `000${nodok}/SP2SPD/ADD1/${f.kampung}/2022`;
                         console.log('<9', nomor);
                         break;
                     case (9 < nodok < 100):
-                        nomor = `00${nodok}/SP3B-${f.kampung}/2022`
+                        nomor = `00${nodok}/SP2SPD/ADD1/${f.kampung}/2022`;
                         console.log('>9', nomor);
                         break;
                     case (99 > nodok > 1000):
-                        nomor = `0${nodok}/SP3B-${f.kampung}/2022`
+                        nomor = `0${nodok}/SP2SPD/ADD1/${f.kampung}/2022`;
                         console.log('>99');
                         break;
                     case (999 > nodok > 9999):
-                        nomor = `${nodok}/SP3B-${f.kampung}/2022`
+                        nomor = `${nodok}/SP2SPD/ADD1/${f.kampung}/2022`;
                         console.log('>999');
                         break;
                     default:

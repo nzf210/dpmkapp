@@ -76,11 +76,11 @@ const Login = () => {
                                                 <h3 className="text-center sm:text-left sm:pl-8 font-semibold mt-1">Silahkan Masuk</h3>
                                                 <form onSubmit={(e) => { e.preventDefault(); Auth() }} className="flex flex-col items-center sm:items-start sm:pl-8 sm:-pr-14 sm:mt-2">
                                                     <div className="flex sm:w-full">
-                                                        <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="username" className="focus:ring-2 focus:ring-cyan-600 sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700 mt-1" />
+                                                        <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" placeholder="username" className="focus:ring-2 focus:ring-cyan-600 sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700 mt-1 pl-2" />
                                                         <img src={iUser} className="h-7 w-7 mt-1 hidden sm:block ml-4" alt="" />
                                                     </div>
                                                     <div className="flex sm:w-full">
-                                                        <input value={password} onChange={(e) => setPassword(e.target.value)} type="text" placeholder="password" className="focus:ring-2 focus:ring-cyan-600 sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700" />
+                                                        <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="password" className="focus:ring-2 focus:ring-cyan-600 sm:w-[80%] min-w-min outline-none border-2 border-blue-700 rounded-md sm:rounded-sm mb-2 focus:shadow-2xl placeholder:text-center sm:placeholder:text-left sm:pl-3 focus:border-blue-700 pl-2" />
                                                         <img src={iLogin} className="h-7 w-7  hidden sm:block ml-4" alt="" />
                                                     </div>
                                                     <div className="flex sm:w-full">

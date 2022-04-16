@@ -368,12 +368,12 @@ const SppAdd = () => {
     const action = [
         {
             icon: () => <><PDFDownloadLink document={<DocSpp dataselectspp={dataselectspp} />} fileName={`doc_spd_${new Date().toLocaleTimeString().slice(0, 16)}`}><LocalPrintshopIcon /></PDFDownloadLink></>,
-            tooltip: 'Download Dok SP3B',
+            tooltip: 'Download Dok SP2SPD',
             onClick: ''
         },
         {
             icon: () => <div className='flex'><button onClick={() => previewSpd()} className="mr-2" > <PictureAsPdfIcon /></button></div>,
-            tooltip: 'Preview SP3B',
+            tooltip: 'Preview SP2SPD',
             onClick: ''
         },
     ]
@@ -404,7 +404,7 @@ const SppAdd = () => {
                 </Stack>
             </LocalizationProvider>
         </div>,
-        tooltip: 'Terbitkan SP3B',
+        tooltip: 'Terbitkan SP2SPD',
         onClick: ''
     }]
     /* Actio Untuk Tambah Tombol dan Event */
@@ -431,7 +431,7 @@ const SppAdd = () => {
                         <div className='relative container -z-40 mx-auto'>
                             <div className='absolute min-w-full mx-auto z-10'>
                                 <MaterialTable
-                                    title="SP3B Terbit"
+                                    title="SP2SPD Terbit"
                                     options={options}
                                     icons={tblIcon}
                                     data={data_}
@@ -448,7 +448,7 @@ const SppAdd = () => {
                                     icons={tblIcon}
                                     columns={kolom_}
                                     data={data_2}
-                                    title="SP3B Proses"
+                                    title="SP2SPD Proses"
                                     localization={localisation}
                                     onSelectionChange={onSelectionChange_}
                                     actions={action_}

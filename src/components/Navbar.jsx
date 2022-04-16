@@ -395,7 +395,7 @@ const Navbar = ({ ubahMenu }) => {
                                         <div className="grid grid-cols-1 relative w-full">
                                             <div className="flex flex-row">
                                                 <i><img src={Spp} alt="" id="img-spp" className="h-6 sm:hidden md:block" /></i>
-                                                <button className="text-center pl-2" id="btn-spp"> S P 3 B </button>
+                                                <button className="text-center pl-2" id="btn-spp"> SP2SPD </button>
                                             </div>
                                             <div className="text-slate-800 sm:absolute w-full sm:mt-[26px] sm:-translate-x-4 hidden  z-50" id="div-dropdown-spp">
                                                 <ul className="w-full m-1">

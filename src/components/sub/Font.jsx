@@ -51,3 +51,28 @@ export default Font.register({
         },
     ],
 })
+
+
+
+export function camelize(str) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+        return index === 0 ? word.toUpperCase() : word.toLowerCase();
+    }).replace(/\s+/g, '');
+}
+
+export function currency(b) {
+    let separator;
+    let prefix;
+    let number_string = b.toString().replace(/[^,\d]/g, '').toString(),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{1,3}/gi);
+
+    if (ribuan) {
+        separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+    }
+    rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+    return prefix === undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+}

@@ -1,11 +1,6 @@
 import React, { useEffect } from "react";
 import {
-    Page,
-    Text,
-    Image,
-    Document,
-    StyleSheet,
-    View
+    Page, Text, Image, Document, StyleSheet, View
 } from "@react-pdf/renderer";
 import Yhk from '../../../public/yhk.png';
 
@@ -22,7 +17,6 @@ import thin from '../../../public/Roboto_Slab/static/RobotoSlab-Thin.ttf';
 import italic from '../../../public/Roboto_Slab/static/Raleway-ExtraLightItalic.ttf';
 import moment from "moment";
 import { camelize, currency } from '../Font';
-import { red } from "@material-ui/core/colors";
 
 Font.register({
     family: "Roboto",
@@ -31,40 +25,31 @@ Font.register({
     fonts: [
         {
             src: black,
-        },
-        {
+        }, {
             src: bold,
             fontWeight: "bold",
-        },
-        {
+        }, {
             src: extrabold,
             fontWeight: "extrabold",
-        },
-        {
+        }, {
             src: extralight,
             fontWeight: "extralight",
-        },
-        {
+        }, {
             src: light,
             fontWeight: "light",
-        },
-        {
+        }, {
             src: medium,
             fontWeight: "medium",
-        },
-        {
+        }, {
             src: reguler,
             fontWeight: "reguler",
-        },
-        {
+        }, {
             src: semibold,
             fontWeight: "semibold",
-        },
-        {
+        }, {
             src: thin,
             fontWeight: "thin",
-        },
-        {
+        }, {
             src: italic,
             fontWeight: "thin",
             fontStyle: 'italic',

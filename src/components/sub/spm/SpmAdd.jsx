@@ -37,7 +37,7 @@ const SpmAdd = () => {
 
     const data = async () => {
         try {
-            const respon = await axios.get('/anggaran');
+            const respon = await axios.get('/anggaran/add');
             if (kd_lvl1 === 2) {
                 const tes = respon.data.filter((e) => e);
                 setData_(tes.filter((e) => e.sts === true && e.sts_spp === true && e.kd_kampung === kd_kampung && e.kd_keg === 4 && e.sts_spm === true));

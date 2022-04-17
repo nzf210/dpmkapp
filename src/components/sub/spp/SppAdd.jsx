@@ -97,7 +97,7 @@ const SppAdd = () => {
                 height: '10px', paddingTop: 1, paddingBottom: 1
             }, editable: () => false,
         }, {
-            field: 'no_spp', title: 'NO SP3B', cellStyle: {
+            field: 'no_spp', title: 'NO SP2SPD', cellStyle: {
                 height: '10px', paddingTop: 1, paddingBottom: 1
             },
         }, {
@@ -110,7 +110,7 @@ const SppAdd = () => {
                 width: '10%',
             }, type: 'currency', currencySetting: { currencyCode: "IDR" }, align: 'center', editable: () => false,
         }, {
-            field: 'tgl_spp', title: 'Tgl SP3B', type: "date", dateSetting: { locale: "id-ID" }, cellStyle: {
+            field: 'tgl_spp', title: 'Tgl SP2SPD', type: "date", dateSetting: { locale: "id-ID" }, cellStyle: {
                 whiteSpace: 'nowrap',
                 width: '10%', height: '10px', paddingTop: 1, paddingBottom: 1
             },

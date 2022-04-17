@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Page,
     Text,
     Image,
     Document,
     StyleSheet,
-    View
+    View, Svg, Font, Path
 } from "@react-pdf/renderer";
+import ReactHtmlParser from 'react-html-parser';
+import { renderToStaticMarkup } from 'react-dom/server';
 import Yhk from '../../../public/yhk.png';
-
-import { Font } from '@react-pdf/renderer';
 import black from '../../../public/Roboto_Slab/static/RobotoSlab-Black.ttf';
 import bold from '../../../public/Roboto_Slab/static/RobotoSlab-Bold.ttf';
 import extrabold from '../../../public/Roboto_Slab/static/RobotoSlab-ExtraBold.ttf';
@@ -23,6 +23,8 @@ import italic from '../../../public/Roboto_Slab/static/Raleway-ExtraLightItalic.
 import moment from "moment";
 import { camelize, currency } from '../Font';
 import { red } from "@material-ui/core/colors";
+
+import QRCode, { QRCodeSVG, QRCodeCanvas } from 'qrcode.react';
 
 Font.register({
     family: "Roboto",
@@ -95,6 +97,9 @@ const Sp2dDoc = ({ dataselectspp }) => {
         console.log("spd dok", dataselectspp);
     }, []);
 
+    //  const [barcode, setBarcode] = useState('Lagi Errorr Coba Cek .... ');
+    //useEffect(() => { qrcode.toDataURL(barcode).then(setBarcode) }, [barcode])
+
     const style = StyleSheet.create({
         pageNumber: { position: "absolute", fontSize: 12, bottom: 30, left: 0, right: 0, textAlign: "center", color: "grey" },
         table: { width: "100%" }, image: { height: "50px", width: "50px", position: 'absolute', marginTop: 45, marginLeft: 63 },
@@ -107,6 +112,7 @@ const Sp2dDoc = ({ dataselectspp }) => {
             {dataselectspp &&
                 dataselectspp.map((e, i) => (
                     <>
+
                         <Page
                             size="A4"
                             key={`doc-sp2d-${i}`}
@@ -117,11 +123,11 @@ const Sp2dDoc = ({ dataselectspp }) => {
                                 paddingRight: "35px",
                                 fontFamily: 'Roboto',
                                 fontWeight: 'light'
-
                             }}
                         >
-                            <Image style={[style.image, { marginTop: 375, marginLeft: 460, height: 65, width: 65 }]} src={Yhk} fixed />
+
                             <Image style={style.image} src={Yhk} fixed />
+
                             <View style={[style.table, { flexDirection: 'column' }]} >
                                 <View style={[style.table, { flexDirection: 'row', marginTop: 20 }]}>
                                     <View style={{ height: 70, width: '15%', border: 0.8 }}></View>
@@ -263,10 +269,14 @@ const Sp2dDoc = ({ dataselectspp }) => {
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
                                             <Text style={{ fontWeight: 'semibold' }}>{e.thp_advis}</Text>
                                         </View>
+                                        <View style={{ position: 'absolute', alignContent: 'flex-end', alignItems: 'flex-end', alignSelf: "flex-end", paddingTop: 3, paddingRight: 3 }}>
+                                            <PdfWithQrCode ssf_id={`${e.thp_advis}DISTRIK${e.distrik}KAMPUNG${e.kampung}@${e.nama_kepala}/${e.nama}$${e.no_rek}>${e.pagu} `} />
+                                            {/* ${e.nama_kepala}/${e.nama}${e.no_rek}>${e.pagu}`} /> */}
+                                        </View>
 
                                     </View>
                                 </View>
-                                <View style={[{ flexDirection: 'row', fontWeight: 'semibold', fontSize: 11, textAlign: 'center', paddingBottom: 2, paddingTop: 2, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
+                                <View style={[{ flexDirection: 'row', fontWeight: 'semibold', fontSize: 11, textAlign: 'center', paddingBottom: 5, paddingTop: 5, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
                                     <View style={[{ width: '10%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>No.</Text></View>
                                     <View style={[{ width: '25%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>Kode Rekening</Text></View>
                                     <View style={[{ width: '50%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>Uraian</Text></View>
@@ -319,3 +329,50 @@ const Sp2dDoc = ({ dataselectspp }) => {
 };
 
 export default Sp2dDoc;
+
+const PdfWithQrCode = ({ ssf_id }) => {
+    const qrCodeComponent = (
+        <QRCode
+            value={ssf_id}
+            renderAs="svg"
+            size={80}
+        />
+    );
+
+    const qrCodeComponentStaticMarkup = renderToStaticMarkup(qrCodeComponent);
+
+    const parsedQrCodeSvg = parseQrCodeMarkup(qrCodeComponentStaticMarkup);
+    if (!parsedQrCodeSvg) {
+        return null;
+    }
+
+    return (
+        <View>
+            <Svg
+                style={{ width: 80, height: 80 }}
+                viewBox="0 0 49 49"
+            >
+                {parsedQrCodeSvg.props.children.filter(c => c.type === 'path').map((child, index) => (
+                    <Path
+                        key={index}
+                        d={child.props.d}
+                        fill={child.props.fill}
+                    />
+                ))}
+            </Svg>
+        </View>
+    );
+}
+
+const parseQrCodeMarkup = (markup) => {
+    let parsedQrCodeSvg = null;
+
+    ReactHtmlParser(markup).forEach(el => {
+        const { type } = el;
+        if (type === 'svg') {
+            parsedQrCodeSvg = el;
+        }
+    });
+
+    return parsedQrCodeSvg;
+};

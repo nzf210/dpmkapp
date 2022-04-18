@@ -71,9 +71,9 @@ Font.register({
 })
 
 const SppDoc = ({ dataselectspp }) => {
-    useEffect(() => {
-        console.log("spd dok", dataselectspp);
-    }, []);
+    // useEffect(() => {
+    //     console.log("spd dok", dataselectspp);
+    // }, []);
 
     //const borderColor = '#90e5fc';
     const ColoredLine = ({ color }) => (
@@ -395,7 +395,7 @@ const SppDoc = ({ dataselectspp }) => {
                                                 <Text style={{ textAlign: 'center', alignItems: 'center', width: 150, }}>-</Text>
                                                 <Text style={{ color: 'white' }}>-</Text>
                                                 <Text style={{ textAlign: 'center', alignItems: 'center', width: 150, }}>-</Text>
-                                                <Text style={{ width: 150, textAlign: 'bold', marginTop: 2, fontWeight: 'semibold' }}>-</Text>
+                                                <Text style={{ width: 150, textAlign: 'center', marginTop: 2, fontWeight: 'semibold' }}>-</Text>
                                             </View>
                                         </View>
                                     </View>

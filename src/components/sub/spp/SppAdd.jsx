@@ -53,7 +53,7 @@ const SppAdd = () => {
                 setData_2(respon.data.filter(e => e.sts_spp === false && e.sts === true && e.kd_keg === 4));
 
             }
-            console.log('data Anggaran', respon.data);
+            //console.log('data Anggaran', respon.data.info);
             setLoad(false);
         } catch (e) {
             console.log('error refresh token', e.message);
@@ -224,8 +224,8 @@ const SppAdd = () => {
                     id: f.id, tgl_spp: ee.toISOString().slice(0, 10), sts_spp: eee, no_spp: nomor
                 })
                 setChangests(new Date().toISOString());
-                console.log(update.data.info);
-                setLoad(false);
+                //console.log(update.data.info);
+                //setLoad(false);
             }
             )
 
@@ -324,6 +324,7 @@ const SppAdd = () => {
         isDeleteHidden: rowData => rowData.sts_spm === true,
 
         onRowUpdate: (f, dataLama) => new Promise(async (reso, rej) => {
+            setLoad(true);
             const update = await axios.patch('/anggaran', {
                 id: f.id, tgl_spp: f.tgl_spp, no_spp: f.no_spp
             })
@@ -332,6 +333,7 @@ const SppAdd = () => {
             reso();
         }),
         onRowDelete: (f) => new Promise(async (reso, rej) => {
+            setLoad(true);
             const del = await axios.patch('/anggaran', {
                 id: f.id, tgl_spp: '1900-01-01', no_spp: `Dihapus ${new Date().toLocaleString()}`, no_spm: '', tgl_spp: '1900-01-01', sts_spp: false, no_sp2d: '', tgl_sp2d: '1900-01-01',
             })

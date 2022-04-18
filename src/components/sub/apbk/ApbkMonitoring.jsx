@@ -250,8 +250,8 @@ const ApbkMonitoring = () => {
         filtering: kd_lvl1 === 2 ? false : true, paging: true, addRowPosition: "first", actionsColumnIndex: -1,
         showSelectAllCheckbox: false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5,
         selection: kd_lvl2 === 2 ? false : true,
-        selectionProps: barisData => ({
-            disabled: barisData.sts === true,
+        selectionProps: (barisData) => ({
+            disabled: kd_lvl1 === 2,
         }),
         headerStyle: {
             fontWeight: 600,

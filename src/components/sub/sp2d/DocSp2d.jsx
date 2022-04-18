@@ -89,9 +89,9 @@ Font.register({
 })
 
 const Sp2dDoc = ({ dataselectspp }) => {
-    useEffect(() => {
-        console.log("spd dok", dataselectspp);
-    }, []);
+    // useEffect(() => {
+    //     console.log("spd dok", dataselectspp);
+    // }, []);
 
     const style = StyleSheet.create({
         pageNumber: { position: "absolute", fontSize: 12, bottom: 30, left: 0, right: 0, textAlign: "center", color: "grey" },

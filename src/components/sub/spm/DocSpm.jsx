@@ -50,9 +50,9 @@ Font.register({
 })
 
 const SpmDoc = ({ dataselectspp }) => {
-    useEffect(() => {
-        console.log("spd dok", dataselectspp);
-    }, []);
+    // useEffect(() => {
+    //     console.log("spd dok", dataselectspp);
+    // }, []);
 
     //const borderColor = '#90e5fc';
     const ColoredLine = ({ color }) => (

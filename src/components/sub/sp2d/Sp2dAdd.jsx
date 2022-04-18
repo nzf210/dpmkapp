@@ -242,12 +242,14 @@ const Sp2dAdd = () => {
     const updateDataChecklist = async (e, ee, eee) => {
         setLoad(true);
         try {
-            // let no_ = 1;
-            e.map(async (f) => {
+            let no_ = 1;
+            let nodok = 0;
+            e.map(async (f, i) => {
                 const no = await axios.get(`/nodok`);
                 const nodok_ = parseInt(no.data[0].no_sp2d);
                 let nomor = '';
-                let nodok = parseInt(nodok_ + 1)
+                nodok = nodok_ + no_ + i
+                console.log('no', nodok)
                 switch (true) {
                     case (nodok < 10):
                         nomor = `000${nodok}/SP2D-ALOKASIDANADESA/2022`; //0001/SP2D-ALOKASIDANADESA/2022
@@ -273,9 +275,11 @@ const Sp2dAdd = () => {
                 })
                 setChangests(new Date().toISOString());
                 console.log(update.data.info);
+                no_++;
+
             }
             )
-            setLoad(false);
+            //setLoad(false);
         } catch (error) {
             console.log(error);
             setLoad(true);
@@ -379,7 +383,7 @@ const Sp2dAdd = () => {
             setChangests(new Date().toISOString());
             //console.log('update ', update.data.info)
             reso();
-            setLoad(false);
+            //setLoad(false);
         }),
         onRowDelete: (f) => new Promise(async (reso, rej) => {
             setLoad(true);
@@ -389,7 +393,7 @@ const Sp2dAdd = () => {
             setChangests(new Date().toISOString());
             //console.log('Delete ', del.data.info)
             reso();
-            setLoad(false);
+            //setLoad(false);
         })
     }
 

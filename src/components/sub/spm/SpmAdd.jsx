@@ -49,7 +49,7 @@ const SpmAdd = () => {
                 setData_(respon.data.filter(e => e.sts === true && e.sts_spp === true && e.kd_keg === 4 && e.sts_spm === true));
                 setData_2(respon.data.filter(e => e.sts === true && e.sts_spp === true && e.kd_keg === 4 && e.sts_spm === false));
             }
-            console.log('data Anggaran', respon.data)
+            //console.log('data Anggaran', respon.data)
             setLoad(false);
         } catch (e) {
             console.log('error refresh token', e.message);
@@ -101,32 +101,29 @@ const SpmAdd = () => {
             field: 'thp_advis', title: 'Kegiatan', cellStyle: {
                 height: '10px', paddingTop: 1, paddingBottom: 1
             }, editable: () => false,
-        }, {
-            field: 'no_spp', title: 'NO SP2SPD', cellStyle: {
-                height: '10px', paddingTop: 1, paddingBottom: 1
-            }, editable: () => false,
-        }, {
-            field: 'tgl_spp', title: 'Tgl SP2SPD', type: "date", dateSetting: { locale: "id-ID" }, cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '10%', height: '10px', paddingTop: 1, paddingBottom: 1
-            },
-            headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '10%',
-            }, editable: () => false,
-        }, {
+        },
+        // {
+        //     field: 'no_spp', title: 'NO SP2SPD', cellStyle: {
+        //         height: '10px', paddingTop: 1, paddingBottom: 1
+        //     }, editable: () => false,
+        // }, {
+        //     field: 'tgl_spp', title: 'Tgl SP2SPD', type: "date", dateSetting: { locale: "id-ID" }, cellStyle: {
+        //         whiteSpace: 'nowrap',
+        //         width: '10%', height: '10px', paddingTop: 1, paddingBottom: 1
+        //     },
+        //     headerStyle: {
+        //         whiteSpace: 'nowrap',
+        //         width: '10%',
+        //     }, editable: () => false,
+        // }, 
+        {
             field: 'no_spm', title: 'NO SKBK', cellStyle: {
                 height: '10px', paddingTop: 1, paddingBottom: 1
             }
         }, {
             field: 'tgl_spm', title: 'Tgl SKBK', type: "date", dateSetting: { locale: "id-ID" }, cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '10%', height: '10px', paddingTop: 1, paddingBottom: 1
-            },
-            headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '10%',
-            },
+                whiteSpace: 'nowrap', width: '10%', height: '10px', paddingTop: 1, paddingBottom: 1
+            }, headerStyle: { whiteSpace: 'nowrap', width: '10%', },
         },
         {
             field: 'pagu', title: 'Pagu', cellStyle: {

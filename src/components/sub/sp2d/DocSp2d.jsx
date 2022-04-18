@@ -110,7 +110,7 @@ const Sp2dDoc = ({ dataselectspp }) => {
                             style={{ paddingTop: "15px", paddingLeft: "50px", paddingBottom: "40px", paddingRight: "35px", fontFamily: 'Roboto', fontWeight: 'light' }}
                         >
                             <Image style={style.image} src={Yhk} fixed />
-                            <View style={[style.table, { flexDirection: 'column' }]} >
+                            <View style={[style.table, { flexDirection: 'column' }]} key={`doc_sp2d_view`} >
                                 <View style={[style.table, { flexDirection: 'row', marginTop: 20 }]}>
                                     <View style={{ height: 70, width: '15%', border: 0.8 }}></View>
                                     <View style={[{ flexDirection: 'column', width: '70%' }]}>
@@ -125,34 +125,34 @@ const Sp2dDoc = ({ dataselectspp }) => {
                                 <View style={[{ flexDirection: 'row', fontSize: 10 }]}>
                                     <View style={[style.row, { flexDirection: 'column', width: '50%', maxWidth: '50%', borderLeft: 0.8, borderBottom: 0.8 }]}>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 79 }]}>Nomor SP2SPD</Text>
+                                            <Text style={[{ paddingRight: 1, width: 79, minWidth: 79 }]}>Nomor SP2SPD</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
-                                            <Text>{e.no_spp}</Text>
+                                            <Text style={[{ width: 167, minWidth: 167 }]}>{e.no_spp}</Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 79 }]}>Tanggal SP2SPD</Text>
+                                            <Text style={[{ paddingRight: 1, width: 79, minWidth: 79 }]}>Tanggal SP2SPD</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
-                                            <Text>{moment(e.tgl_spp).locale('id').format("DD MMMM YYYY")}</Text>
+                                            <Text style={[{ width: 167, minWidth: 167 }]}>{moment(e.tgl_spp).locale('id').format("DD MMMM YYYY")}</Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 79 }]}>Nomor SKBK</Text>
+                                            <Text style={[{ paddingRight: 1, width: 79, minWidth: 79 }]}>Nomor SKBK</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
-                                            <Text>{e.no_spm}</Text>
+                                            <Text style={[{ width: 167, minWidth: 167 }]}>{e.no_spm}</Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 79 }]}>Tanggal SKBK</Text>
+                                            <Text style={[{ paddingRight: 1, width: 79, minWidth: 79 }]}>Tanggal SKBK</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
-                                            <Text>{moment(e.tgl_spm).locale('id').format("DD MMMM YYYY")}</Text>
+                                            <Text style={[{ width: 167, minWidth: 167 }]}>{moment(e.tgl_spm).locale('id').format("DD MMMM YYYY")}</Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 79 }]}>Kampung</Text>
+                                            <Text style={[{ paddingRight: 1, width: 79, minWidth: 79 }]}>Kampung</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
-                                            <Text>{e.kampung}</Text>
+                                            <Text style={[{ width: 167, minWidth: 167 }]}>{e.kampung}</Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 79 }]}>Distrik</Text>
+                                            <Text style={[{ paddingRight: 1, width: 79, minWidth: 79 }]}>Distrik</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
-                                            <Text>{e.distrik}</Text>
+                                            <Text style={[{ width: 167, minWidth: 167 }]}>{e.distrik}</Text>
                                         </View>
                                     </View>
                                     <View style={[style.row, { flexDirection: 'column', width: '50%', maxWidth: '50%', border: 0.8, borderTop: 0 }]}>
@@ -189,7 +189,7 @@ const Sp2dDoc = ({ dataselectspp }) => {
                                     </View>
                                 </View>
                                 <View>
-                                    <View style={[style.row, { fontSize: 11, flexDirection: 'column', borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8, paddingTop: 5, paddingBottom: 5 }]}>
+                                    <View style={[style.row, { fontSize: 11, flexDirection: 'column', borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8, paddingTop: 7, paddingBottom: 7 }]}>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
                                             <Text style={[{ paddingRight: 1, width: 90 }]}>Bank</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
@@ -224,7 +224,7 @@ const Sp2dDoc = ({ dataselectspp }) => {
                                     </View>
                                 </View>
                                 <View>
-                                    <View style={[style.row, { fontSize: 11, flexDirection: 'column', borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8, paddingTop: 5, paddingBottom: 5 }]}>
+                                    <View style={[style.row, { fontSize: 11, flexDirection: 'column', borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8, paddingTop: 7, paddingBottom: 7 }]}>
                                         <Text style={[{ paddingLeft: 3 }]}>Kepada:</Text>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
                                             <Text style={[{ paddingRight: 1, width: 160 }]}>Nama Kepala Kampung</Text>
@@ -256,7 +256,7 @@ const Sp2dDoc = ({ dataselectspp }) => {
                                         </View>
                                     </View>
                                 </View>
-                                <View style={[{ flexDirection: 'row', fontWeight: 'semibold', fontSize: 11, textAlign: 'center', paddingBottom: 5, paddingTop: 5, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
+                                <View style={[{ flexDirection: 'row', fontWeight: 'semibold', fontSize: 11, textAlign: 'center', paddingBottom: 3, paddingTop: 5, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
                                     <View style={[{ width: '10%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>No.</Text></View>
                                     <View style={[{ width: '25%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>Kode Rekening</Text></View>
                                     <View style={[{ width: '50%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>Uraian</Text></View>
@@ -315,7 +315,7 @@ const Sp2dDoc = ({ dataselectspp }) => {
                                             <Text style={{ textAlign: 'center' }}>DEKAI, {moment(e.tgl_sp2d).locale('id').format("DD MMMM YYYY")}</Text>
                                             <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>Plt. KEPALA</Text>
                                             <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>DINAS PEMBERDAYAAN MASAYRAKAT KAMPUNG</Text>
-                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold', textDecoration: 'underline', marginTop: 60 }}>LAZARUS PAHABOL, SE </Text>
+                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold', textDecoration: 'underline', marginTop: 60 }}>LAZARUS PAHABOL, SE, MM</Text>
                                             <Text style={{ textAlign: 'center' }}>PENATA Tk.I </Text>
                                             <Text style={{ textAlign: 'center' }}>NIP. 19740404 200605 1 001</Text>
                                         </View>

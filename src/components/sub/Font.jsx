@@ -95,3 +95,34 @@ const parseQrCodeMarkup = (markup) => {
 };
 
 /* QR COde .......... */
+
+/* Loader ....................................................... */
+export const Loader = () => {
+    let circleCommonClasses = 'h-2.5 w-2.5 bg-current  rounded-full bg-blue-500 ';
+    return (
+        <div className='absolute inset-0 z-50'>
+            <div className='w-full min-h-screen'>
+                <div className='z-30'>
+                    <div className='w-40 mx-auto align-middle min-h-screen flex'>
+                        <div className='items-center h-5 translate-x-1/2 flex-col min-h-screen '>
+                            <div className='h-1/2'></div>
+                            <div className='inline-block align-middle my-auto h-7' >
+                                <div className='flex'>
+                                    <div className={`${circleCommonClasses} mr-1 animate-bounce`}></div>
+                                    <div
+                                        className={`${circleCommonClasses} mr-1 animate-bounce200`}
+                                    ></div>
+                                    <div className={`${circleCommonClasses} animate-bounce400`}></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    );
+};
+
+
+/* Loader ....................................................... */

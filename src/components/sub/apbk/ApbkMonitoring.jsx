@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import MaterialTable, { MTableBodyRow, MTableEditRow } from 'material-table';
 import tblIcon from '../../TableIcon';
+import { Loader } from '../Font';
+
 
 
 
@@ -29,21 +31,26 @@ const ApbkMonitoring = () => {
     const [changests, setChangests] = useState('');
     const [selectedRow, setSelectedRow] = useState(null);
     const [selectedRow_, setSelectedRow_] = useState(null);
+    const [load, setLoad] = useState(false);
 
 
     const data = async () => {
         try {
+            setLoad(true);
             const respon = await axios.get('/anggaran');
             if (kd_lvl1 === 2) {
                 const tes = respon.data.filter((e) => e);
                 setData_(tes.filter((e) => e.sts === true && e.kd_kampung === kd_kampung));
                 setData_2(tes.filter((e) => e.sts === false && e.kd_kampung === kd_kampung));
+                setLoad(false);
             } else {
                 setData_(respon.data.filter(e => e.sts === true));
                 setData_2(respon.data.filter(e => e.sts === false));
+                setLoad(false);
             }
         } catch (e) {
             console.log('error refresh token', e.message);
+            setLoad(false);
         }
     }
 
@@ -192,6 +199,7 @@ const ApbkMonitoring = () => {
 
     /* Funtiom Update Data */
     const updateDataChecklist = async (e) => {
+        setLoad(true);
         try {
             const date = new Date();
             const update = await axios.patch('/anggaran', {
@@ -200,6 +208,7 @@ const ApbkMonitoring = () => {
                 sts: 1
             })
             setChangests(date);
+            setLoad(false);
         } catch (error) {
             console.log('error update ... ', error)
         }
@@ -338,11 +347,15 @@ const ApbkMonitoring = () => {
 
     return (
         <div>
+            <div>
+                {load ? <Loader /> : null}
+            </div>
             <div className='pt-20'>
                 <div className='mx-auto'>
                     <div className='container mx-auto'>
                         <div className='relative container -z-40 mx-auto'>
                             <div className='absolute min-w-full mx-auto z-10'>
+
                                 <MaterialTable
                                     title="Daftar APBK Telah Verifikasi "
                                     options={options}

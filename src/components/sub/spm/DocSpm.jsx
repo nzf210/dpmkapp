@@ -82,9 +82,9 @@ const SpmDoc = ({ dataselectspp }) => {
         header: { borderTop: 'none', },
         bold: { fontWeight: 'semibold', fontSize: 11, textAlign: 'center', alignSelf: 'center', alignContent: 'center', alignItems: 'center' },
         // So Declarative and unDRY 👌
-        row1: { width: '10%' },
-        row2: { width: '19%', },
-        row3: { width: '18%', },
+        row1: { width: '5%' },
+        row2: { width: '19%', textAlign: 'left' },
+        row3: { width: '23%', },
         row4: { width: '10%', },
         row5: { width: '7%', },
         row6: { width: '10%', },
@@ -105,7 +105,7 @@ const SpmDoc = ({ dataselectspp }) => {
                     <>
                         <Page
                             size="A4"
-                            key={`doc-spd-${i}`}
+                            key={`doc-spd-page1`}
                             style={{
                                 paddingTop: "15px",
                                 paddingLeft: "50px",
@@ -252,7 +252,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                         </View>
                                         <View style={{ marginTop: 0, flexDirection: 'row', paddingHorizontal: 2, minWidth: 4 }}>
                                             <Text style={{ width: 7, color: 'white' }}>11 </Text>
-                                            <Text style={{ width: 7, }}>1.</Text>
+                                            <Text style={{ width: 7, }}>5.</Text>
                                             <Text style={{ width: 7, color: 'white' }}>111</Text>
                                             <Text>Akan membuat laporan pertanggungjawaban Dana Desa berdasarkan peraturan yang berlaku;</Text>
                                         </View>
@@ -287,7 +287,7 @@ const SpmDoc = ({ dataselectspp }) => {
                         </Page>
 
                         <Page size="A4"
-                            key={`doc-spm-2-${i}`}
+                            key={`doc-spm-2-page2`}
                             style={{
                                 paddingTop: "15px",
                                 paddingLeft: "50px",
@@ -361,7 +361,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                 <View style={[style.row, { fontSize: 10, textAlign: 'center', minHeight: 28, maxHeight: 28, alignItems: 'center' }]}>
                                     <Text style={[style.row1, style.boder]}>1</Text>
                                     <Text style={[style.row2, style.boder]}>{e.nama_kepala}</Text>
-                                    <Text style={[style.row3, style.boder]}>Kepala Kampung</Text>
+                                    <Text style={[style.row3, style.boder, { fontSize: 10, textAlign: 'left', width: 88, paddingTop: 0, alignItems: 'center', }]}>Kepala Kampung</Text>
                                     <Text style={[style.row4, style.boder]}>3</Text>
                                     <Text style={[style.row5, style.boder]}>OB</Text>
                                     <Text style={[style.row6, style.boder]}>1.500.000</Text>
@@ -371,7 +371,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                 <View style={[style.row, { fontSize: 10, textAlign: 'center', minHeight: 28, maxHeight: 28, alignItems: 'center' }]}>
                                     <Text style={[style.row1, style.boder]}>2</Text>
                                     <Text style={[style.row2, style.boder]}>{e.nm_3}</Text>
-                                    <Text style={[style.row3, style.boder]}>Sekretaris</Text>
+                                    <Text style={[style.row3, style.boder, { fontSize: 10, textAlign: 'left', width: 88, alignItems: 'center', }]}>Sekretaris</Text>
                                     <Text style={[style.row4, style.boder]}>3</Text>
                                     <Text style={[style.row5, style.boder]}>OB</Text>
                                     <Text style={[style.row6, style.boder]}>850.000</Text>
@@ -381,7 +381,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                 <View style={[style.row, { fontSize: 10, textAlign: 'center', minHeight: 28, maxHeight: 28, alignItems: 'center' }]}>
                                     <Text style={[style.row1, style.boder]}>3</Text>
                                     <Text style={[style.row2, style.boder]}>{e.nama}</Text>
-                                    <Text style={[style.row3, style.boder]}>Bendahara</Text>
+                                    <Text style={[style.row3, style.boder, { fontSize: 10, textAlign: 'left', width: 88, alignItems: 'center', }]}>Bendahara</Text>
                                     <Text style={[style.row4, style.boder]}>3</Text>
                                     <Text style={[style.row5, style.boder]}>OB</Text>
                                     <Text style={[style.row6, style.boder]}>800.000</Text>
@@ -391,7 +391,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                 <View style={[style.row, { fontSize: 10, textAlign: 'center', minHeight: 28, maxHeight: 28, alignItems: 'center' }]}>
                                     <Text style={[style.row1, { borderRight: '1px solid #EEE', minHeight: 28, alignItems: 'center', paddingTop: 7 }]}>4</Text>
                                     <Text style={[style.row2, style.boder]}>{e.nm_4}</Text>
-                                    <Text style={[style.row3, style.boder]}>Kaur Pemerintahan</Text>
+                                    <Text style={[style.row3, style.boder, { fontSize: 10, textAlign: 'left', width: 88, paddingTop: 0, alignItems: 'center', }]}>Kaur Pemerintahan</Text>
                                     <Text style={[style.row4, style.boder]}>3</Text>
                                     <Text style={[style.row5, style.boder]}>OB</Text>
                                     <Text style={[style.row6, style.boder]}>700.000</Text>
@@ -401,7 +401,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                 <View style={[style.row, { fontSize: 10, textAlign: 'center', minHeight: 28, maxHeight: 28, alignItems: 'center' }]}>
                                     <Text style={[style.row1, { borderRight: '1px solid #EEE', minHeight: 28, alignItems: 'center', paddingTop: 7 }]}>5</Text>
                                     <Text style={[style.row2, style.boder]}>{e.nm_5}</Text>
-                                    <Text style={[style.row3, style.boder]}>Kaur Umum</Text>
+                                    <Text style={[style.row3, style.boder, { fontSize: 10, textAlign: 'left', width: 88, alignItems: 'center', }]}>Kaur Umum</Text>
                                     <Text style={[style.row4, style.boder]}>3</Text>
                                     <Text style={[style.row5, style.boder]}>OB</Text>
                                     <Text style={[style.row6, style.boder]}>700.000</Text>
@@ -411,7 +411,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                 <View style={[style.row, { fontSize: 10, textAlign: 'center', minHeight: 28, maxHeight: 28, alignItems: 'center' }]}>
                                     <Text style={[style.row1, { borderRight: '1px solid #EEE', minHeight: 28, alignItems: 'center', paddingTop: 7 }]}>6</Text>
                                     <Text style={[style.row2, style.boder]}>{e.nm_6}</Text>
-                                    <Text style={[style.row3, style.boder]}>Kaur Kesejahteraan Rakyat</Text>
+                                    <Text style={[style.row3, style.boder, { fontSize: 10, textAlign: 'left', width: 88, paddingTop: 0, alignItems: 'center', }]}>Kaur Kesejahteraan Rakyat</Text>
                                     <Text style={[style.row4, style.boder]}>3</Text>
                                     <Text style={[style.row5, style.boder]}>OB</Text>
                                     <Text style={[style.row6, style.boder]}>700.000</Text>
@@ -421,7 +421,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                 <View style={[style.row, { fontSize: 10, textAlign: 'center', minHeight: 28, maxHeight: 28, alignItems: 'center' }]}>
                                     <Text style={[style.row1, { borderRight: '1px solid #EEE', minHeight: 28, alignItems: 'center', paddingTop: 7 }]}>7</Text>
                                     <Text style={[style.row2, style.boder]}>{e.nm_7}</Text>
-                                    <Text style={[style.row3, style.boder]}>Kaur Pembangunan</Text>
+                                    <Text style={[style.row3, style.boder, { fontSize: 10, textAlign: 'left', width: 88, paddingTop: 0, alignItems: 'center', }]}>Kaur Pembangunan</Text>
                                     <Text style={[style.row4, style.boder]}>3</Text>
                                     <Text style={[style.row5, style.boder]}>OB</Text>
                                     <Text style={[style.row6, style.boder]}>700.000</Text>
@@ -436,7 +436,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                 <View style={[style.row, { fontSize: 10, textAlign: 'center', minHeight: 28, maxHeight: 28, alignItems: 'center' }]}>
                                     <Text style={[style.row1, { borderRight: '1px solid #EEE', minHeight: 28, alignItems: 'center', paddingTop: 7 }]}>1</Text>
                                     <Text style={[style.row2, style.boder]}>{e.nm_8}</Text>
-                                    <Text style={[style.row3, style.boder]}>Ketua Bamuskam</Text>
+                                    <Text style={[style.row3, style.boder, { fontSize: 10, textAlign: 'left', width: 88, alignItems: 'center', }]}>Ketua Bamuskam</Text>
                                     <Text style={[style.row4, style.boder]}>3</Text>
                                     <Text style={[style.row5, style.boder]}>OB</Text>
                                     <Text style={[style.row6, style.boder]}>1.500.000</Text>
@@ -446,7 +446,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                 <View style={[style.row, { fontSize: 10, textAlign: 'center', minHeight: 28, maxHeight: 28, alignItems: 'center' }]}>
                                     <Text style={[style.row1, { borderRight: '1px solid #EEE', minHeight: 28, alignItems: 'center', paddingTop: 7 }]}>2</Text>
                                     <Text style={[style.row2, style.boder]}>{e.nm_9}</Text>
-                                    <Text style={[style.row3, style.boder]}>Wakil Ketua Bamuskam</Text>
+                                    <Text style={[style.row3, style.boder, { fontSize: 10, textAlign: 'left', width: 88, paddingTop: 0, alignItems: 'center', }]}>Wakil Ketua Bamuskam</Text>
                                     <Text style={[style.row4, style.boder]}>3</Text>
                                     <Text style={[style.row5, style.boder]}>OB</Text>
                                     <Text style={[style.row6, style.boder]}>850.000</Text>
@@ -456,7 +456,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                 <View style={[style.row, { fontSize: 10, textAlign: 'center', minHeight: 28, maxHeight: 28, alignItems: 'center' }]}>
                                     <Text style={[style.row1, { borderRight: '1px solid #EEE', minHeight: 28, alignItems: 'center', paddingTop: 7 }]}>3</Text>
                                     <Text style={[style.row2, style.boder]}>{e.nm_10}</Text>
-                                    <Text style={[style.row3, style.boder]}>Sekretaris Bamuskam</Text>
+                                    <Text style={[style.row3, style.boder, { fontSize: 10, textAlign: 'left', width: 88, paddingTop: 0, alignItems: 'center', }]}>Sekretaris Bamuskam</Text>
                                     <Text style={[style.row4, style.boder]}>3</Text>
                                     <Text style={[style.row5, style.boder]}>OB</Text>
                                     <Text style={[style.row6, style.boder]}>800.000</Text>
@@ -466,7 +466,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                 <View style={[style.row, { fontSize: 10, textAlign: 'center', minHeight: 28, maxHeight: 28, alignItems: 'center' }]}>
                                     <Text style={[style.row1, { borderRight: '1px solid #EEE', minHeight: 28, alignItems: 'center', paddingTop: 7 }]}>4</Text>
                                     <Text style={[style.row2, style.boder]}>{e.nm_11}</Text>
-                                    <Text style={[style.row3, style.boder]}>Ketua Bidang PPK &amp; PK</Text>
+                                    <Text style={[style.row3, style.boder, { fontSize: 10, textAlign: 'left', width: 88, paddingTop: 0, alignItems: 'center', }]}>Ketua Bidang PPK &amp; PK</Text>
                                     <Text style={[style.row4, style.boder]}>3</Text>
                                     <Text style={[style.row5, style.boder]}>OB</Text>
                                     <Text style={[style.row6, style.boder]}>700.000</Text>
@@ -476,7 +476,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                 <View style={[style.row, { fontSize: 10, textAlign: 'center', minHeight: 28, maxHeight: 28, alignItems: 'center' }]}>
                                     <Text style={[style.row1, { borderRight: '1px solid #EEE', minHeight: 28, alignItems: 'center', paddingTop: 7 }]}>5</Text>
                                     <Text style={[style.row2, style.boder]}>{e.nm_12}</Text>
-                                    <Text style={[style.row3, style.boder]}>Ketua Bidang PK &amp; PMK</Text>
+                                    <Text style={[style.row3, style.boder, { fontSize: 10, textAlign: 'left', width: 88, paddingTop: 0, alignItems: 'center', }]}>Ketua Bidang PK &amp; PMK</Text>
                                     <Text style={[style.row4, style.boder]}>3</Text>
                                     <Text style={[style.row5, style.boder]}>OB</Text>
                                     <Text style={[style.row6, style.boder]}>700.000</Text>
@@ -486,7 +486,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                 <View style={[style.row, { fontSize: 10, textAlign: 'center', minHeight: 28, maxHeight: 28, alignItems: 'center' }]}>
                                     <Text style={[style.row1, { borderRight: '1px solid #EEE', minHeight: 28, alignItems: 'center', paddingTop: 7 }]}>6</Text>
                                     <Text style={[style.row2, style.boder]}>{e.nm_13}</Text>
-                                    <Text style={[style.row3, style.boder]}>Hansip</Text>
+                                    <Text style={[style.row3, style.boder, { fontSize: 10, textAlign: 'left', width: 88, alignItems: 'center', }]}>Hansip</Text>
                                     <Text style={[style.row4, style.boder]}>3</Text>
                                     <Text style={[style.row5, style.boder]}>OB</Text>
                                     <Text style={[style.row6, style.boder]}>500.000</Text>

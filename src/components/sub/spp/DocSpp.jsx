@@ -148,7 +148,7 @@ const SppDoc = ({ dataselectspp }) => {
                     <>
                         <Page
                             size="A4"
-                            key={`doc-spd-${i}`}
+                            key={`doc-spp-1`}
                             style={{
                                 paddingTop: "15px",
                                 paddingLeft: "50px",
@@ -209,12 +209,12 @@ const SppDoc = ({ dataselectspp }) => {
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 49, width: 260, }}>3. Nama Kepala Kampung</Text>
                                     <Text style={{ paddingTop: -15, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -30, paddingLeft: 270, fontWeight: 'bold' }}>{camelize(e.nama_kepala)}</Text>
+                                    <Text style={{ paddingTop: -30, paddingLeft: 270, fontWeight: 'bold' }}>{e.nama_kepala}</Text>
                                 </View>
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 49, width: 260, }}>4. Nama Bendahara Kampung</Text>
                                     <Text style={{ paddingTop: -15, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -30, paddingLeft: 270, fontWeight: 'bold' }}>{camelize(e.nama)}</Text>
+                                    <Text style={{ paddingTop: -30, paddingLeft: 270, fontWeight: 'bold' }}>{e.nama}</Text>
                                 </View>
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 50, width: 260 }}>5. Jumlah Permohonan Dana Rp.</Text>
@@ -276,7 +276,7 @@ const SppDoc = ({ dataselectspp }) => {
                             >Halaman 1 dari 2</Text>
                         </Page>
                         <Page size="A4" orientation="landscape"
-                            key={`doc-spd-2-${i}`}
+                            key={`doc-spp-2`}
                             style={{
                                 paddingTop: "15px",
                                 paddingLeft: "50px",
@@ -395,7 +395,7 @@ const SppDoc = ({ dataselectspp }) => {
                                                 <Text style={{ textAlign: 'center', alignItems: 'center', width: 150, }}>-</Text>
                                                 <Text style={{ color: 'white' }}>-</Text>
                                                 <Text style={{ textAlign: 'center', alignItems: 'center', width: 150, }}>-</Text>
-                                                <Text style={{ width: 150, textAlign: 'right', marginTop: 2, fontWeight: 'semibold' }}>-</Text>
+                                                <Text style={{ width: 150, textAlign: 'bold', marginTop: 2, fontWeight: 'semibold' }}>-</Text>
                                             </View>
                                         </View>
                                     </View>

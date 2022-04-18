@@ -21,6 +21,7 @@ import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import BackupIcon from '@mui/icons-material/Backup';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DocSp2d from './DocSp2d';
+import { Loader } from '../Font';
 
 const Sp2dAdd = () => {
 
@@ -34,8 +35,10 @@ const Sp2dAdd = () => {
     const date = new Date();
     const [tgl, setTgl] = useState(date);
     const [viewprint, setviewprint] = useState(false);
+    const [load, setLoad] = useState(false);
 
     const data = async () => {
+        setLoad(true);
         try {
             const respon = await axios.get('/anggaran');
             // if (kd_lvl1 === 2) {
@@ -46,9 +49,11 @@ const Sp2dAdd = () => {
             setData_(respon.data.filter(e => e.sts === true && e.sts_spp === true && e.kd_keg === 4 && e.sts_spm === true && e.sts_sp2d === true));
             setData_2(respon.data.filter(e => e.sts === true && e.sts_spp === true && e.kd_keg === 4 && e.sts_spm === true && e.sts_sp2d === false));
             // }
-            console.log('data Anggaran', respon.data)
+            //console.log('data Anggaran', respon.data)
+            setLoad(false);
         } catch (e) {
             console.log('error refresh token', e.message);
+            setLoad(true);
         }
     }
 
@@ -73,30 +78,18 @@ const Sp2dAdd = () => {
         //     render: rowData => rowData.tableData.id + 1
         // }, 
         {
-            field: 'kampung', title: 'Kampung',
-            cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%',
-                height: '10px', paddingTop: 1, paddingBottom: 1
-            },
-            headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%',
-            }, editable: () => false,
+            field: 'kampung', title: 'Kampung', cellStyle: { whiteSpace: 'nowrap', width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1 },
+            headerStyle: { whiteSpace: 'nowrap', width: '15%', }, editable: () => false,
         }, {
             field: 'distrik', title: 'Distrik', editable: () => false,
             cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
+                whiteSpace: 'nowrap', width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
             },
             headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%',
+                whiteSpace: 'nowrap', width: '15%',
             },
         }, {
-            field: 'thp_advis', title: 'Kegiatan', cellStyle: {
-                height: '10px', paddingTop: 1, paddingBottom: 1
-            }, editable: () => false,
+            field: 'thp_advis', title: 'Kegiatan', cellStyle: { height: '10px', paddingTop: 1, paddingBottom: 1 }, editable: () => false,
         },
         {
             field: 'no_sp2d', title: 'NO SP2D', cellStyle: {
@@ -105,44 +98,41 @@ const Sp2dAdd = () => {
         },
         {
             field: 'tgl_sp2d', title: 'Tgl SP2D', type: "date", dateSetting: { locale: "id-ID" }, cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '10%', height: '10px', paddingTop: 1, paddingBottom: 1
+                whiteSpace: 'nowrap', width: '10%', height: '10px', paddingTop: 1, paddingBottom: 1
             },
             headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '10%',
+                whiteSpace: 'nowrap', width: '10%',
             }
         },
-
-        {
-            field: 'no_spm', title: 'NO SKBK', cellStyle: {
-                height: '10px', paddingTop: 1, paddingBottom: 1
-            }
-        }, {
-            field: 'tgl_spm', title: 'Tgl SKBK', type: "date", dateSetting: { locale: "id-ID" }, cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '10%', height: '10px', paddingTop: 1, paddingBottom: 1
-            },
-            headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '10%',
-            },
-        },
-        {
-            field: 'no_spp', title: 'NO SP2SPD', cellStyle: {
-                height: '10px', paddingTop: 1, paddingBottom: 1
-            }, editable: () => false,
-        },
-        {
-            field: 'tgl_spp', title: 'Tgl SP2SPD', type: "date", dateSetting: { locale: "id-ID" }, cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '10%', height: '10px', paddingTop: 1, paddingBottom: 1
-            },
-            headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '10%',
-            }, editable: () => false,
-        },
+        // {
+        //     field: 'no_spm', title: 'NO SKBK', cellStyle: {
+        //         height: '10px', paddingTop: 1, paddingBottom: 1
+        //     }
+        // }, {
+        //     field: 'tgl_spm', title: 'Tgl SKBK', type: "date", dateSetting: { locale: "id-ID" }, cellStyle: {
+        //         whiteSpace: 'nowrap',
+        //         width: '10%', height: '10px', paddingTop: 1, paddingBottom: 1
+        //     },
+        //     headerStyle: {
+        //         whiteSpace: 'nowrap',
+        //         width: '10%',
+        //     },
+        // },
+        // {
+        //     field: 'no_spp', title: 'NO SP2SPD', cellStyle: {
+        //         height: '10px', paddingTop: 1, paddingBottom: 1
+        //     }, editable: () => false,
+        // },
+        // {
+        //     field: 'tgl_spp', title: 'Tgl SP2SPD', type: "date", dateSetting: { locale: "id-ID" }, cellStyle: {
+        //         whiteSpace: 'nowrap',
+        //         width: '10%', height: '10px', paddingTop: 1, paddingBottom: 1
+        //     },
+        //     headerStyle: {
+        //         whiteSpace: 'nowrap',
+        //         width: '10%',
+        //     }, editable: () => false,
+        // },
         {
             field: 'pagu', title: 'Pagu', cellStyle: {
                 whiteSpace: 'nowrap',
@@ -224,16 +214,17 @@ const Sp2dAdd = () => {
                 whiteSpace: 'nowrap',
                 width: '15%',
             }, editable: () => false,
-        }, {
-            field: 'no_spp', title: 'NO SP2SPD', cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
-            },
-            headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%',
-            }, type: "date", dateSetting: { locale: "id-ID" }, editable: () => false,
         },
+        //  {
+        //     field: 'no_spp', title: 'NO SP2SPD', cellStyle: {
+        //         whiteSpace: 'nowrap',
+        //         width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
+        //     },
+        //     headerStyle: {
+        //         whiteSpace: 'nowrap',
+        //         width: '15%',
+        //     }, type: "date", dateSetting: { locale: "id-ID" }, editable: () => false,
+        // },
         // {
         //     field: 'sts', title: 'Status', editable: () => false, render: (row) => <div className='bg-yellow-200 rounded-md p-2 text-center -translate-x-3'>Proses SKBK</div>, align: 'center',
         //     cellStyle: {
@@ -249,8 +240,8 @@ const Sp2dAdd = () => {
 
     /* Funtiom Update Data */
     const updateDataChecklist = async (e, ee, eee) => {
+        setLoad(true);
         try {
-
             // let no_ = 1;
             e.map(async (f) => {
                 const no = await axios.get(`/nodok`);
@@ -284,9 +275,10 @@ const Sp2dAdd = () => {
                 console.log(update.data.info);
             }
             )
-
+            setLoad(false);
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            setLoad(true);
         }
     }
     /* Funtiom Update Data */
@@ -360,7 +352,7 @@ const Sp2dAdd = () => {
             actions: ['Aksi']
         },
         body: {
-            emptyDataSourceMessage: ('sedang memuat data ... '),
+            emptyDataSourceMessage: ('Data belum tersedia ... '),
             addTooltip: ('tambah data'),
             editTooltip: ('ubah data'),
             deleteTooltip: ('hapus data'),
@@ -380,20 +372,24 @@ const Sp2dAdd = () => {
         //isDeleteHidden: rowData => rowData.sts_sp2d === true,
 
         onRowUpdate: (f, dataLama) => new Promise(async (reso, rej) => {
+            setLoad(true);
             const update = await axios.patch('/anggaran', {
                 id: f.id, tgl_sp2d: f.tgl_sp2d, no_sp2d: f.no_sp2d
             })
             setChangests(new Date().toISOString());
-            console.log('update ', update.data.info)
+            //console.log('update ', update.data.info)
             reso();
+            setLoad(false);
         }),
         onRowDelete: (f) => new Promise(async (reso, rej) => {
+            setLoad(true);
             const del = await axios.patch('/anggaran', {
                 id: f.id, no_sp2d: null /* `Dihapus ${new Date().toLocaleString()}`*/, sts_sp2d: false, no_sp2d: '', tgl_sp2d: '1900-01-01'
             })
             setChangests(new Date().toISOString());
-            console.log('Delete ', del.data.info)
+            //console.log('Delete ', del.data.info)
             reso();
+            setLoad(false);
         })
     }
 
@@ -445,6 +441,9 @@ const Sp2dAdd = () => {
 
     return (
         <div>
+            <div>
+                {load ? <Loader /> : null}
+            </div>
             <div className='container w-full mx-auto items-center justify-center'>
                 <div className='mx-auto fixed z-20 w-[70%]'>
                     <div className='mx-auto justify-center items-center relative'>

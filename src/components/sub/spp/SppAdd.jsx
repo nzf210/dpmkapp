@@ -21,6 +21,7 @@ import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import BackupIcon from '@mui/icons-material/Backup';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DocSpp from './DocSpp';
+import { Loader } from '../Font'
 
 const SppAdd = () => {
 
@@ -34,19 +35,26 @@ const SppAdd = () => {
     const date = new Date();
     const [tgl, setTgl] = useState(date);
     const [viewprint, setviewprint] = useState(false);
+    const [load, setLoad] = useState(false);
+
+
 
     const data = async () => {
+        setLoad(true);
         try {
             const respon = await axios.get('/anggaran');
             if (kd_lvl1 === 2) {
                 const tes = respon.data.filter((e) => e);
                 setData_(tes.filter((e) => e.sts_spp === true && e.kd_kampung === kd_kampung && e.sts === true && e.kd_keg === 4));
                 setData_2(tes.filter((e) => e.sts_spp === false && e.kd_kampung === kd_kampung && e.sts === true && e.kd_keg === 4));
+
             } else {
                 setData_(respon.data.filter(e => e.sts_spp === true && e.sts === true && e.kd_keg === 4));
                 setData_2(respon.data.filter(e => e.sts_spp === false && e.sts === true && e.kd_keg === 4));
+
             }
-            console.log('data Anggaran', respon.data)
+            console.log('data Anggaran', respon.data);
+            setLoad(false);
         } catch (e) {
             console.log('error refresh token', e.message);
         }
@@ -135,76 +143,57 @@ const SppAdd = () => {
             title: 'No',
             cellStyle: {
                 whiteSpace: 'nowrap',
-                width: '2%',
-                height: '10px', paddingTop: 1, paddingBottom: 1
+                width: '2%', height: '10px', paddingTop: 1, paddingBottom: 1
             },
             headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%',
+                whiteSpace: 'nowrap', width: '15%',
             }, editable: () => false,
             render: rowData => rowData.tableData.id + 1
         },
         {
             field: 'kampung', title: 'Kampung', editable: () => false, cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
+                whiteSpace: 'nowrap', width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
             },
             headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%',
+                whiteSpace: 'nowrap', width: '15%',
             },
         },
         {
             field: 'distrik', title: 'Distrik', editable: () => false,
             cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
+                whiteSpace: 'nowrap', width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
             },
             headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%',
+                whiteSpace: 'nowrap', width: '15%',
             },
         },
         {
-            field: 'thp_advis', title: 'Kegiatan', cellStyle: {
-                height: '10px', paddingTop: 1, paddingBottom: 1
-            },
+            field: 'thp_advis', title: 'Kegiatan', cellStyle: { height: '10px', paddingTop: 1, paddingBottom: 1 },
         },
         {
             field: 'pagu', title: 'Pagu', cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1, type: 'currency', currencySetting: { currencyCode: "IDR" },
+                whiteSpace: 'nowrap', width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1, type: 'currency', currencySetting: { currencyCode: "IDR" },
             },
             headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%',
+                whiteSpace: 'nowrap', width: '15%',
             }, type: 'currency', currencySetting: { currencyCode: "IDR" },
         },
         {
             field: 'tgl', title: 'TGL Verf APBK', cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
+                whiteSpace: 'nowrap', width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
             },
-            headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%',
-            }, type: "date", dateSetting: { locale: "id-ID" }
+            headerStyle: { whiteSpace: 'nowrap', width: '15%', }, type: "date", dateSetting: { locale: "id-ID" }
         },
         {
-            field: 'sts', title: 'Status', editable: () => false, render: (row) => <div className='bg-yellow-200 rounded-md p-2 text-center -translate-x-3'>Proses SP3B</div>, align: 'center',
-            cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
-            },
-            headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%',
-            },
+            field: 'sts', title: 'Status', editable: () => false, render: (row) => <div className='bg-yellow-200 rounded-md p-2 text-center -translate-x-3'>Proses SP2SPD</div>, align: 'center',
+            cellStyle: { whiteSpace: 'nowrap', width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1 },
+            headerStyle: { whiteSpace: 'nowrap', width: '15%', },
         },
     ]
 
     /* Funtiom Update Data */
     const updateDataChecklist = async (e, ee, eee) => {
+        setLoad(true);
         try {
             e.map(async (f, i) => {
                 const no = await axios.get(`/nodok/${f.kd_kampung}`);
@@ -236,6 +225,7 @@ const SppAdd = () => {
                 })
                 setChangests(new Date().toISOString());
                 console.log(update.data.info);
+                setLoad(false);
             }
             )
 
@@ -314,7 +304,7 @@ const SppAdd = () => {
             actions: ['Aksi']
         },
         body: {
-            emptyDataSourceMessage: ('sedang memuat data ... '),
+            emptyDataSourceMessage: ('Data belum tersedia ... '),
             addTooltip: ('tambah data'),
             editTooltip: ('ubah data'),
             deleteTooltip: ('hapus data'),
@@ -411,6 +401,9 @@ const SppAdd = () => {
 
     return (
         <div>
+            <>
+                {load ? <Loader /> : null}
+            </>
             <div className='container w-full mx-auto items-center justify-center'>
                 <div className='mx-auto fixed z-20 w-[70%]'>
                     <div className='mx-auto justify-center items-center relative'>

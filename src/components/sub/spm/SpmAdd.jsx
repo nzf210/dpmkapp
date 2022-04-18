@@ -21,6 +21,7 @@ import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import BackupIcon from '@mui/icons-material/Backup';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DocSpm from './DocSpm';
+import { Loader } from '../Font';
 
 const SpmAdd = () => {
 
@@ -34,9 +35,11 @@ const SpmAdd = () => {
     const date = new Date();
     const [tgl, setTgl] = useState(date);
     const [viewprint, setviewprint] = useState(false);
+    const [load, setLoad] = useState(false);
 
     const data = async () => {
         try {
+            setLoad(true);
             const respon = await axios.get('/anggaran/add');
             if (kd_lvl1 === 2) {
                 const tes = respon.data.filter((e) => e);
@@ -47,6 +50,7 @@ const SpmAdd = () => {
                 setData_2(respon.data.filter(e => e.sts === true && e.sts_spp === true && e.kd_keg === 4 && e.sts_spm === false));
             }
             console.log('data Anggaran', respon.data)
+            setLoad(false);
         } catch (e) {
             console.log('error refresh token', e.message);
         }
@@ -205,16 +209,17 @@ const SpmAdd = () => {
                 whiteSpace: 'nowrap',
                 width: '15%',
             }, editable: () => false,
-        }, {
-            field: 'tgl_spp', title: 'TGL SP2SPD', cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
-            },
-            headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%',
-            }, type: "date", dateSetting: { locale: "id-ID" }, editable: () => false,
         },
+        //  {
+        //     field: 'tgl_spp', title: 'TGL SP2SPD', cellStyle: {
+        //         whiteSpace: 'nowrap',
+        //         width: '15%', height: '10px', paddingTop: 1, paddingBottom: 1
+        //     },
+        //     headerStyle: {
+        //         whiteSpace: 'nowrap',
+        //         width: '15%',
+        //     }, type: "date", dateSetting: { locale: "id-ID" }, editable: () => false,
+        // },
         // {
         //     field: 'sts', title: 'Status', editable: () => false, render: (row) => <div className='bg-yellow-200 rounded-md p-2 text-center -translate-x-3'>Proses SKBK</div>, align: 'center',
         //     cellStyle: {
@@ -231,6 +236,7 @@ const SpmAdd = () => {
     /* Funtiom Update Data */
     const updateDataChecklist = async (e, ee, eee) => {
         try {
+            setLoad(true);
             e.map(async (f, i) => {
                 const no = await axios.get(`/nodok/${f.kd_kampung}`);
                 const nodok_ = parseInt(no.data[0].no_spm);
@@ -261,6 +267,7 @@ const SpmAdd = () => {
                 })
                 setChangests(new Date().toISOString());
                 console.log(update.data.info);
+                setLoad(false);
             }
             )
 
@@ -339,7 +346,7 @@ const SpmAdd = () => {
             actions: ['Aksi']
         },
         body: {
-            emptyDataSourceMessage: ('sedang memuat data ... '),
+            emptyDataSourceMessage: ('Data belum tersedia ... '),
             addTooltip: ('tambah data'),
             editTooltip: ('ubah data'),
             deleteTooltip: ('hapus data'),
@@ -359,20 +366,24 @@ const SpmAdd = () => {
         isDeleteHidden: rowData => rowData.sts_sp2d === true,
 
         onRowUpdate: (f, dataLama) => new Promise(async (reso, rej) => {
+            setLoad(true);
             const update = await axios.patch('/anggaran', {
                 id: f.id, tgl_spm: f.tgl_spm, no_spm: f.no_spm
             })
             setChangests(new Date().toISOString());
             console.log('update ', update.data.info)
             reso();
+            setLoad(false);
         }),
         onRowDelete: (f) => new Promise(async (reso, rej) => {
+            setLoad(true);
             const del = await axios.patch('/anggaran', {
                 id: f.id, no_spm: `Dihapus ${new Date().toLocaleString()}`, tgl_spm: '1900-01-01', sts_spm: false, no_sp2d: '', tgl_sp2d: '1900-01-01'
             })
             setChangests(new Date().toISOString());
             console.log('Delete ', del.data.info)
             reso();
+            setLoad(false);
         })
     }
 
@@ -424,6 +435,9 @@ const SpmAdd = () => {
 
     return (
         <div>
+            <div>
+                {load ? <Loader /> : null}
+            </div>
             <div className='container w-full mx-auto items-center justify-center'>
                 <div className='mx-auto fixed z-20 w-[70%]'>
                     <div className='mx-auto justify-center items-center relative'>

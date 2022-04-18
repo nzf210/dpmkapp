@@ -1,13 +1,13 @@
-import { Font } from '@react-pdf/renderer';
 import black from '../../public/Roboto_Slab/static/RobotoSlab-Black.ttf';
-import bold from '../../public/Roboto_Slab/static/RobotoSlab-Bold.ttf';
-import extrabold from '../../public/Roboto_Slab/static/RobotoSlab-ExtraBold.ttf';
-import extralight from '../../public/Roboto_Slab/static/RobotoSlab-ExtraLight.ttf';
-import light from '../../public/Roboto_Slab/static/RobotoSlab-Light.ttf';
-import medium from '../../public/Roboto_Slab/static/RobotoSlab-Medium.ttf';
-import reguler from '../../public/Roboto_Slab/static/RobotoSlab-Regular.ttf';
-import semibold from '../../public/Roboto_Slab/static/RobotoSlab-SemiBold.ttf';
-import thin from '../../public/Roboto_Slab/static/RobotoSlab-Thin.ttf';
+import React from 'react';
+
+//
+import {
+    View, Svg, Font, Path
+} from "@react-pdf/renderer";
+import QRCode from 'qrcode.react';
+import ReactHtmlParser from 'react-html-parser';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 export default Font.register({
     family: "Roboto",
@@ -16,39 +16,7 @@ export default Font.register({
     fonts: [
         {
             src: black,
-        },
-        {
-            src: bold,
-            fontWeight: "bold",
-        },
-        {
-            src: extrabold,
-            fontWeight: "extrabold",
-        },
-        {
-            src: extralight,
-            fontWeight: "extralight",
-        },
-        {
-            src: light,
-            fontWeight: "light",
-        },
-        {
-            src: medium,
-            fontWeight: "medium",
-        },
-        {
-            src: reguler,
-            fontWeight: "reguler",
-        },
-        {
-            src: semibold,
-            fontWeight: "semibold",
-        },
-        {
-            src: thin,
-            fontWeight: "thin",
-        },
+        }
     ],
 })
 
@@ -76,3 +44,54 @@ export function currency(b) {
     rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
     return prefix === undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 }
+
+
+/* QR COde .......... */
+
+export const PdfWithQrCode = ({ ssf_id }) => {
+    const qrCodeComponent = (
+        <QRCode
+            value={ssf_id}
+            renderAs="svg"
+            size={80}
+        />
+    );
+
+    const qrCodeComponentStaticMarkup = renderToStaticMarkup(qrCodeComponent);
+
+    const parsedQrCodeSvg = parseQrCodeMarkup(qrCodeComponentStaticMarkup);
+    if (!parsedQrCodeSvg) {
+        return null;
+    }
+
+    return (
+        <View>
+            <Svg
+                style={{ width: 80, height: 80 }}
+                viewBox="0 0 49 49"
+            >
+                {parsedQrCodeSvg.props.children.filter(c => c.type === 'path').map((child, index) => (
+                    <Path
+                        key={index}
+                        d={child.props.d}
+                        fill={child.props.fill}
+                    />
+                ))}
+            </Svg>
+        </View>
+    );
+}
+
+const parseQrCodeMarkup = (markup) => {
+    let parsedQrCodeSvg = null;
+    ReactHtmlParser(markup).forEach(el => {
+        const { type } = el;
+        if (type === 'svg') {
+            parsedQrCodeSvg = el;
+        }
+    });
+
+    return parsedQrCodeSvg;
+};
+
+/* QR COde .......... */

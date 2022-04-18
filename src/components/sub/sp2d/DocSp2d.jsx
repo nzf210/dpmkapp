@@ -7,10 +7,7 @@ import {
     StyleSheet,
     View, Svg, Font, Path
 } from "@react-pdf/renderer";
-import ReactHtmlParser from 'react-html-parser';
-import { renderToStaticMarkup } from 'react-dom/server';
 import Yhk from '../../../public/yhk.png';
-import black from '../../../public/Roboto_Slab/static/RobotoSlab-Black.ttf';
 import bold from '../../../public/Roboto_Slab/static/RobotoSlab-Bold.ttf';
 import extrabold from '../../../public/Roboto_Slab/static/RobotoSlab-ExtraBold.ttf';
 import extralight from '../../../public/Roboto_Slab/static/RobotoSlab-ExtraLight.ttf';
@@ -19,21 +16,21 @@ import medium from '../../../public/Roboto_Slab/static/RobotoSlab-Medium.ttf';
 import reguler from '../../../public/Roboto_Slab/static/RobotoSlab-Regular.ttf';
 import semibold from '../../../public/Roboto_Slab/static/RobotoSlab-SemiBold.ttf';
 import thin from '../../../public/Roboto_Slab/static/RobotoSlab-Thin.ttf';
-import italic from '../../../public/Roboto_Slab/static/Raleway-ExtraLightItalic.ttf';
+import ExtraLightItalic from '../../../public/Raleway/static/Raleway-ExtraLightItalic.ttf';
+import BoldItalic from '../../../public/Raleway/static/Raleway-BoldItalic.ttf';
+import SemiBoldItalic from '../../../public/Raleway/static/Raleway-SemiBoldItalic.ttf';
 import moment from "moment";
-import { camelize, currency } from '../Font';
+import { camelize, currency, PdfWithQrCode } from '../Font';
 import { red } from "@material-ui/core/colors";
 
-import QRCode, { QRCodeSVG, QRCodeCanvas } from 'qrcode.react';
+
 
 Font.register({
     family: "Roboto",
     fontStyle: "normal",
     fontWeight: "normal",
     fonts: [
-        {
-            src: black,
-        },
+
         {
             src: bold,
             fontWeight: "bold",
@@ -66,11 +63,7 @@ Font.register({
             src: thin,
             fontWeight: "thin",
         },
-        {
-            src: italic,
-            fontWeight: "thin",
-            fontStyle: 'italic',
-        }
+
     ],
 })
 
@@ -80,14 +73,17 @@ Font.register({
     fontWeight: "normal",
     fonts: [
         {
-            src: italic,
+            src: ExtraLightItalic,
             fontWeight: "thin",
-            fontStyle: 'italic',
         },
         {
-            src: italic,
+            src: SemiBoldItalic,
             fontWeight: "semibold",
-            fontStyle: 'italic',
+        },
+        {
+            src: BoldItalic,
+            fontWeight: "Bold",
+
         }
     ],
 })
@@ -97,14 +93,10 @@ const Sp2dDoc = ({ dataselectspp }) => {
         console.log("spd dok", dataselectspp);
     }, []);
 
-    //  const [barcode, setBarcode] = useState('Lagi Errorr Coba Cek .... ');
-    //useEffect(() => { qrcode.toDataURL(barcode).then(setBarcode) }, [barcode])
-
     const style = StyleSheet.create({
         pageNumber: { position: "absolute", fontSize: 12, bottom: 30, left: 0, right: 0, textAlign: "center", color: "grey" },
         table: { width: "100%" }, image: { height: "50px", width: "50px", position: 'absolute', marginTop: 45, marginLeft: 63 },
         row: { flexDirection: 'row' }, hide: { color: 'white' },
-
     });
 
     return (
@@ -112,22 +104,12 @@ const Sp2dDoc = ({ dataselectspp }) => {
             {dataselectspp &&
                 dataselectspp.map((e, i) => (
                     <>
-
                         <Page
                             size="A4"
                             key={`doc-sp2d-${i}`}
-                            style={{
-                                paddingTop: "15px",
-                                paddingLeft: "50px",
-                                paddingBottom: "40px",
-                                paddingRight: "35px",
-                                fontFamily: 'Roboto',
-                                fontWeight: 'light'
-                            }}
+                            style={{ paddingTop: "15px", paddingLeft: "50px", paddingBottom: "40px", paddingRight: "35px", fontFamily: 'Roboto', fontWeight: 'light' }}
                         >
-
                             <Image style={style.image} src={Yhk} fixed />
-
                             <View style={[style.table, { flexDirection: 'column' }]} >
                                 <View style={[style.table, { flexDirection: 'row', marginTop: 20 }]}>
                                     <View style={{ height: 70, width: '15%', border: 0.8 }}></View>
@@ -207,7 +189,7 @@ const Sp2dDoc = ({ dataselectspp }) => {
                                     </View>
                                 </View>
                                 <View>
-                                    <View style={[style.row, { fontSize: 11, flexDirection: 'column', borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8, paddingTop: 15, paddingBottom: 15 }]}>
+                                    <View style={[style.row, { fontSize: 11, flexDirection: 'column', borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8, paddingTop: 5, paddingBottom: 5 }]}>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
                                             <Text style={[{ paddingRight: 1, width: 90 }]}>Bank</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
@@ -237,12 +219,12 @@ const Sp2dDoc = ({ dataselectspp }) => {
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
                                             <Text style={[{ paddingRight: 1, width: 90 }]}>Terbilang</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
-                                            <Text style={{ fontFamily: 'Raleway', fontWeight: 'semibold', fontStyle: 'italic', }}>Tiga Puluh Tiga Juta Enam Ratus Ribu Rupiah</Text>
+                                            <Text style={{ fontFamily: 'Raleway', fontWeight: 'semibold' }}>Tiga Puluh Tiga Juta Enam Ratus Ribu Rupiah</Text>
                                         </View>
                                     </View>
                                 </View>
                                 <View>
-                                    <View style={[style.row, { fontSize: 11, flexDirection: 'column', borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8, paddingTop: 15, paddingBottom: 15 }]}>
+                                    <View style={[style.row, { fontSize: 11, flexDirection: 'column', borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8, paddingTop: 5, paddingBottom: 5 }]}>
                                         <Text style={[{ paddingLeft: 3 }]}>Kepada:</Text>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
                                             <Text style={[{ paddingRight: 1, width: 160 }]}>Nama Kepala Kampung</Text>
@@ -269,11 +251,9 @@ const Sp2dDoc = ({ dataselectspp }) => {
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
                                             <Text style={{ fontWeight: 'semibold' }}>{e.thp_advis}</Text>
                                         </View>
-                                        <View style={{ position: 'absolute', alignContent: 'flex-end', alignItems: 'flex-end', alignSelf: "flex-end", paddingTop: 3, paddingRight: 3 }}>
+                                        <View style={{ position: 'absolute', alignContent: 'flex-end', alignItems: 'flex-end', alignSelf: "flex-end", paddingTop: 8, paddingRight: 3 }}>
                                             <PdfWithQrCode ssf_id={`${e.thp_advis}DISTRIK${e.distrik}KAMPUNG${e.kampung}@${e.nama_kepala}/${e.nama}$${e.no_rek}>${e.pagu} `} />
-                                            {/* ${e.nama_kepala}/${e.nama}${e.no_rek}>${e.pagu}`} /> */}
                                         </View>
-
                                     </View>
                                 </View>
                                 <View style={[{ flexDirection: 'row', fontWeight: 'semibold', fontSize: 11, textAlign: 'center', paddingBottom: 5, paddingTop: 5, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
@@ -286,31 +266,60 @@ const Sp2dDoc = ({ dataselectspp }) => {
                                     <View style={[{ width: '100%', textAlign: 'left', paddingLeft: 3, fontWeight: 'semibold' }]}><Text>5.1.01.01 Penyelenggaraan Belanja SILTAP, Tunjangan dan Operasional Pemerintahan Desa</Text></View>
                                 </View>
                                 <View style={[{ flexDirection: 'row', fontSize: 11, textAlign: 'center', paddingBottom: 2, paddingTop: 2, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
-                                    <View style={[{ width: '10%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>No.</Text></View>
-                                    <View style={[{ width: '25%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>Kode Rekening</Text></View>
-                                    <View style={[{ width: '50%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>Uraian</Text></View>
-                                    <View style={[{ width: '15%', textAlign: 'right', paddingRight: 3 }]}><Text>Jumlah (Rp)</Text></View>
+                                    <View style={[{ width: '10%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>1</Text></View>
+                                    <View style={[{ width: '25%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>5.1.01.01.01</Text></View>
+                                    <View style={[{ width: '50%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>Penyediaan Penghasilan Tetap dan Tunjangan Kepala Desa</Text></View>
+                                    <View style={[{ width: '15%', textAlign: 'right', paddingRight: 3 }]}><Text>4.500.000</Text></View>
                                 </View>
                                 <View style={[{ flexDirection: 'row', fontSize: 11, textAlign: 'center', paddingBottom: 2, paddingTop: 2, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
-                                    <View style={[{ width: '10%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>No.</Text></View>
-                                    <View style={[{ width: '25%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>Kode Rekening</Text></View>
-                                    <View style={[{ width: '50%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>Uraian</Text></View>
-                                    <View style={[{ width: '15%', textAlign: 'right', paddingRight: 3 }]}><Text>Jumlah (Rp)</Text></View>
+                                    <View style={[{ width: '10%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>2</Text></View>
+                                    <View style={[{ width: '25%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>5.1.01.02.01</Text></View>
+                                    <View style={[{ width: '50%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>Penyediaan Penghasilan Tetap dan Tunjangan Perangkat Desa</Text></View>
+                                    <View style={[{ width: '15%', textAlign: 'right', paddingRight: 3 }]}><Text>13.350.000</Text></View>
                                 </View>
                                 <View style={[{ flexDirection: 'row', fontSize: 11, textAlign: 'center', paddingBottom: 2, paddingTop: 2, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
-                                    <View style={[{ width: '10%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>No.</Text></View>
-                                    <View style={[{ width: '25%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>Kode Rekening</Text></View>
-                                    <View style={[{ width: '50%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left ', paddingLeft: 3 }]}><Text>Uraian</Text></View>
-                                    <View style={[{ width: '15%', textAlign: 'right', paddingRight: 3 }]}><Text>Jumlah (Rp)</Text></View>
+                                    <View style={[{ width: '10%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>3</Text></View>
+                                    <View style={[{ width: '25%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>5.1.01.04.01</Text></View>
+                                    <View style={[{ width: '50%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left ', paddingLeft: 3 }]}><Text>Penyediaan Tunjangan BPD</Text></View>
+                                    <View style={[{ width: '15%', textAlign: 'right', paddingRight: 3 }]}><Text>15.750.000</Text></View>
                                 </View>
                                 <View style={[{ flexDirection: 'row', fontSize: 11, textAlign: 'center', paddingBottom: 2, paddingTop: 2, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
-                                    <View style={[{ width: '10%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>No.</Text></View>
-                                    <View style={[{ width: '25%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>Kode Rekening</Text></View>
-                                    <View style={[{ width: '50%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>Uraian</Text></View>
-                                    <View style={[{ width: '15%' }]}><Text>Jumlah (Rp)</Text></View>
+                                    <View style={[{ width: '10%', color: 'white' }]}><Text>No.</Text></View>
+                                    <View style={[{ width: '25%', color: 'white' }]}><Text>Kode Rekening</Text></View>
+                                    <View style={[{ width: '50%', textAlign: 'right', fontWeight: 'semibold' }]}><Text>Jumlah</Text></View>
+                                    <View style={[{ width: '15%', fontWeight: 'semibold', textAlign: 'right', paddingRight: 3 }]}><Text>33.600.000</Text></View>
                                 </View>
                                 <View style={[{ flexDirection: 'row', fontSize: 11, textAlign: 'center', paddingBottom: 2, paddingTop: 2, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
-                                    <View><Text style={{ paddingLeft: 3 }}>Uang Sejumlah : Tiga Puluh Tiga Juta Enam Ratus Ribu Rupiah</Text></View>
+                                    <View><Text style={{ paddingLeft: 3, fontFamily: 'Raleway', fontWeight: 'semibold' }}>Uang Sejumlah : Tiga Puluh Tiga Juta Enam Ratus Ribu Rupiah</Text></View>
+                                </View>
+                                <View style={{ flexDirection: 'row', fontSize: 11, marginTop: 10 }}>
+                                    <View style={{ flexDirection: 'column', width: '35%', alignContent: 'flex-start', paddingLeft: 3, fontSize: 9 }}>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Text>Lembar 1</Text>
+                                            <Text>: </Text>
+                                            <Text>Bank Yang di Tunjuk</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Text>Lembar 2</Text>
+                                            <Text>: </Text>
+                                            <Text>Arsip DPMK</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Text>Lembar 3</Text>
+                                            <Text>: </Text>
+                                            <Text>Pihak Penerima</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{ flexDirection: 'column', width: '65%' }}>
+                                        <View style={{ flexDirection: 'column' }}>
+                                            <Text style={{ textAlign: 'center' }}>DEKAI, {moment(e.tgl_sp2d).locale('id').format("DD MMMM YYYY")}</Text>
+                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>Plt. KEPALA</Text>
+                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>DINAS PEMBERDAYAAN MASAYRAKAT KAMPUNG</Text>
+                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold', textDecoration: 'underline', marginTop: 60 }}>LAZARUS PAHABOL, SE </Text>
+                                            <Text style={{ textAlign: 'center' }}>PENATA Tk.I </Text>
+                                            <Text style={{ textAlign: 'center' }}>NIP. 19740404 200605 1 001</Text>
+                                        </View>
+                                    </View>
                                 </View>
                             </View>
                             <Text
@@ -320,7 +329,6 @@ const Sp2dDoc = ({ dataselectspp }) => {
                             // }
                             >Halaman 1 dari 1</Text>
                         </Page>
-
                     </>
                 ))
             }
@@ -329,50 +337,3 @@ const Sp2dDoc = ({ dataselectspp }) => {
 };
 
 export default Sp2dDoc;
-
-const PdfWithQrCode = ({ ssf_id }) => {
-    const qrCodeComponent = (
-        <QRCode
-            value={ssf_id}
-            renderAs="svg"
-            size={80}
-        />
-    );
-
-    const qrCodeComponentStaticMarkup = renderToStaticMarkup(qrCodeComponent);
-
-    const parsedQrCodeSvg = parseQrCodeMarkup(qrCodeComponentStaticMarkup);
-    if (!parsedQrCodeSvg) {
-        return null;
-    }
-
-    return (
-        <View>
-            <Svg
-                style={{ width: 80, height: 80 }}
-                viewBox="0 0 49 49"
-            >
-                {parsedQrCodeSvg.props.children.filter(c => c.type === 'path').map((child, index) => (
-                    <Path
-                        key={index}
-                        d={child.props.d}
-                        fill={child.props.fill}
-                    />
-                ))}
-            </Svg>
-        </View>
-    );
-}
-
-const parseQrCodeMarkup = (markup) => {
-    let parsedQrCodeSvg = null;
-
-    ReactHtmlParser(markup).forEach(el => {
-        const { type } = el;
-        if (type === 'svg') {
-            parsedQrCodeSvg = el;
-        }
-    });
-
-    return parsedQrCodeSvg;
-};

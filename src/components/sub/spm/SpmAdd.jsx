@@ -38,22 +38,43 @@ const SpmAdd = () => {
     const [load, setLoad] = useState(false);
 
     const data = async () => {
+        setLoad(true);
         try {
-            setLoad(true);
-            const respon = await axios.get('/anggaran/add');
             if (kd_lvl1 === 2) {
+                const respon = await axios.get(`/anggaran/${kd_kampung}?sts=${1}&kd_keg=${4}&sts_spp=${1}`);
+                console.log('respon data skbk', respon)
                 const tes = respon.data.filter((e) => e);
-                setData_(tes.filter((e) => e.sts === true && e.sts_spp === true && e.kd_kampung === kd_kampung && e.kd_keg === 4 && e.sts_spm === true));
-                setData_2(tes.filter((e) => e.sts === true && e.sts_spp === true && e.kd_kampung === kd_kampung && e.kd_keg === 4 && e.sts_spm === false));
+                setData_(tes.filter((e) => e.sts_spm === true));
+                setData_2(tes.filter((e) => e.sts_spm === false));
+
             } else {
-                setData_(respon.data.filter(e => e.sts === true && e.sts_spp === true && e.kd_keg === 4 && e.sts_spm === true));
-                setData_2(respon.data.filter(e => e.sts === true && e.sts_spp === true && e.kd_keg === 4 && e.sts_spm === false));
+                const respon = await axios.get(`/anggaran?page=${2}&size=${20}&sts=${1}&kd_keg=${4}&sts_spp=${1}`);
+                console.log('respon data ', respon.data.result)
+                setData_(respon.data.result.data.data.filter(e => e.sts_spp === true));
+                setData_2(respon.data.result.data.data.filter(e => e.sts_spp === false));
             }
-            //console.log('data Anggaran', respon.data)
+            //console.log('data Anggaran', respon.data.info);
             setLoad(false);
         } catch (e) {
-            console.log('error refresh token', e.message);
+            console.log('error load data SP2SPD', e);
         }
+
+        // try {
+        //     setLoad(true);
+        //     const respon = await axios.get('/anggaran/add');
+        //     if (kd_lvl1 === 2) {
+        //         const tes = respon.data.filter((e) => e);
+        //         setData_(tes.filter((e) => e.sts === true && e.sts_spp === true && e.kd_kampung === kd_kampung && e.kd_keg === 4 && e.sts_spm === true));
+        //         setData_2(tes.filter((e) => e.sts === true && e.sts_spp === true && e.kd_kampung === kd_kampung && e.kd_keg === 4 && e.sts_spm === false));
+        //     } else {
+        //         setData_(respon.data.filter(e => e.sts === true && e.sts_spp === true && e.kd_keg === 4 && e.sts_spm === true));
+        //         setData_2(respon.data.filter(e => e.sts === true && e.sts_spp === true && e.kd_keg === 4 && e.sts_spm === false));
+        //     }
+        //     //console.log('data Anggaran', respon.data)
+        //     setLoad(false);
+        // } catch (e) {
+        //     console.log('error refresh token', e.message);
+        // }
     }
 
     useEffect(
@@ -276,12 +297,13 @@ const SpmAdd = () => {
 
     const options = {
         filtering: kd_lvl1 === 2 ? false : true, paging: true, addRowPosition: "first", actionsColumnIndex: -1,
-        showSelectAllCheckbox: false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5, selection: true,
+        showSelectAllCheckbox: kd_lvl1 === 1 ? true : false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5, selection: true,
         // selectionProps: barisData => ({
-        //     " disabled: barisData.sts === true",
+        //     " disabled: barisData.sts === true",columnsButton:true,
         // }),
+        columnsButton: true,
         headerStyle: {
-            fontWeight: 600,
+            fontWeight: 500,
             height: 10,
             maxHeight: 10,
             paddingBottom: 0,
@@ -307,7 +329,7 @@ const SpmAdd = () => {
     }
     const options_ = {
         filtering: kd_lvl1 === 2 ? false : true, paging: true, addRowPosition: "first", actionsColumnIndex: -1,
-        showSelectAllCheckbox: false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5,
+        showSelectAllCheckbox: kd_lvl1 === 1 ? true : false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5,
         selection: true,
         // selectionProps: barisData => ({
         //     disabled: barisData.sts === true,

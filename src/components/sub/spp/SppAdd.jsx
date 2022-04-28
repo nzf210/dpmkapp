@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import MaterialTable from 'material-table';
+import React, { createRef, useEffect, useState } from 'react';
+import MaterialTable, { MTablePagination } from 'material-table';
+import { TablePagination } from '@material-ui/core'
 import tblIcon from '../../TableIcon';
 
 /* DAte Picker */
@@ -27,6 +28,7 @@ const SppAdd = () => {
 
     const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
     const [data_, setData_] = useState([]);
+    const [data_pdf, setData_pdf] = useState([]);
     const [data_2, setData_2] = useState([]);
     const [changests, setChangests] = useState('');
     const [selectedRow, setSelectedRow] = useState(null);
@@ -36,50 +38,63 @@ const SppAdd = () => {
     const [tgl, setTgl] = useState(date);
     const [viewprint, setviewprint] = useState(false);
     const [load, setLoad] = useState(false);
+    const [page_, setPage_] = useState(0);
+    const [size_, setSize_] = useState(5);
+    const [count_, setCount_] = useState(2000);
 
+    // const data = async () => {
+    //     let url = `/anggaran?sts=1&kd_ked=4&page=${page_}&size=${size_}`
+    //     await axios.get(url).then((e) => {
+    //         setData_(e.data.result.data.data);
+    //         setCount_(e.data.result.pagination.total_records);
+    //     })
+    // }
 
 
     const data = async () => {
-        setLoad(true);
         try {
-            const respon = await axios.get('/anggaran');
             if (kd_lvl1 === 2) {
+                const respon = await axios.get(`/anggaran/${kd_kampung}?sts=1&kd_keg=4&page=${page_}&size=${size_}`);
+                console.log('respon data spp id', respon)
                 const tes = respon.data.filter((e) => e);
-                setData_(tes.filter((e) => e.sts_spp === true && e.kd_kampung === kd_kampung && e.sts === true && e.kd_keg === 4));
-                setData_2(tes.filter((e) => e.sts_spp === false && e.kd_kampung === kd_kampung && e.sts === true && e.kd_keg === 4));
+                setData_(tes.filter((e) => e.sts_spp === true));
+                setData_2(tes.filter((e) => e.sts_spp === false));
 
             } else {
-                setData_(respon.data.filter(e => e.sts_spp === true && e.sts === true && e.kd_keg === 4));
-                setData_2(respon.data.filter(e => e.sts_spp === false && e.sts === true && e.kd_keg === 4));
+                const respon = await axios.get(`/anggaran?page=${page_}&size=${size_}&sts=${1}&kd_keg=${4}`);
+                console.log('respon data ', respon.data.result)
+                setData_(respon.data.result.data.data.filter(e => e.sts_spp === true));
+                setData_2(respon.data.result.data.data.filter(e => e.sts_spp === false));
 
             }
             //console.log('data Anggaran', respon.data.info);
             setLoad(false);
         } catch (e) {
-            console.log('error refresh token', e.message);
+            console.log('error load data SP2SPD', e);
         }
     }
 
     useEffect(
         () => data(),
-        [changests]
+        [changests, page_, size_]
     )
 
     const kolom = [
+        // {
+        //     title: 'No',
+        //     cellStyle: {
+        //         whiteSpace: 'nowrap',
+        //         width: '5%',
+        //         maxWidth: '5%',
+        //         height: '10px', paddingTop: 1, paddingBottom: 1
+        //     },
+        //     headerStyle: {
+        //         whiteSpace: 'nowrap',
+        //         width: '15%',
+        //     }, editable: () => false,
+        //     render: rowData => rowData.tableData.id + 1
+        // }, 
         {
-            title: 'No',
-            cellStyle: {
-                whiteSpace: 'nowrap',
-                width: '5%',
-                maxWidth: '5%',
-                height: '10px', paddingTop: 1, paddingBottom: 1
-            },
-            headerStyle: {
-                whiteSpace: 'nowrap',
-                width: '15%',
-            }, editable: () => false,
-            render: rowData => rowData.tableData.id + 1
-        }, {
             field: 'kampung', title: 'Kampung',
             cellStyle: {
                 whiteSpace: 'nowrap',
@@ -236,11 +251,16 @@ const SppAdd = () => {
     /* Funtiom Update Data */
 
     const options = {
-        filtering: kd_lvl1 === 2 ? false : true, paging: true, addRowPosition: "first", actionsColumnIndex: -1,
-        showSelectAllCheckbox: false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5, selection: true,
+        filtering: kd_lvl1 === 2 ? false : true, paging: true, addRowPosition: "first",
+        actionsColumnIndex: -1, showSelectAllCheckbox: kd_lvl1 === 1 ? true : false, showTextRowsSelected: false,
+        pageSizeOptions: [5, 10, 25, 50, 100], //pageSize: size_, 
+        showButtonPage: false,
+        selection: (e) => console.log('select', e),
+
         // selectionProps: barisData => ({
         //     " disabled: barisData.sts === true",
         // }),
+        columnsButton: true,
         headerStyle: {
             fontWeight: 600,
             height: 10,
@@ -264,11 +284,12 @@ const SppAdd = () => {
         filterCellStyle: {
             height: 5, paddingTop: 0, margin: 0, paddingBottom: 0
         },
-        actionsCellStyle: { height: 5 }
+        actionsCellStyle: { height: 5 },
+        debounceInterval: 700, padding: 'dense' //untuk Mendelay key pencarian
     }
     const options_ = {
         filtering: kd_lvl1 === 2 ? false : true, paging: true, addRowPosition: "first", actionsColumnIndex: -1,
-        showSelectAllCheckbox: false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5,
+        showSelectAllCheckbox: kd_lvl1 === 1 ? true : false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5,
         selection: true,
         // selectionProps: barisData => ({
         //     disabled: barisData.sts === true,
@@ -314,7 +335,6 @@ const SppAdd = () => {
                 saveTooltip: ('Simpan')
             }
         }
-
     }
 
     const editable = {
@@ -343,19 +363,6 @@ const SppAdd = () => {
         })
     }
 
-    // let editable_ = {
-    //     onRowUpdate: (dataBaru, dataLama) => new Promise((reso, rej) => {
-    //         //updateData(dataBaru, 1);
-    //         console.log('data', dataBaru);
-    //         reso();
-    //     }),
-    //     onRowDelete: (dataLama) => new Promise((reso, rej) => {
-    //         console.log('data', dataLama);
-    //         //hapusDataPejabat(dataLama);
-    //         reso();
-    //     })
-    // }
-
 
     const action = [
         {
@@ -364,9 +371,9 @@ const SppAdd = () => {
             onClick: ''
         },
         {
-            icon: () => <div className='flex'><button onClick={() => previewSpd()} className="mr-2" > <PictureAsPdfIcon /></button></div>,
+            icon: () => <div className='flex'><button className="mr-2" onClick={previewSpd} > <PictureAsPdfIcon /></button></div>,
             tooltip: 'Preview SP2SPD',
-            onClick: ''
+            onClick: '() => { setData_pdf(data_.filter(e => e.tableData.checked === true)); setviewprint(true); }'
         },
     ]
 
@@ -374,7 +381,7 @@ const SppAdd = () => {
     const onSelectionChange = (e) => setDataSelectspp(e);
     const onSelectionChange_ = (e) => setDataSelect(e);
     const onClickTerbitSPP = () => updateDataChecklist(dataselect, tgl, 1);
-    const previewSpd = (e) => setviewprint(true);
+    const previewSpd = () => setviewprint(true);
     /* Aktion Data Pada saat Select */
 
     /* Actio Untuk Tambah Tombol dan Event */
@@ -400,6 +407,21 @@ const SppAdd = () => {
         onClick: ''
     }]
     /* Actio Untuk Tambah Tombol dan Event */
+    // const handleSelectAllClick = (event) => {
+    //     if (event.target.checked) {
+    //         // const newSelecteds = stableSort(rows, getComparator(order, orderBy))
+    //         //     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    //         //     .map((n) => n.name)
+    //         setDataSelectspp(event);
+    //         console.log('first', event)
+    //         //setSelected(newSelecteds);
+    //         console.log(event)
+    //         return;
+    //     }
+    //     setDataSelectspp([]);
+    // };
+
+    const tableRef = createRef();
 
     return (
         <div>
@@ -410,7 +432,7 @@ const SppAdd = () => {
                 <div className='mx-auto fixed z-20 w-[70%]'>
                     <div className='mx-auto justify-center items-center relative'>
                         <span className={`absolute right-0 text-red-500 bg-slate-400 rounded-full cursor-pointer z-20 w-4 m-4 -translate-x-1/2 items-center text-center ${viewprint ? '' : 'hidden'} `}
-                            onClick={() => setviewprint(false)}> X </span>
+                            onClick={() => setviewprint(false)}>X</span>
                         <div className='mx-auto'>
                             {viewprint ?
                                 <PDFViewer
@@ -427,20 +449,66 @@ const SppAdd = () => {
                             <div className='absolute min-w-full mx-auto z-10'>
                                 <MaterialTable
                                     title="SP2SPD Terbit"
+
                                     options={options}
+                                    tableRef={tableRef}
                                     icons={tblIcon}
-                                    data={data_}
+                                    //data={data_}
                                     localization={localisation}
                                     columns={kolom}
                                     actions={action}
-                                    onSelectionChange={onSelectionChange}
+                                    onSelectionChange={(e) => onSelectionChange(e)}
                                     editable={editable}
+                                    data={query =>
+                                        new Promise(async (reso, rej) => {
+                                            let url = '/anggaran?'
+                                            url += 'size=' + query.pageSize
+                                            url += '&page=' + (query.page + 1)
+                                            url += '&sts=' + (1)
+                                            url += '&kd_keg=' + (4)
+                                            await axios.get(url).then(
+                                                (e) => {
+                                                    console.log(e);
+                                                    reso({
+                                                        data: e.data.result.data.data,
+                                                        page: e.data.result.pagination.current_page - 1,
+                                                        totalCount: e.data.result.pagination.total_records
+                                                    })
+                                                }
+                                            )
+                                        })
+                                    }
+
+                                // onChangeRowsPerPage={query =>
+                                //     new Promise(async (reso, rej) => {
+                                //         let url = '/anggaran?'
+                                //         url += 'size=' + query
+                                //         url += '&page=' + (page_ + 1)
+                                //         url += '&sts=' + (1)
+                                //         await axios.get(url).then(
+                                //             (e) => {
+                                //                 console.log(e);
+                                //                 reso({
+                                //                     data: e.data.result.data.data,
+                                //                     page: e.data.result.pagination.current_page - 1,
+                                //                     totalCount: e.data.result.pagination.total_records
+                                //                 })
+                                //                 setDataSelectspp(e.data.result.data.data);
+                                //                 setCount_(e.data.result.pagination.total_records);
+                                //                 setPage_(e.data.result.pagination.current_page - 1);
+
+                                //             }
+                                //         )
+
+                                //     })
+                                // }
                                 />
                                 <br />
                                 {kd_lvl1 !== 2 ? <p className='text-blue-700'>*Note: Silahkan Pilih Kegiatan untuk terbitkan SP3B </p> : null}
                                 <MaterialTable
                                     options={options_}
                                     icons={tblIcon}
+                                    tableRef={tableRef}
                                     columns={kolom_}
                                     data={data_2}
                                     title="SP2SPD Proses"

@@ -16,7 +16,9 @@ import semibold from '../../../public/Roboto_Slab/static/RobotoSlab-SemiBold.ttf
 import thin from '../../../public/Roboto_Slab/static/RobotoSlab-Thin.ttf';
 import italic from '../../../public/Roboto_Slab/static/Raleway-ExtraLightItalic.ttf';
 import moment from "moment";
-import { camelize, currency } from '../Font';
+import { currency, sayit_v2 } from '../Font';
+//var CurrencyFormat = require('react-currency-format');
+import CurrencyFormat from 'react-currency-format';
 
 Font.register({
     family: "Roboto",
@@ -219,7 +221,7 @@ const SppDoc = ({ dataselectspp }) => {
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 50, width: 260 }}>5. Jumlah Permohonan Dana Rp.</Text>
                                     <Text style={{ paddingTop: -15, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -32, paddingLeft: 270, fontWeight: 'bold' }}>Rp {currency(e.pagu)},-</Text>
+                                    <Text style={{ paddingTop: -32, paddingLeft: 270, fontWeight: 'bold' }}><CurrencyFormat value={e.pagu} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                 </View>
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 50, width: 260, }}>6. Untuk Kebutuhan</Text>
@@ -237,22 +239,23 @@ const SppDoc = ({ dataselectspp }) => {
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 70, width: 260, }}>b. Akumulasi Sebelumnya </Text>
                                     <Text style={{ paddingTop: -17, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -32, paddingLeft: 270, }}>Rp 0.00</Text>
+                                    <Text style={{ paddingTop: -32, paddingLeft: 270, }}><CurrencyFormat value={parseInt(parseInt(e.thp_select) + parseInt(e.opt3) + parseInt(e.opt4))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                 </View>
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 70, width: 260, }}>c. Sisa Dana yang belum dicairkan </Text>
                                     <Text style={{ paddingTop: -17, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -32, paddingLeft: 270, }}>Rp 134.400.00</Text>
+                                    <Text style={{ paddingTop: -32, paddingLeft: 270, }}><CurrencyFormat value={parseInt(134000000 - (parseInt(e.thp_select) + parseInt(e.opt3) + parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                 </View>
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 70, width: 260, }}>d. Jumlah dana yang diminta saat ini </Text>
                                     <Text style={{ paddingTop: -32, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -47, paddingLeft: 270, }}>Rp {currency(e.pagu)},-</Text>
+                                    <Text style={{ paddingTop: -47, paddingLeft: 270, }}><CurrencyFormat value={e.pagu} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
+                                    {/* <Text style={{ paddingTop: -47, paddingLeft: 270, }}>Rp {currency(e.pagu)},-</Text> */}
                                 </View>
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 70, width: 260, }}>e. Sisa Jumlah Dana ADD yang belum di Cairkan </Text>
                                     <Text style={{ paddingTop: -32, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -47, paddingLeft: 270, }}>Rp 134.400.00</Text>
+                                    <Text style={{ paddingTop: -47, paddingLeft: 270, }}><CurrencyFormat value={parseInt(134000000 - (parseInt(e.thp_select) + parseInt(e.opt3) + parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                 </View>
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 50, width: 260, }}>8. Ketentuan - Ketentuan Lainnya</Text>
@@ -261,7 +264,7 @@ const SppDoc = ({ dataselectspp }) => {
                                 </View>
                                 <View style={{ marginTop: -10 }}>
                                     <View style={{ width: 260, alignSelf: 'flex-end' }}>
-                                        <Text style={{ textAlign: 'center' }}>Ditetapkan di {camelize(e.kampung)}</Text>
+                                        <Text style={{ textAlign: 'center', textTransform: 'capitalize' }}>Ditetapkan di {e.kampung}</Text>
                                         <Text style={{ textAlign: 'center', marginTop: -3 }}>Pada Tanggal {moment(e.tgl_spp).locale('id').format("DD MMMM YYYY")}</Text>
                                         <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Kepala Kampung</Text>
                                         <Text style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 50, fontSize: 13, textDecoration: 'underline' }}>{e.nama_kepala}</Text>
@@ -390,12 +393,12 @@ const SppDoc = ({ dataselectspp }) => {
                                             <View style={{ textAlign: 'center', border: '1px', borderColor: 'black', borderStyle: 'dashed', paddingVertical: 3, alignItems: 'flex-start' }}>
                                                 <Text style={{ color: 'white' }}>-</Text>
                                                 <Text style={{ color: 'white' }}>-</Text>
-                                                <Text style={{ textAlign: 'center', alignItems: 'center', width: 150, alignContent: 'center' }}>-</Text>
+                                                <Text style={{ textAlign: 'center', alignItems: 'center', width: 150, alignContent: 'center' }}><CurrencyFormat value={parseInt(e.thp_select)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                                 <Text style={{ color: 'white' }}>-</Text>
-                                                <Text style={{ textAlign: 'center', alignItems: 'center', width: 150, }}>-</Text>
+                                                <Text style={{ textAlign: 'center', alignItems: 'center', width: 150, }}><CurrencyFormat value={parseInt(e.opt3)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                                 <Text style={{ color: 'white' }}>-</Text>
-                                                <Text style={{ textAlign: 'center', alignItems: 'center', width: 150, }}>-</Text>
-                                                <Text style={{ width: 150, textAlign: 'center', marginTop: 2, fontWeight: 'semibold' }}>-</Text>
+                                                <Text style={{ textAlign: 'center', alignItems: 'center', width: 150, }}><CurrencyFormat value={parseInt(e.opt4)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
+                                                <Text style={{ width: 150, textAlign: 'center', marginTop: 2, fontWeight: 'semibold' }}><CurrencyFormat value={(parseInt(e.thp_select) + parseInt(e.opt3) + parseInt(e.opt4))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                             </View>
                                         </View>
                                     </View>
@@ -410,7 +413,7 @@ const SppDoc = ({ dataselectspp }) => {
                                                 <Text style={{ textAlign: 'right', width: 120, }}>Rp 13.350.000,-</Text>
                                                 <Text style={{ color: 'white' }}>0</Text>
                                                 <Text style={{ textAlign: 'right', width: 120, }}>Rp 15.750.000,-</Text>
-                                                <Text style={{ width: 120, textAlign: 'right', marginTop: 2, fontWeight: 'semibold' }}>Rp {currency(e.pagu)},-</Text>
+                                                <Text style={{ width: 120, textAlign: 'right', marginTop: 2, fontWeight: 'semibold' }}><CurrencyFormat value={e.pagu} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                             </View>
                                         </View>
                                     </View>
@@ -420,12 +423,12 @@ const SppDoc = ({ dataselectspp }) => {
                                             <View style={{ textAlign: 'center', border: '1px', borderColor: 'black', borderStyle: 'dashed', paddingVertical: 3, alignItems: 'flex-start' }}>
                                                 <Text style={{ color: 'white' }}>0</Text>
                                                 <Text style={{ color: 'white' }}>0</Text>
-                                                <Text style={{ textAlign: 'right', width: 83, }}>Rp 13.500.000,-</Text>
+                                                <Text style={{ textAlign: 'right', width: 83, }}><CurrencyFormat value={parseInt(18000000 - 4500000 - (parseInt(e.thp_select)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                                 <Text style={{ color: 'white' }}>0</Text>
-                                                <Text style={{ textAlign: 'right', width: 83, }}>Rp 40.050.000,-</Text>
+                                                <Text style={{ textAlign: 'right', width: 83, }}><CurrencyFormat value={parseInt(53400000 - 13350000 - (parseInt(e.opt3)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                                 <Text style={{ color: 'white' }}>0</Text>
-                                                <Text style={{ textAlign: 'right', width: 83, }}>Rp 47.250.000,-</Text>
-                                                <Text style={{ width: 83, marginTop: 2, fontWeight: 'semibold' }}>Rp 100.800.000,-</Text>
+                                                <Text style={{ textAlign: 'right', width: 83, }}><CurrencyFormat value={parseInt(63300000 - 15750000 - (parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
+                                                <Text style={{ width: 83, marginTop: 2, fontWeight: 'semibold' }}><CurrencyFormat value={parseInt(134000000 - 33600000 - (parseInt(e.thp_select) + parseInt(e.opt3) + parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                             </View>
                                         </View>
                                     </View>
@@ -433,13 +436,14 @@ const SppDoc = ({ dataselectspp }) => {
                                 <View>
                                     <Text>
                                         <Text>Jumlah Permohonan Dana:</Text>
-                                        <Text style={{ fontWeight: 'semibold' }}>Rp {currency(e.pagu)}</Text>
+                                        <Text style={{ fontWeight: 'semibold' }}><CurrencyFormat value={e.pagu} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                     </Text>
-                                    <Text style={{ fontFamily: 'Raleway', fontWeight: "thin", fontStyle: 'italic' }}>(Terbilang: Tiga Puluh Tiga Juta Enam Ratus Ribu Rupiah)</Text>
+                                    <Text style={{ fontFamily: 'Raleway', fontWeight: "thin", fontStyle: 'italic', textTransform: 'capitalize' }}>(Terbilang: {sayit_v2(e.pagu)})</Text>
+                                    {/* <Text style={{ fontFamily: 'Raleway', fontWeight: "thin", fontStyle: 'italic' }}>(Terbilang: {konvertAngka(e.pagu)} rupiah )</Text> */}
                                 </View>
                                 <View style={{ marginTop: -10 }}>
                                     <View style={{ width: 260, alignSelf: 'flex-end' }}>
-                                        <Text style={{ textAlign: 'center' }}>Ditetapkan di {camelize(e.kampung)}</Text>
+                                        <Text style={{ textAlign: 'center', }}>Ditetapkan di <Text style={{ textTransform: 'capitalize' }}>{e.kampung}</Text> </Text>
                                         <Text style={{ textAlign: 'center', marginTop: -3 }}>Pada Tanggal {moment(e.tgl_spp).locale('id').format("DD MMMM YYYY")}</Text>
                                         <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Kepala Kampung</Text>
                                         <Text style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 50, fontSize: 13, textDecoration: 'underline' }}>{e.nama_kepala}</Text>

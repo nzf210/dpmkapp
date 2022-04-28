@@ -37,19 +37,20 @@ const ApbkMonitoring = () => {
     const data = async () => {
         try {
             setLoad(true);
-            const respon = await axios.get('/anggaran');
             if (kd_lvl1 === 2) {
+                const respon = await axios.get(`/anggaran/${kd_kampung}`);
                 const tes = respon.data.filter((e) => e);
                 setData_(tes.filter((e) => e.sts === true && e.kd_kampung === kd_kampung));
                 setData_2(tes.filter((e) => e.sts === false && e.kd_kampung === kd_kampung));
                 setLoad(false);
             } else {
-                setData_(respon.data.filter(e => e.sts === true));
-                setData_2(respon.data.filter(e => e.sts === false));
+                const respon = await axios.get(`/anggaran`);
+                setData_(respon.data.result.data.data.filter(e => e.sts === true));
+                setData_2(respon.data.result.data.data.filter(e => e.sts === false));
                 setLoad(false);
             }
         } catch (e) {
-            console.log('error refresh token', e.message);
+            console.log('error get apbk data', e.message);
             setLoad(false);
         }
     }
@@ -217,7 +218,7 @@ const ApbkMonitoring = () => {
 
     const options = {
         pageSizeOptions: [5, 10, 25, 50, 100], filtering: kd_lvl1 === 2 ? false : true, paging: true, addRowPosition: "first", actionsColumnIndex: -1,
-        showSelectAllCheckbox: false, showTextRowsSelected: false, pageSize: 5,
+        showSelectAllCheckbox: kd_lvl1 === 1 ? true : false, showTextRowsSelected: false, pageSize: 5,
         selectionProps: barisData => ({
             disabled: barisData.sts === true,
         }),
@@ -248,7 +249,7 @@ const ApbkMonitoring = () => {
     }
     const options_ = {
         filtering: kd_lvl1 === 2 ? false : true, paging: true, addRowPosition: "first", actionsColumnIndex: -1,
-        showSelectAllCheckbox: false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5,
+        showSelectAllCheckbox: kd_lvl1 === 1 ? true : false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5,
         selection: kd_lvl2 === 2 ? false : true,
         selectionProps: (barisData) => ({
             disabled: kd_lvl1 === 2,

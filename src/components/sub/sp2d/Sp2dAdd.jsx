@@ -40,16 +40,12 @@ const Sp2dAdd = () => {
     const data = async () => {
         setLoad(true);
         try {
-            const respon = await axios.get('/anggaran');
-            // if (kd_lvl1 === 2) {
-            //     const tes = respon.data.filter((e) => e);
-            //     setData_(tes.filter((e) => e.sts === true && e.sts_spp === true && e.kd_kampung === kd_kampung && e.kd_keg === 4 && e.sts_spm === true));
-            //     setData_2(tes.filter((e) => e.sts === true && e.sts_spp === true && e.kd_kampung === kd_kampung && e.kd_keg === 4 && e.sts_spm === false));
-            // } else {
-            setData_(respon.data.filter(e => e.sts === true && e.sts_spp === true && e.kd_keg === 4 && e.sts_spm === true && e.sts_sp2d === true));
-            setData_2(respon.data.filter(e => e.sts === true && e.sts_spp === true && e.kd_keg === 4 && e.sts_spm === true && e.sts_sp2d === false));
-            // }
-            //console.log('data Anggaran', respon.data)
+            const respon = await axios.get(`/anggaran?sts=${1}&sts_spp=${1}&sts_spm=${1}&kd_keg=${4}&page=${2}&size=${5}`);
+
+            setData_(respon.data.result.data.data.filter(e => e.sts_sp2d === true));
+            setData_2(respon.data.result.data.data.filter(e => e.sts_sp2d === false));
+            // setData_(respon.data.filter(e => e.sts_sp2d === true));
+            // setData_2(respon.data.filter(e => e.sts_sp2d === false));
             setLoad(false);
         } catch (e) {
             console.log('error refresh token', e.message);
@@ -289,10 +285,11 @@ const Sp2dAdd = () => {
 
     const options = {
         filtering: kd_lvl1 === 2 ? false : true, paging: true, addRowPosition: "first", actionsColumnIndex: -1,
-        showSelectAllCheckbox: false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5, selection: true,
+        showSelectAllCheckbox: kd_lvl1 === 1 ? true : false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5, selection: true,
         // selectionProps: barisData => ({
         //     " disabled: barisData.sts === true",
         // }),
+        columnsButton: true,
         headerStyle: {
             fontWeight: 600,
             height: 10,
@@ -320,7 +317,7 @@ const Sp2dAdd = () => {
     }
     const options_ = {
         filtering: kd_lvl1 === 2 ? false : true, paging: true, addRowPosition: "first", actionsColumnIndex: -1,
-        showSelectAllCheckbox: false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5,
+        showSelectAllCheckbox: kd_lvl1 === 1 ? true : false, showTextRowsSelected: false, pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 5,
         selection: true,
         // selectionProps: barisData => ({
         //     disabled: barisData.sts === true,

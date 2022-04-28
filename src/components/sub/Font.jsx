@@ -126,3 +126,152 @@ export const Loader = () => {
 
 
 /* Loader ....................................................... */
+
+/* ======================== Terbilang ============================ */
+let satuan = ["", "satu ", "dua ", "tiga ", "empat ", "lima ", "enam ", "tujuh ", "delapan ", "sembilan "]
+
+export let konvertAng = (n) => {
+    //QString sen = QString::number(n);
+    if (n < 10) {
+        return satuan[n];
+    } else if (n == 10) { // khusus untuk sepuluh
+        return "sepuluh ";
+    } else if (n == 11) { // khusus untuk sebelas
+        return "sebelas ";
+    } else if (n < 20) {
+        return satuan[n - 10] + "belas ";
+    } else if (n < 100) {
+        return satuan[(n - (n % 10)) / 10] + "puluh " + konvertAng(n % 10);
+    } else { return ""; }
+}
+
+export let konvertAngka = (n) => {
+    if (n < 0) {
+        return "negatif " + konvertAngka(-n);
+    } else if (n < 10) {
+        return satuan[n];
+    } else if (n == 10) { // khusus untuk sepuluh
+        return "sepuluh ";
+    } else if (n == 11) { // khusus untuk sebelas
+        return "sebelas ";
+    } else if (n < 20) {
+        return satuan[n - 10] + "belas ";
+    } else if (n < 100) {
+        return satuan[(n - (n % 10)) / 10] + "puluh " + konvertAngka(n % 10);
+    } else if (n < 1000) {
+        return (n < 200 ? "seratus " : satuan[(n - (n % 100)) / 100] + "ratus ") + konvertAngka(n % 100);
+    } else if (n < 1000000) {
+        return (n < 2000 ? "seribu " : konvertAngka((n - (n % 1000)) / 1000) + "ribu ") + konvertAngka(n % 1000);
+    } else if (n < 1000000000) {
+        return konvertAngka((n - (n % 1000000)) / 1000000) + "juta " + konvertAngka(n % 1000000);
+    } else if (n < 1000000000000) {
+        return konvertAngka((n - (n % 1000000000)) / 1000000000) + "Miliar " + konvertAngka(n % 1000000000);
+    } else if (n < 1000000000000000) {
+        return konvertAngka((n - (n % 1000000000000)) / 1000000000000) + "Triliun " + konvertAngka(n % 1000000000000);
+    }
+    else {
+        return "Angka lebih besar dari 999.999.999.999,999,999 (harus kurang dari 1jt T)";
+    }
+}
+/* ======================== Terbilang ============================ */
+
+const CENT = 0;
+const POINT = 1;
+const NOMINAL = ["Nol", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan"];
+const THOUDELIM = ".";
+const DECDELIM = ",";
+let d = document;
+
+// function format_v2(s, r, curr = "") {
+//     s += "";
+//     regexp = /^(\d*\.\d+|\d+)$/gi
+
+//     if (regexp.test(s)) {
+//         s = s.replace(/^0+/gi, "");
+//         s = s.split(".");
+//         s[1] = Math.round(s[1] / Math.pow(10, s[1].length - r)) + "";
+//         var l = s[0].length; var t = ""; var c = 0;
+//         if (l == 0) { s[0] = "0"; l = 1; };
+//         while (l > 0) { t = s[0][l - 1] + (c % 3 == 0 && c != 0 ? THOUDELIM : "") + t; l--; c++; }
+//         s[1] = s[1] == undefined ? "0" : s[1];
+//         for (i = s[1].length; i < r; i++) { s[1] += "0"; }
+//         return curr + t + DECDELIM + s[1];
+//     }
+//     else return "ERROR: Invalid number format";
+// }
+
+function threedigit(word) {
+    while (word.length < 3) word = "0" + word;
+    word = word.split("");
+    let a = word[0]; let b = word[1]; let c = word[2];
+    word = "";
+    word += (a != "0" ? (a != "1" ? NOMINAL[parseInt(a)] : "Se") : "") + (a != "0" ? (a != "1" ? " Ratus" : "ratus") : "");
+    word += " " + (b != "0" ? (b != "1" ? NOMINAL[parseInt(b)] : "Se") : "") + (b != "0" ? (b != "1" ? " Puluh" : "puluh") : "");
+    word += " " + (c != "0" ? NOMINAL[parseInt(c)] : "");
+    word = word.replace(/Sepuluh ([^ ]+)/gi, "$1 Belas");
+    word = word.replace(/Satu Belas/gi, "Sebelas");
+    word = word.replace(/^[ ]+$/gi, "");
+
+    return word;
+}
+
+
+export let capitalizeFirstLetter = ([first, ...rest], locale = navigator.language) =>
+    first.toLocaleUpperCase(locale) + rest.join('')
+
+export function sayit_v2(s, t = CENT, r = 2, curr = "RUPIAH") {
+    if (isNaN(t)) {
+        t.toUpperCase().replace(/^\s+|\s+$/g, '');
+        t = t == "POINT" ? POINT : CENT;
+    }
+    t = t == POINT ? POINT : CENT;
+    if (t == CENT) r = 2;
+
+    s += "";
+    let regexp = /^(\d*\.\d+|\d+)$/gi
+
+    if (regexp.test(s)) {
+        s = s.replace(/^0+/gi, "");
+        let zero3 = Array(
+            "", "Ribu", "Juta", "Milyar", "Trilyun", "Kuadriliun",
+            "Kuantiliun", "Sekstiliun", "Septiliun", "Oktiliun",
+            "Noniliun", "Desiliun");
+
+        s = s.split(".");
+        if (s[1]) {
+            s[1] = Math.round(s[1] / Math.pow(10, s[1].length - r)) + "";
+        }
+
+        let word = s[0];
+        let cent = s[1] ? s[1] : (t == CENT ? "0" : "");
+        if (cent.length < 2 && t == CENT) cent += "0";
+
+        let subword = ""; let i = 0;
+        while (word.length > 3) {
+            let subdigit = threedigit(word.substr(word.length - 3, 3));
+            subword = subdigit + (subdigit != "" ? " " + zero3[i] + " " : "") + subword;
+            word = word.substring(0, word.length - 3);
+            i++;
+        }
+        subword = threedigit(word) + " " + zero3[i] + " " + subword;
+        subword = subword.replace(/^ +$/gi, "");
+
+        word = (subword == "" ? "NOL" : subword.toUpperCase()) + (t == CENT ? " " + curr : " KOMA");
+
+        if (t == CENT) { subword = threedigit(cent); }
+        else {
+            subword = [];
+            for (i in cent) subword.push(NOMINAL[cent[i]]);
+            subword = subword.join(" ");
+        }
+        cent = (subword == "" ? "" : " ") + subword.toUpperCase() + (subword == "" || t == POINT ? "" : " SEN");
+        let terbilang = (word + cent).toLowerCase()
+        return capitalizeFirstLetter(terbilang, 'ID');
+    }
+    else return "ERROR: Invalid number format";
+}
+
+// function capitalizeFirstLetter(string) {
+//     return string.charAt(0).toUpperCase() + string.slice(1);
+// }
+

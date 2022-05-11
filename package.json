@@ -25,6 +25,8 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
+    "ag-grid-community": "^27.2.1",
+    "ag-grid-react": "^27.2.1",
     "assert": "^2.0.0",
     "axios": "^0.26.1",
     "bcrypt": "^5.0.1",

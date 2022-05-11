@@ -1,6 +1,5 @@
 import React, { createRef, useEffect, useState } from 'react';
-import MaterialTable, { MTablePagination } from 'material-table';
-import { TablePagination } from '@material-ui/core'
+import MaterialTable from 'material-table';
 import tblIcon from '../../TableIcon';
 
 /* DAte Picker */

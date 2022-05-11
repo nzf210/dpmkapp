@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
-import { Page, Text, Image, Document, StyleSheet, View } from "@react-pdf/renderer";
+import React from "react";
+import {
+    Page, Text, Image, Document, StyleSheet, View
+} from "@react-pdf/renderer";
 import Yhk from '../../../public/yhk.png';
 
 import { Font } from '@react-pdf/renderer';
@@ -15,7 +17,7 @@ import thin from '../../../public/Roboto_Slab/static/RobotoSlab-Thin.ttf';
 import italic from '../../../public/Roboto_Slab/static/Raleway-ExtraLightItalic.ttf';
 import moment from "moment";
 import { sayit_v2 } from '../Font';
-
+//var CurrencyFormat = require('react-currency-format');
 import CurrencyFormat from 'react-currency-format';
 
 Font.register({
@@ -70,7 +72,7 @@ Font.register({
     ],
 })
 
-const SppDoc = ({ dataselectspp }) => {
+const DocSpp_reg = ({ dataselectspp }) => {
 
     const ColoredLine = ({ color }) => (
         <hr
@@ -138,13 +140,13 @@ const SppDoc = ({ dataselectspp }) => {
     });
 
     return (
-        <Document key="doc-spd">
+        <Document key="docsppreg">
             {dataselectspp &&
                 dataselectspp.map((e, i) => (
                     <>
                         <Page
                             size="A4"
-                            key={`doc-spp-1`}
+                            key={`${i.toString()}sppreg`}
                             style={{
                                 paddingTop: "15px",
                                 paddingLeft: "50px",
@@ -273,7 +275,7 @@ const SppDoc = ({ dataselectspp }) => {
                             >Halaman 1 dari 2</Text>
                         </Page>
                         <Page size="A4" orientation="landscape"
-                            key={`doc-spp-2`}
+                            key={`docsppreg2`}
                             style={{
                                 paddingTop: "15px",
                                 paddingLeft: "50px",
@@ -458,4 +460,4 @@ const SppDoc = ({ dataselectspp }) => {
     );
 };
 
-export default SppDoc;
+export default DocSpp_reg;

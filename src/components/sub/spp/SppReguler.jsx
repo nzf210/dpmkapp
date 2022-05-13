@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState, Fragment } from 'react';
 import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 
 import 'ag-grid-community/dist/styles/ag-grid.css'; // Core grid CSS, always needed
@@ -20,17 +20,18 @@ import SaveAsIcon from '@mui/icons-material/SaveAs';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { orange, pink } from '@mui/material/colors';
+import BackupIcon from '@mui/icons-material/Backup';
 
+import DatePicker from '../../DatePicker'
+
+import { blue, green, orange, pink, red } from '@mui/material/colors';
 import AlertDialog from '../../DialogAlert';
 import InfoDialog from '../../DialogInfo';
+import { Loader } from '../Font';
 
-//import { ModuleRegistry } from '@ag-grid-community/core';
-//import { ClientSideRowModelModule } from '@ag';
-//import { CsvExportModule } from '@ag-grid-community/csv-export';
+import Pagination from '../../Pagination';
 
-// Register the required feature modules with the Grid
-//ModuleRegistry.registerModules([CsvExportModule]);
+
 
 const SppReguler = () => {
 
@@ -55,6 +56,7 @@ const SppReguler = () => {
     const [dataVprint, setDataVprint] = useState([]);
     const [dataDlprint, setDataDlprint] = useState([]);
     const [dataform, setDataform] = useState({ no_spp: '', tgl_spp: '', sts_spp: '' });
+    const [load, setLoad] = useState(false);
 
     const [rowData_, setRowData_] = useState(); // Set rowData to Array of Objects, one Object per Row
     const [count_, setCount_] = useState();
@@ -67,6 +69,7 @@ const SppReguler = () => {
     const [print_, setPrint_] = useState(false);
     const [dataprint_, setDataprint_] = useState([]);
     //const [dateupdate_, setDateUpdate_] = useState('');
+    const [tgl, setTgl] = useState(new Date());
 
 
 
@@ -79,7 +82,7 @@ const SppReguler = () => {
         { field: 'tgl_spp', headerName: 'Tgl SP2SPD', width: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
         { field: 'pagu', width: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
         {
-            headerName: 'Aksi', cellStyle: { textAlign: "left", alignItems: 'left' }, //headerClass: 'ag-theme-text-aksi',
+            headerName: 'Aksi', cellStyle: { textAlign: "left", alignItems: 'left' }, headerClass: 'ag-theme-text-aksi',
             // cellRendererFramework: (e) =>
             //     <div className='-pl-20 -ml-6'>
             //         <Button onClick={() => { handleUpdateForm(e.data) }} style={{ height: 8, alignContent: 'center', marginTop: -6 }} >
@@ -134,9 +137,9 @@ const SppReguler = () => {
     }));
 
     // Example of consuming Grid Event
-    const cellClickedListener = useCallback(event => {
-        console.log('cellClicked', event.data);
-    }, []);
+    // const cellClickedListener = useCallback(event => {
+    //     console.log('cellClicked', event.data);
+    // }, []);
 
     // Example load data from sever
     useEffect(async () => {
@@ -170,9 +173,9 @@ const SppReguler = () => {
     }, [page_, perpage_, dateupdate]);
 
     // Example using Grid's API
-    const buttonListener = useCallback(e => {
-        gridRef.current.api.deselectAll();
-    }, []);
+    // const buttonListener = useCallback(e => {
+    //     gridRef.current.api.deselectAll();
+    // }, []);
 
     useEffect(() => {
         if (search !== '') {
@@ -190,6 +193,55 @@ const SppReguler = () => {
         }
     }, [search_])
 
+
+    //================= Terbitkan SP2SPD =========================
+    /* Funtiom Update Data */
+    const updateDataChecklist = async () => {
+        setLoad(true);
+        //console.log(dataprint_, `${moment(tgl).locale('id').format("YYYY-MM-DD")}`)
+        let tgl_spp = moment(tgl).locale('id').format("YYYY-MM-DD");
+        try {
+            dataprint_.map(async (f, i) => {
+                const no = await axios.get(`/nodok/${f.kd_kampung}`);
+                const nodok_ = parseInt(no.data[0].no_spp);
+                let nomor = '';
+                let nodok = parseInt((nodok_ + 1))
+                switch (true) {
+                    case (nodok < 10):
+                        nomor = `000${nodok}/SP2SPD/DDREG/${f.kampung}/2022`;
+                        console.log('<9', nomor);
+                        break;
+                    case (9 < nodok < 100):
+                        nomor = `00${nodok}/SP2SPD/DDREG/${f.kampung}/2022`;
+                        console.log('>9', nomor);
+                        break;
+                    case (99 > nodok > 1000):
+                        nomor = `0${nodok}/SP2SPD/DDREG/${f.kampung}/2022`;
+                        console.log('>99');
+                        break;
+                    case (999 > nodok > 9999):
+                        nomor = `${nodok}/SP2SPD/DDREG/${f.kampung}/2022`;
+                        console.log('>999');
+                        break;
+                    default:
+                        break;
+                }
+                const update = await axios.patch('/anggaran', {
+                    id: f.id, tgl_spp, sts_spp: true, no_spp: nomor
+                })
+
+                console.log(update.data);
+                setLoad(false);
+                setDateUpdate(new Date())
+            }
+            )
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    /* Funtiom Update Data */
+    //================= Terbitkan SP2SPD =========================
 
     //================= Alert Dialog =========================
     const [open, setOpen] = React.useState(false);
@@ -296,8 +348,6 @@ const SppReguler = () => {
     }, []);
 
 
-
-
     return (
         <>
             {viewprint ?
@@ -322,7 +372,7 @@ const SppReguler = () => {
                         <div className="flex border-2 rounded">
                             <input type="text" className="px-1.5 py-0.5 w-64" placeholder="Cari..." onChange={(e) => setSearch(e.target.value)} value={search} />
                             {searchdel ? <span className='rounded-full mx-1 cursor-pointer text-red-500 font-semibold' onClick={() => { setSearch(''); }}>X</span> : null}
-                            <button className="flex items-center justify-center px-1.5 border-l" onClick={btnClick}>
+                            <utton className="flex items-center justify-center px-1.5 border-l" onClick={btnClick}>
                                 <Tooltip title='Cari / Reload Data' style={{ height: 12 }} >
                                     <IconButton>
                                         <svg className="w-3 h-3 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -330,33 +380,33 @@ const SppReguler = () => {
                                         </svg>
                                     </IconButton>
                                 </Tooltip>
-                            </button>
+                            </utton>
                         </div>
                         {print ? <div>
                             {viewbtn ?
                                 <><PDFDownloadLink placeholder='Print Data PDF' document={<DocSpp_reg dataselectspp={dataDlprint} />} fileName={`doc_spp-reg_${new Date().toLocaleTimeString().slice(0, 16)}`}>
-                                    {({ loading }) => loading && !viewbtn ? "" :
+                                    {({ loading }) => loading && !viewbtn ? <Loader /> :
                                         <Tooltip title='SaveAs PDF' style={{ alignContent: 'center', height: 8, width: 8 }} >
                                             <IconButton style={{ alignContent: 'center', height: 8, marginTop: -4, width: 8, paddingLeft: 22 }}>
-                                                <button className='w-8' onClick={() => setTimeout(() => { setDataDlprint([]); setBtn(false) }, 1500)}><SaveAsIcon /></button>
+                                                <utton className='w-8' onClick={() => setTimeout(() => { setDataDlprint([]); setBtn(false) }, 1500)}><SaveAsIcon sx={{ color: green[600] }} /></utton>
                                             </IconButton>
                                         </Tooltip>
                                     }
                                 </PDFDownloadLink></> : null}
                             <Tooltip title='Cetak PDF' style={{ height: 8, alignContent: 'center', width: 16 }} >
                                 <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22 }}>
-                                    <Button onClick={() => { setDataDlprint(dataprint); setBtn(true); }} ><LocalPrintshopIcon /></Button>
+                                    <Button onClick={() => { setDataDlprint(dataprint); setBtn(true); }} ><LocalPrintshopIcon sx={{ color: orange[400] }} /></Button>
                                 </IconButton>
                             </Tooltip>
 
                             <Tooltip title='Preview PDF' style={{ height: 8, alignContent: 'center', width: 16 }} >
                                 <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22 }}>
-                                    <Button style={{ width: 8 }} onClick={() => { setViewprint(true); setDataVprint(dataprint) }} ><PictureAsPdfIcon /></Button>
+                                    <Button style={{ width: 8 }} onClick={() => { setViewprint(true); setDataVprint(dataprint) }} ><PictureAsPdfIcon sx={{ color: red[500] }} /></Button>
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title='Save xlsx' style={{ height: 8, alignContent: 'center', width: 16 }} >
                                 <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22 }}>
-                                    <Button style={{ width: 8 }} onClick={() => onBtnExport()} ><CloudDownloadIcon /></Button>
+                                    <Button style={{ width: 8 }} onClick={() => onBtnExport()} ><CloudDownloadIcon sx={{ color: green[500] }} /></Button>
                                 </IconButton>
                             </Tooltip>
                         </div> : null}
@@ -400,7 +450,7 @@ const SppReguler = () => {
                         <div className="flex border-2 rounded">
                             <input type="text" className="px-1.5 py-0.5 w-64" placeholder="Cari..." onChange={(e) => setSearch_(e.target.value)} value={search_} />
                             {searchdel_ ? <span className='rounded-full mx-1 cursor-pointer text-red-500 font-semibold' onClick={() => { setSearch_(''); }}>X</span> : null}
-                            <button className="flex items-center justify-center px-1.5 border-l" onClick={btnClick_}>
+                            <utton className="flex items-center justify-center px-1.5 border-l" onClick={btnClick_}>
                                 <Tooltip title='Cari / Reload Data' style={{ height: 12 }} >
                                     <IconButton>
                                         <svg className="w-3 h-3 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -408,16 +458,23 @@ const SppReguler = () => {
                                         </svg>
                                     </IconButton>
                                 </Tooltip>
-                            </button>
+                            </utton>
                         </div>
                         {print_ ? <div>
-
-
-                            <Tooltip title='Save xlsx' style={{ height: 8, alignContent: 'center', width: 16 }} >
-                                <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22 }}>
-                                    <Button style={{ width: 8 }} onClick={() => onBtnExport_()} ><CloudDownloadIcon /></Button>
+                            <Tooltip title='Save xlsx' style={{ height: 8, alignContent: 'center', paddingLeft: 22, width: 16, marginTop: -28 }} >
+                                <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22, marginTop: -18 }}>
+                                    <Button onClick={() => onBtnExport_()} className='mx-4 -mt-6' ><CloudDownloadIcon sx={{ color: green[500] }} /></Button>
                                 </IconButton>
                             </Tooltip>
+                            {/* =================== Form Tanggal dan button Terbitkan SP2SPD ===============================  */}
+                            <Tooltip title='Terbitkan SP2SPD' style={{ height: 8, alignContent: 'center', paddingLeft: 22, width: 16, marginTop: -28 }} >
+                                <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22, marginTop: -18 }}>
+                                    <Button onClick={updateDataChecklist} className='mx-4 -mt-6'><BackupIcon sx={{ color: blue[500] }} /></Button>
+                                </IconButton>
+                            </Tooltip>
+                            <div className='h-4 -mb-8'>
+                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); console.log(e) }} />
+                            </div>
                         </div> : null}
                     </div>
                     <div className='container w-full bg-slate-400 mx-auto -z-40 relative'>
@@ -438,7 +495,7 @@ const SppReguler = () => {
                                         onSelectionChanged={onSelectionChanged_}
                                         suppressRowClickSelection={true} // Option Disable selection saat buutton click
                                     />
-                                    <Pagination_
+                                    <Pagination
                                         postsPerPage={perpage_} totalPosts={count_} currentPage={page_}
                                         paginateFront={() => { if (next_ != null) { setPage_(parseInt(next_)) } }}
                                         paginateBack={() => { if (prev_ != null) { setPage_(parseInt(prev_)) } }}
@@ -446,8 +503,6 @@ const SppReguler = () => {
                                         // paginateBack={() => { if (page !== 1) { setPage(page - 1) } }}
                                         selectChanged={(e) => { setPerpage_(e.target.value) }}
                                     />
-                                    {/* <AlertDialog open={open} handleClose={handleClose} dataform={dataform} onChange={onChangeForm} handleSubmit={handleSubmitForm} />
-                                    <InfoDialog open={dialoginfo} text={info} handleClose={handleClose} /> */}
                                 </div>
                             </div>
                         </div>
@@ -460,96 +515,3 @@ const SppReguler = () => {
 }
 
 export default SppReguler
-
-function Pagination({
-    postsPerPage, totalPosts, paginateFront, paginateBack, currentPage, selectChanged
-}) {
-
-    return (
-        <div className='py-2 w-full  flex'>
-            <div className='flex-auto'></div>
-            <div className='w-[450px] h-6'>
-                <div className='flex '>
-                    <div className='my-auto mr-2 flex text-center items-center'>
-                        <select onChange={(e) => selectChanged(e)} name="reg_sel" id="reg_sel" className='pl-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500'>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                            <option value={totalPosts}>All</option>
-                        </select>
-                    </div>
-                    <span onClick={() => { paginateBack(); }}
-
-                        className='relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50'
-                    >
-                        <span>Back</span>
-                    </span>
-                    <p className='text-sm text-gray-700 pl-2 my-auto'>
-                        Halaman
-                        {/* <span className='font-medium'>{currentPage * postsPerPage - 10}</span> */}
-                        <span className='font-medium px-2'>{currentPage}</span>
-                        Dari
-                        <span className='font-medium px-2'> {Math.ceil(totalPosts / postsPerPage)} </span>
-                        Tot Data
-                        <span className='font-medium px-2'> {totalPosts} </span>
-                        {/* results */}
-                    </p>
-                    <span onClick={() => { paginateFront(); }}
-
-                        className='relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50'
-                    >
-                        <span>Next</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-    );
-}
-function Pagination_({
-    postsPerPage, totalPosts, paginateFront, paginateBack, currentPage, selectChanged
-}) {
-
-    return (
-        <div className='py-2 w-full  flex'>
-            <div className='flex-auto'></div>
-            <div className='w-[450px] h-6'>
-                <div className='flex '>
-                    <div className='my-auto mr-2 flex text-center items-center'>
-                        <select onChange={(e) => selectChanged(e)} name="reg_sel" id="reg_sel" className='pl-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500'>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                            <option value={totalPosts}>All</option>
-                        </select>
-                    </div>
-                    <span onClick={() => { paginateBack(); }}
-
-                        className='relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50'
-                    >
-                        <span>Back</span>
-                    </span>
-                    <p className='text-sm text-gray-700 pl-2 my-auto'>
-                        Halaman
-                        {/* <span className='font-medium'>{currentPage * postsPerPage - 10}</span> */}
-                        <span className='font-medium px-2'>{currentPage}</span>
-                        Dari
-                        <span className='font-medium px-2'> {Math.ceil(totalPosts / postsPerPage)} </span>
-                        Tot Data
-                        <span className='font-medium px-2'> {totalPosts} </span>
-                        {/* results */}
-                    </p>
-                    <span onClick={() => { paginateFront(); }}
-
-                        className='relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50'
-                    >
-                        <span>Next</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-    );
-}

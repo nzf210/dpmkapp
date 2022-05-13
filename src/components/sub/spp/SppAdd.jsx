@@ -405,20 +405,7 @@ const SppAdd = () => {
         tooltip: 'Terbitkan SP2SPD',
         onClick: ''
     }]
-    /* Actio Untuk Tambah Tombol dan Event */
-    // const handleSelectAllClick = (event) => {
-    //     if (event.target.checked) {
-    //         // const newSelecteds = stableSort(rows, getComparator(order, orderBy))
-    //         //     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-    //         //     .map((n) => n.name)
-    //         setDataSelectspp(event);
-    //         console.log('first', event)
-    //         //setSelected(newSelecteds);
-    //         console.log(event)
-    //         return;
-    //     }
-    //     setDataSelectspp([]);
-    // };
+
 
     const tableRef = createRef();
 
@@ -448,7 +435,6 @@ const SppAdd = () => {
                             <div className='absolute min-w-full mx-auto z-10'>
                                 <MaterialTable
                                     title="SP2SPD Terbit"
-
                                     options={options}
                                     tableRef={tableRef}
                                     icons={tblIcon}
@@ -478,29 +464,7 @@ const SppAdd = () => {
                                         })
                                     }
 
-                                // onChangeRowsPerPage={query =>
-                                //     new Promise(async (reso, rej) => {
-                                //         let url = '/anggaran?'
-                                //         url += 'size=' + query
-                                //         url += '&page=' + (page_ + 1)
-                                //         url += '&sts=' + (1)
-                                //         await axios.get(url).then(
-                                //             (e) => {
-                                //                 console.log(e);
-                                //                 reso({
-                                //                     data: e.data.result.data.data,
-                                //                     page: e.data.result.pagination.current_page - 1,
-                                //                     totalCount: e.data.result.pagination.total_records
-                                //                 })
-                                //                 setDataSelectspp(e.data.result.data.data);
-                                //                 setCount_(e.data.result.pagination.total_records);
-                                //                 setPage_(e.data.result.pagination.current_page - 1);
 
-                                //             }
-                                //         )
-
-                                //     })
-                                // }
                                 />
                                 <br />
                                 {kd_lvl1 !== 2 ? <p className='text-blue-700'>*Note: Silahkan Pilih Kegiatan untuk terbitkan SP3B </p> : null}

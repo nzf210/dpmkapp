@@ -5,7 +5,7 @@ import { DatePicker, KeyboardDatePicker, MuiPickersUtilsProvider } from "@materi
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import Stack from '@mui/material/Stack';
-function DatePicker_({ tgl, setTgl }) {
+function DatePicker_({ tgl, setTgl, nmpicker }) {
     //const [selectedDate, handleDateChange] = useState(new Date());
 
     return (
@@ -33,7 +33,7 @@ function DatePicker_({ tgl, setTgl }) {
                         autoOk
                         variant="inline"
                         inputVariant="outlined"
-                        label="TGL SP2SPD"
+                        label={`TGL ${nmpicker}`}
                         format="dd-MM-yyyy"
                         margin="dense"
 

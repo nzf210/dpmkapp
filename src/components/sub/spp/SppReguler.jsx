@@ -31,7 +31,10 @@ import { Loader } from '../Font';
 
 import Pagination from '../../Pagination';
 
-
+moment.updateLocale('id', {
+    weekdaysMin: ["Ahad", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
+    months: ["Januari", "February", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Novenber", "Desember"]
+});
 
 const SppReguler = () => {
 
@@ -68,21 +71,20 @@ const SppReguler = () => {
     const [searchdel_, setSearchDel_] = useState(false);
     const [print_, setPrint_] = useState(false);
     const [dataprint_, setDataprint_] = useState([]);
-    //const [dateupdate_, setDateUpdate_] = useState('');
     const [tgl, setTgl] = useState(new Date());
-
+    const nmpicker = 'SP2SPD REG';
 
 
     const [columnDefs] = useState([
         { field: 'kampung', filter: true, minWidth: 150, maxWidth: 150, suppressSizeToFit: true, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, checkboxSelection: true },
         { field: 'distrik', filter: true, minWidth: 150, maxWidth: 150, suppressSizeToFit: true }, //suppressSizeToFit: false 
-        { field: 'thp_advis', headerName: 'Kegiatan', width: 280 },
-        { field: 'no_spp', headerName: 'No SP2SPD', width: 150, },
+        { field: 'thp_advis', headerName: 'Kegiatan', width: 270, filter: true, suppressSizeToFit: true },
+        { field: 'no_spp', headerName: 'No SP2SPD', width: 220, filter: true, suppressSizeToFit: true },
         // { field: 'tgl_spp', headerName: 'Tgl SP2SPD', width: 150, cellRenderer: (e) => <span>{e.value}</span> },
-        { field: 'tgl_spp', headerName: 'Tgl SP2SPD', width: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
-        { field: 'pagu', width: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
+        { field: 'tgl_spp', suppressSizeToFit: true, filter: true, headerName: 'Tgl SP2SPD', width: 150, maxWidth: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
+        { field: 'pagu', suppressSizeToFit: true, width: 150, maxWidth: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
         {
-            headerName: 'Aksi', cellStyle: { textAlign: "left", alignItems: 'left' }, headerClass: 'ag-theme-text-aksi',
+            headerName: 'Aksi', cellStyle: { textAlign: "right", alignItems: 'right' }, headerClass: 'ag-theme-text-aksi', width: 80, maxWidth: 80,
             // cellRendererFramework: (e) =>
             //     <div className='-pl-20 -ml-6'>
             //         <Button onClick={() => { handleUpdateForm(e.data) }} style={{ height: 8, alignContent: 'center', marginTop: -6 }} >
@@ -101,17 +103,17 @@ const SppReguler = () => {
             //         </Button>
             //     </div>,
             cellRenderer: (e) => (!e.data.sts_spm ?
-                <div className='-pl-20 -ml-6'>
-                    <Button onClick={() => { handleUpdateForm(e.data); }} style={{ height: 8, alignContent: 'center', marginTop: -6 }}   >
+                <div className=' -ml-10 -mt-1'>
+                    <Button onClick={() => { handleUpdateForm(e.data); }} style={{ height: 8, alignContent: 'center', marginRight: -10, width: 2, maxWidth: '2px', padding: 0, }}   >
                         <Tooltip title='Edit Data' style={{ height: 8, alignContent: 'center' }} >
-                            <IconButton style={{ height: 8, alignContent: 'center' }}>
-                                <EditIcon fontSize="small" sx={{ color: orange[500] }} style={{ alignContent: 'center' }} />
+                            <IconButton style={{ height: 8, alignContent: 'center' }} >
+                                <EditIcon fontSize="small" sx={{ color: orange[500] }} style={{ alignContent: 'center', padding: 0 }} />
                             </IconButton>
                         </Tooltip>
                     </Button>
-                    <Button onClick={() => handleDelete(e.data)} style={{ height: 8, alignContent: 'center', marginTop: -6 }}>
+                    <Button onClick={() => handleDelete(e.data)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
                         <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center' }} >
-                            <IconButton style={{ height: 8, alignContent: 'center' }}>
+                            <IconButton style={{ height: 8, alignContent: 'center' }} >
                                 <DeleteForeverIcon fontSize="small" sx={{ color: pink[500] }} />
                             </IconButton>
                         </Tooltip>
@@ -128,12 +130,9 @@ const SppReguler = () => {
         { field: 'pagu', width: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
     ]);
 
-
     // DefaultColDef sets props common to all Columns
     const defaultColDef = useMemo(() => ({
-        sortable: true,
-        flex: 1,
-        minWidth: 100,
+        sortable: true, flex: 1, minWidth: 100,
     }));
 
     // Example of consuming Grid Event
@@ -143,6 +142,7 @@ const SppReguler = () => {
 
     // Example load data from sever
     useEffect(async () => {
+        setLoad(true);
         let url = `/anggaran/reg?page=${page}&size=${perpage}&sts_spp=${true}&sts=${true}`;
         if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
         if (search !== '') { url += `&kampung=${search}` }
@@ -153,11 +153,15 @@ const SppReguler = () => {
             setPerpage(e.data.result.data.per_page);
             setPrev(e.data.result.pagination.previous_page);
             setNext(e.data.result.pagination.next_page);
+            if (e.status === 200) {
+                setLoad(false);
+            }
         })
-            .then(e => console.log(e))
+        // .then(e => console.log(e))
     }, [page, perpage, dateupdate]);
 
     useEffect(async () => {
+        setLoad(true);
         let url = `/anggaran/reg?page=${page_}&size=${perpage_}&sts_spp=${false}&sts=${true}`;
         if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
         if (search_ !== '') { url += `&kampung=${search_}` }
@@ -168,73 +172,69 @@ const SppReguler = () => {
             setPerpage_(e.data.result.data.per_page);
             setPrev_(e.data.result.pagination.previous_page);
             setNext_(e.data.result.pagination.next_page);
+            if (e.status === 200) {
+                setLoad(false);
+            }
         })
-            .then(e => console.log(e))
+
     }, [page_, perpage_, dateupdate]);
 
     // Example using Grid's API
     // const buttonListener = useCallback(e => {
     //     gridRef.current.api.deselectAll();
     // }, []);
-
-    useEffect(() => {
-        if (search !== '') {
-            setSearchDel(true);
-        } else {
-            setSearchDel(false);
-        }
-    }, [search])
-
-    useEffect(() => {
-        if (search_ !== '') {
-            setSearchDel_(true);
-        } else {
-            setSearchDel_(false);
-        }
-    }, [search_])
-
+    useEffect(() => { if (search !== '') { setSearchDel(true); } else { setSearchDel(false); } }, [search])
+    useEffect(() => { if (search_ !== '') { setSearchDel_(true); } else { setSearchDel_(false); } }, [search_])
 
     //================= Terbitkan SP2SPD =========================
-    /* Funtiom Update Data */
+    /* Funtiom Update Data +++++++++++ PENOMORAN ++++++++*/
     const updateDataChecklist = async () => {
         setLoad(true);
         //console.log(dataprint_, `${moment(tgl).locale('id').format("YYYY-MM-DD")}`)
         let tgl_spp = moment(tgl).locale('id').format("YYYY-MM-DD");
         try {
             dataprint_.map(async (f, i) => {
-                const no = await axios.get(`/nodok/${f.kd_kampung}`);
+                const no = await axios.get(`/nodok/${f.kd_kampung}?kd_keg=1`);
                 const nodok_ = parseInt(no.data[0].no_spp);
                 let nomor = '';
                 let nodok = parseInt((nodok_ + 1))
+                let thp;
+                switch (f.id_thp) {
+                    case 2:
+                        thp = 'I'
+                        break;
+                    case 3:
+                        thp = 'II'
+                        break;
+                    default:
+                        thp = 'III'
+                }
                 switch (true) {
                     case (nodok < 10):
-                        nomor = `000${nodok}/SP2SPD/DDREG/${f.kampung}/2022`;
+                        nomor = `000${nodok}/SP2SPD/DDREG-${thp}/${f.kampung}/2022`;
                         console.log('<9', nomor);
                         break;
                     case (9 < nodok < 100):
-                        nomor = `00${nodok}/SP2SPD/DDREG/${f.kampung}/2022`;
+                        nomor = `00${nodok}/SP2SPD/DDREG-${thp}/${f.kampung}/2022`;
                         console.log('>9', nomor);
                         break;
                     case (99 > nodok > 1000):
-                        nomor = `0${nodok}/SP2SPD/DDREG/${f.kampung}/2022`;
+                        nomor = `0${nodok}/SP2SPD/DDREG-${thp}/${f.kampung}/2022`;
                         console.log('>99');
                         break;
                     case (999 > nodok > 9999):
-                        nomor = `${nodok}/SP2SPD/DDREG/${f.kampung}/2022`;
+                        nomor = `${nodok}/SP2SPD/DDREG-${thp}/${f.kampung}/2022`;
                         console.log('>999');
                         break;
                     default:
                         break;
                 }
-                const update = await axios.patch('/anggaran', {
-                    id: f.id, tgl_spp, sts_spp: true, no_spp: nomor
-                })
-
-                console.log(update.data);
-                setLoad(false);
-                setDateUpdate(new Date())
-            }
-            )
+                const update = await axios.patch('/anggaran', { id: f.id, tgl_spp, sts_spp: true, no_spp: nomor })
+                console.log(update.status);
+                if (update.status === 200) {
+                    setDateUpdate(new Date())
+                }
+            })
 
         } catch (error) {
             console.log(error)
@@ -250,6 +250,7 @@ const SppReguler = () => {
     const onChangeForm = (e) => { const { value, id } = e.target; setDataform({ ...dataform, [id]: value }) }
     const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
     const handleDelete = async (e) => {
+        setLoad(true);
         const confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
         if (confirm) {
             try {
@@ -263,6 +264,7 @@ const SppReguler = () => {
                     setTimeout(() => {
                         setDialogInfo(false);
                     }, 2000);
+                    setLoad(false);
                 } else { setDialogInfo(true); setInfo('Gagal Hapus Data') }
             } catch (error) { console.log('Error Hapus spp reg', error) }
         }
@@ -270,6 +272,7 @@ const SppReguler = () => {
     const handleSubmitForm = async () => {
         const confirm = window.confirm(`Apa Anda Yakin Ubah Data ${dataform.kampung} Distrik ${dataform.distrik} ${dataform.thp_advis} `)
         if (confirm) {
+            setLoad(true);
             try {
                 // console.log('submit', dataform.id, dataform.tgl_spp, dataform.no_spp)
                 const update = await axios.patch('/anggaran', { id: dataform.id, tgl_spp: dataform.tgl_spp, sts_spp: true, no_spp: dataform.no_spp })
@@ -282,19 +285,19 @@ const SppReguler = () => {
                     setTimeout(() => {
                         setDialogInfo(false);
                     }, 2000);
+                    setLoad(false);
                 } else { setDialogInfo(true); setInfo('Gagal Ubah Data') }
             } catch (error) { console.log('Error Update spp reg', error) }
         }
     }
     //================= Alert Dialog =========================
 
-
     //================= btn click cari data ==================
     const btnClick = async (e) => {
+        setLoad(true);
         let url = `/anggaran/reg?page=${1}&size=${perpage}&kampung=${search}&sts_spp=${true}&sts=${true}`;
         if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
         // if (search) { url += `&kd_advis=${}` }
-
         await axios.get(url).then((e) => {
             setRowData(e.data.result.data.data);
             setCount(e.data.result.data.count);
@@ -302,13 +305,16 @@ const SppReguler = () => {
             setPerpage(e.data.result.data.per_page);
             setPrev(e.data.result.pagination.previous_page);
             setNext(e.data.result.pagination.next_page);
+            if (e.status === 200) {
+                setDateUpdate(new Date())
+            }
         })
     }
     const btnClick_ = async (e) => {
+        setLoad(true);
         let url = `/anggaran/reg?page=${1}&size=${perpage_}&kampung=${search_}&sts_spp=${false}&sts=${true}`;
         if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-        // if (search) { url += `&kd_advis=${}` }
-
+        // if (search) { url += `&kd_advis=${}` }   
         await axios.get(url).then((e) => {
             setRowData_(e.data.result.data.data);
             setCount_(e.data.result.data.count);
@@ -316,8 +322,13 @@ const SppReguler = () => {
             setPerpage_(e.data.result.data.per_page);
             setPrev_(e.data.result.pagination.previous_page);
             setNext_(e.data.result.pagination.next_page);
+            if (e.status === 200) {
+                setDateUpdate(new Date())
+            }
         })
     }
+    //================= btn click cari data ==================
+
     const onSelectionChanged = (e) => {
         let selectedRows = e.api.getSelectedRows();
         let data = [...selectedRows]
@@ -340,12 +351,8 @@ const SppReguler = () => {
         }
     }
 
-    const onBtnExport = useCallback(() => {
-        gridRef.current.api.exportDataAsCsv();
-    }, []);
-    const onBtnExport_ = useCallback(() => {
-        gridRef_.current.api.exportDataAsCsv();
-    }, []);
+    const onBtnExport = useCallback(() => { gridRef.current.api.exportDataAsCsv(); }, []);
+    const onBtnExport_ = useCallback(() => { gridRef_.current.api.exportDataAsCsv(); }, []);
 
 
     return (
@@ -365,9 +372,10 @@ const SppReguler = () => {
                 </div>
                 : null}
             <div className='grid grid-flow-row h-0'>
+                {load ? <Loader /> : null}
                 <div >
                     <div className="h-20"></div>
-                    <span className='left-0 w-44 absolute ml-[20%] -z-50 font-semibold text-slate-900'>SP2SPD TERBIT</span>
+                    <span className='left-0 w-44 absolute ml-[20%] -z-50 font-semibold text-slate-900'>SP2SPD REG TERBIT</span>
                     <div className="flex items-center justify-center z-10">
                         <div className="flex border-2 rounded">
                             <input type="text" className="px-1.5 py-0.5 w-64" placeholder="Cari..." onChange={(e) => setSearch(e.target.value)} value={search} />
@@ -428,6 +436,8 @@ const SppReguler = () => {
                                         onGridReady={params => { params.api.sizeColumnsToFit(); params.api.resetRowHeights(); params.api.setHeaderHeight(30); }}
                                         onSelectionChanged={onSelectionChanged}
                                         suppressRowClickSelection={true} // Option Disable selection saat buutton click
+                                        overlayLoadingTemplate={'<span class="ag-overlay-loading-center">Tunggu ... Memuat Data</span>'}
+                                        overlayNoRowsTemplate={'<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow">Data Tidak Tersedia / Tidak Di temukan</span>'}
                                     />
                                     <Pagination
                                         postsPerPage={perpage} totalPosts={count} currentPage={page}
@@ -437,7 +447,7 @@ const SppReguler = () => {
                                         // paginateBack={() => { if (page !== 1) { setPage(page - 1) } }}
                                         selectChanged={(e) => { setPerpage(e.target.value) }}
                                     />
-                                    <AlertDialog open={open} handleClose={handleClose} dataform={dataform} onChange={onChangeForm} handleSubmit={handleSubmitForm} />
+                                    <AlertDialog open={open} handleClose={handleClose} dataform={dataform} onChange={onChangeForm} handleSubmit={handleSubmitForm} nmpicker={nmpicker} ns={`SP2SPD`} />
                                     <InfoDialog open={dialoginfo} text={info} handleClose={handleClose} />
                                 </div>
                             </div>
@@ -445,7 +455,7 @@ const SppReguler = () => {
                     </div>
                 </div>
                 <div className='mt-72 -z-20'>
-                    <span className='left-0 w-44 absolute ml-[20%] -z-50 font-semibold text-slate-900'>SP2SPD PROSES</span>
+                    <span className='left-0 w-44 absolute ml-[20%] -z-50 font-semibold text-slate-900'>SP2SPD REG PROSES</span>
                     <div className="flex items-center justify-center z-10">
                         <div className="flex border-2 rounded">
                             <input type="text" className="px-1.5 py-0.5 w-64" placeholder="Cari..." onChange={(e) => setSearch_(e.target.value)} value={search_} />
@@ -473,7 +483,7 @@ const SppReguler = () => {
                                 </IconButton>
                             </Tooltip>
                             <div className='h-4 -mb-8'>
-                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); console.log(e) }} />
+                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); console.log(e) }} nmpicker={nmpicker} />
                             </div>
                         </div> : null}
                     </div>
@@ -494,6 +504,8 @@ const SppReguler = () => {
                                         onGridReady={params => { params.api.sizeColumnsToFit(); params.api.resetRowHeights(); params.api.setHeaderHeight(30); }}
                                         onSelectionChanged={onSelectionChanged_}
                                         suppressRowClickSelection={true} // Option Disable selection saat buutton click
+                                        overlayLoadingTemplate={'<span class="ag-overlay-loading-center">Tunggu ... Memuat Data</span>'}
+                                        overlayNoRowsTemplate={'<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow">Data Tidak Tersedia / Tidak Di temukan</span>'}
                                     />
                                     <Pagination
                                         postsPerPage={perpage_} totalPosts={count_} currentPage={page_}

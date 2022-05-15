@@ -23,9 +23,9 @@ const Login = () => {
 
     const Auth = async () => {
 
-        if (username === '' && password === '') { openModal(); setInfo('Username dan Password Kosong'); return }
-        if (username === '') { openModal(); setInfo('Username Kosong'); return }
-        if (password === '') { openModal(); setInfo('Password Kosong'); return }
+        if (!username && !password) { openModal(); setInfo('Username dan Password Kosong'); return }
+        if (!username) { openModal(); setInfo('Username Kosong'); return }
+        if (!password) { openModal(); setInfo('Password Kosong'); return }
         if (tahun === 'Pilih Tahun') { openModal(); setInfo('Pilih Tahun'); return }
 
         try {

@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState, Fragment } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 
 import 'ag-grid-community/dist/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css'; // Optional theme CSS
 import axios from 'axios';
 import CurrencyFormat from 'react-currency-format';
-import DocSpm_add from './DocSpm';
+import DocSpmAdd from './DocSpm';
 import moment from "moment";
 
 //Redux
@@ -38,7 +38,8 @@ moment.updateLocale('id', {
 
 const SpmAdd = () => {
 
-    const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_lvl1 } = useSelector(state => state.userLogin);
+    // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
     const gridRef = useRef(); // Optional - for accessing Grid's API
     const gridRef_ = useRef(); // Optional - for accessing Grid's API
     const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
@@ -118,7 +119,6 @@ const SpmAdd = () => {
                         </Tooltip>
                     </Button>
                 </div> : null),
-            width: 50,
         }
     ]);
     const [columnDefs_] = useState([
@@ -145,7 +145,7 @@ const SpmAdd = () => {
         setLoad(true);
         let url = `/anggaran/add?page=${page}&size=${perpage}&sts_spp=true&sts=true&sts_spm=true&kd_keg=4`;
         if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-        if (search !== '') { url += `&kampung=${search}` }
+        if (search) { url += `&kampung=${search}` }
         await axios.get(url).then((e) => {
             setRowData(e.data.result.data.data);
             setCount(e.data.result.data.count);
@@ -164,7 +164,7 @@ const SpmAdd = () => {
         setLoad(true);
         let url = `/anggaran/add?page=${page_}&size=${perpage_}&sts_spp=true&sts=true&sts_spm=false&kd_keg=4`;
         if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-        if (search_ !== '') { url += `&kampung=${search_}` }
+        if (search_) { url += `&kampung=${search_}` }
         await axios.get(url).then((e) => {
             setRowData_(e.data.result.data.data);
             setCount_(e.data.result.data.count);
@@ -198,17 +198,17 @@ const SpmAdd = () => {
             dataprint_.map(async (f, i) => {
                 const no = await axios.get(`/nodok/${f.kd_kampung}?kd_keg=4`);
                 const nodok_ = parseInt(no.data[0].no_spm);
-                let thp;
-                switch (f.id_thp) {
-                    case 2:
-                        thp = 'I'
-                        break;
-                    case 3:
-                        thp = 'II'
-                        break;
-                    default:
-                        thp = 'III'
-                }
+                // let thp = '';
+                // switch (f.id_thp) {
+                //     case 2:
+                //         thp = 'I'
+                //         break;
+                //     case 3:
+                //         thp = 'II'
+                //         break;
+                //     default:
+                //         thp = 'III'
+                // }
 
                 let nomor = '';
                 let nodok = parseInt((nodok_ + 1))
@@ -252,25 +252,23 @@ const SpmAdd = () => {
     const handleClose = () => { setOpen(false); setDialogInfo(false) };
     const onChangeForm = (e) => {
         const { value, id } = e.target;
-        console.log(value, id)
+        //console.log(value, id)
         setDataform({ ...dataform, [id]: value })
     }
     const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
     const handleDelete = async (e) => {
-        setLoad(true);
         const confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
         if (confirm) {
+            setLoad(true);
             try {
                 const update = await axios.patch('/anggaran', { id: e.id, tgl_spm: '1900-01-01', sts_spm: false, no_spm: `data di hapus ${Date()}` })
                 if (update.status === 200) {
-                    console.log(update.data.info)
+                    //console.log(update.data.info)
                     handleClose();
                     setInfo('Data Di Hapus');
                     setDateUpdate(Date());
                     setDialogInfo(true);
-                    setTimeout(() => {
-                        setDialogInfo(false);
-                    }, 2000);
+                    setTimeout(() => { setDialogInfo(false); }, 2000);
                     setLoad(false);
                 } else { setDialogInfo(true); setInfo('Gagal Hapus Data') }
             } catch (error) { console.log('Error Hapus spm reg', error) }
@@ -289,9 +287,7 @@ const SpmAdd = () => {
                     setInfo(update.data.info);
                     setDateUpdate(Date());
                     setDialogInfo(true);
-                    setTimeout(() => {
-                        setDialogInfo(false);
-                    }, 2000);
+                    setTimeout(() => { setDialogInfo(false); }, 2000);
                     setLoad(false);
                 } else { setDialogInfo(true); setInfo('Gagal Ubah Data') }
             } catch (error) { console.log('Error Update spm reg', error) }
@@ -302,7 +298,8 @@ const SpmAdd = () => {
     //================= btn click cari data ==================
     const btnClick = async (e) => {
         setLoad(true);
-        let url = `/anggaran/add?page=${1}&size=${perpage}&kampung=${search}&sts_spp=${true}&sts=${true}&sts_spm=true&kd_keg=4`;
+        ///anggaran/add?page=${page}&size=${perpage}&sts_spp=true&sts=true&sts_spm=true&kd_keg=4
+        let url = `/anggaran/add?page=1&size=${perpage}&kampung=${search}&sts_spp=true&sts=true&sts_spm=true&kd_keg=4`;
         if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
         // if (search) { url += `&kd_advis=${}` }
         await axios.get(url).then((e) => {
@@ -312,14 +309,12 @@ const SpmAdd = () => {
             setPerpage(e.data.result.data.per_page);
             setPrev(e.data.result.pagination.previous_page);
             setNext(e.data.result.pagination.next_page);
-            if (e.status === 200) {
-                setDateUpdate(new Date())
-            }
+            if (e.status === 200) { setDateUpdate(new Date()) }
         })
     }
     const btnClick_ = async (e) => {
         setLoad(true);
-        let url = `/anggaran/add?page=${1}&size=${perpage_}&kampung=${search_}&sts_spp=${false}&sts=${true}&sts_spm=true&kd_keg=4`;
+        let url = `/anggaran/add?page=1&size=${perpage_}&kampung=${search_}&sts_spp=true&sts=true&sts_spm=false&kd_keg=4`;
         if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
         // if (search) { url += `&kd_advis=${}` }   
         await axios.get(url).then((e) => {
@@ -329,9 +324,7 @@ const SpmAdd = () => {
             setPerpage_(e.data.result.data.per_page);
             setPrev_(e.data.result.pagination.previous_page);
             setNext_(e.data.result.pagination.next_page);
-            if (e.status === 200) {
-                setDateUpdate(new Date())
-            }
+            if (e.status === 200) { setDateUpdate(new Date()) }
         })
     }
     //================= btn click cari data ==================
@@ -339,7 +332,7 @@ const SpmAdd = () => {
     const onSelectionChanged = (e) => {
         let selectedRows = e.api.getSelectedRows();
         let data = [...selectedRows]
-        if (data.length == 0) {
+        if (data.length === 0) {
             setPrint(false);
         } else {
             setPrint(true);
@@ -350,7 +343,7 @@ const SpmAdd = () => {
     const onSelectionChanged_ = (e) => {
         let selectedRows = e.api.getSelectedRows();
         let data = [...selectedRows]
-        if (data.length == 0) {
+        if (data.length === 0) {
             setPrint_(false);
         } else {
             setPrint_(true);
@@ -370,7 +363,7 @@ const SpmAdd = () => {
                     <div className='grow'>
                         <div className='mx-auto justify-center items-center h-screen w-[90%]'>
                             <PDFViewer style={{ width: "100%", height: "100vh", alignItems: 'center', alignSelf: 'center' }}
-                            ><DocSpm_add dataselectspp={dataVprint} /></PDFViewer>
+                            ><DocSpmAdd dataselectspp={dataVprint} /></PDFViewer>
                             <span className={`absolute text-red-500 bg-slate-900 rounded-full text-xl cursor-pointer z-20 w-6 m-4 right-20 -top-2 -translate-x-1/2 text-center`}
                                 onClick={() => { setViewprint(false); setDataVprint([]) }}>X</span>
                         </div>
@@ -387,7 +380,7 @@ const SpmAdd = () => {
                         <div className="flex border-2 rounded">
                             <input type="text" className="px-1.5 py-0.5 w-64" placeholder="Cari..." onChange={(e) => setSearch(e.target.value)} value={search} />
                             {searchdel ? <span className='rounded-full mx-1 cursor-pointer text-red-500 font-semibold' onClick={() => { setSearch(''); }}>X</span> : null}
-                            <utton className="flex items-center justify-center px-1.5 border-l" onClick={btnClick}>
+                            <Button className="flex items-center justify-center px-1.5 border-l" onClick={btnClick}>
                                 <Tooltip title='Cari / Reload Data' style={{ height: 12 }} >
                                     <IconButton>
                                         <svg className="w-3 h-3 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -395,15 +388,15 @@ const SpmAdd = () => {
                                         </svg>
                                     </IconButton>
                                 </Tooltip>
-                            </utton>
+                            </Button>
                         </div>
                         {print ? <div>
                             {viewbtn ?
-                                <><PDFDownloadLink placeholder='Print Data PDF' document={<DocSpm_add dataselectspp={dataDlprint} />} fileName={`doc_spp-reg_${new Date().toLocaleTimeString().slice(0, 16)}`}>
+                                <><PDFDownloadLink placeholder='Print Data PDF' document={<DocSpmAdd dataselectspp={dataDlprint} />} fileName={`doc_spp-reg_${new Date().toLocaleTimeString().slice(0, 16)}`}>
                                     {({ loading }) => loading && !viewbtn ? <Loader /> :
                                         <Tooltip title='SaveAs PDF' style={{ alignContent: 'center', height: 8, width: 8 }} >
                                             <IconButton style={{ alignContent: 'center', height: 8, marginTop: -4, width: 8, paddingLeft: 22 }}>
-                                                <utton className='w-8' onClick={() => setTimeout(() => { setDataDlprint([]); setBtn(false) }, 1500)}><SaveAsIcon sx={{ color: green[600] }} /></utton>
+                                                <Button className='w-8' onClick={() => setTimeout(() => { setDataDlprint([]); setBtn(false) }, 1500)}><SaveAsIcon sx={{ color: green[600] }} /></Button>
                                             </IconButton>
                                         </Tooltip>
                                     }
@@ -467,7 +460,7 @@ const SpmAdd = () => {
                         <div className="flex border-2 rounded">
                             <input type="text" className="px-1.5 py-0.5 w-64" placeholder="Cari..." onChange={(e) => setSearch_(e.target.value)} value={search_} />
                             {searchdel_ ? <span className='rounded-full mx-1 cursor-pointer text-red-500 font-semibold' onClick={() => { setSearch_(''); }}>X</span> : null}
-                            <utton className="flex items-center justify-center px-1.5 border-l" onClick={btnClick_}>
+                            <Button className="flex items-center justify-center px-1.5 border-l" onClick={btnClick_}>
                                 <Tooltip title='Cari / Reload Data' style={{ height: 12 }} >
                                     <IconButton>
                                         <svg className="w-3 h-3 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -475,7 +468,7 @@ const SpmAdd = () => {
                                         </svg>
                                     </IconButton>
                                 </Tooltip>
-                            </utton>
+                            </Button>
                         </div>
                         {print_ ? <div>
                             <Tooltip title='Save xlsx' style={{ height: 8, alignContent: 'center', paddingLeft: 22, width: 16, marginTop: -28 }} >

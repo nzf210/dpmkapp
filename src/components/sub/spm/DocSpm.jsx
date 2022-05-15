@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
     Page,
     Text,
@@ -22,7 +22,7 @@ import thin from '../../../public/Roboto_Slab/static/RobotoSlab-Thin.ttf';
 import italic from '../../../public/Roboto_Slab/static/Raleway-ExtraLightItalic.ttf';
 import moment from "moment";
 import { camelize, currency } from '../Font';
-import { red } from "@material-ui/core/colors";
+// import { red } from "@material-ui/core/colors";
 
 Font.register({
     family: "Roboto",
@@ -65,7 +65,7 @@ const SpmDoc = ({ dataselectspp }) => {
             fontSize: 12, marginBottom: 20, textAlign: "center",
             color: "grey",
             fontFamily: 'Roboto',
-            fontWeight: 'extrabold'
+            fontWeight: 'extrabold', borderTop: 'none',
         },
         head: {
             backgroundColor: "blue",
@@ -79,7 +79,6 @@ const SpmDoc = ({ dataselectspp }) => {
         view3r: { fontWeight: 'semibold' },
         table: { width: '100%', },
         row: { display: 'flex', flexDirection: 'row', borderTop: '1px solid #EEE', paddingTop: 0, paddingBottom: 0, },
-        header: { borderTop: 'none', },
         bold: { fontWeight: 'semibold', fontSize: 11, textAlign: 'center', alignSelf: 'center', alignContent: 'center', alignItems: 'center' },
         // So Declarative and unDRY 👌
         row1: { width: '5%' },

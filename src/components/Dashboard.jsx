@@ -20,7 +20,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         dispatch(getKamdis());
-        console.log('dashboard')
+        //console.log('dashboard')
     }, []);
 
     return (

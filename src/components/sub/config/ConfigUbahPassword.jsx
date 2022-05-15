@@ -1,5 +1,5 @@
 import MyModalHapus from './ubahpassword/MyModalHapus'
-import Filterkampung from "../filter/Filterkampung";
+//import Filterkampung from "../filter/Filterkampung";
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
@@ -10,7 +10,8 @@ import { useSelector } from 'react-redux';
 
 const ConfigUbahPassword = () => {
 
-    const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, userId } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_lvl1, kd_lvl2, userId } = useSelector(state => state.userLogin);
+    //const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, userId } = useSelector(state => state.userLogin);
     const [user, setUser] = useState([]);
     const [getUserInfo, setgetUserInfo] = useState(null);
     const [getInfoEdit_, setgetInfoEdit_] = useState(null);

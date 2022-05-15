@@ -15,7 +15,8 @@ import axios from "axios";
 
 export default function MyModal({ setgetUserInfo, setInfoHasil }) {
 
-    const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, userId } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_distrik, kd_lvl1, kd_lvl2 } = useSelector(state => state.userLogin);
+    // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, userId } = useSelector(state => state.userLogin);
 
     // const [kd_kampung_, setKdDistrik_] = useState('0');
     // const [kd_distrik_, setKdKampung_] = useState('0');

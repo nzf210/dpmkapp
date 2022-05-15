@@ -9,12 +9,13 @@ import { useSelector } from 'react-redux';
 
 function View() {
 
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
     const [infoedit, setInfoEdit] = useState(false);
     const [data, setData] = useState([]);
     const [trdlload, setTrdlload] = useState('');
 
-    const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_lvl1 } = useSelector(state => state.userLogin);
+    // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
 
     const data_ = async () => {
         try {
@@ -109,29 +110,3 @@ function View() {
 
 export default View;
 
-// const CustomDatePicker = (props) => {
-//     const [date, setDate] = useState(null);
-//     const DateFnsUtils = '2020'
-//     return (
-//         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-//             <KeyboardDatePicker
-//                 margin="normal"
-//                 id="date-picker-dialog"
-//                 label="Date picker"
-//                 format="dd/MM/yyyy"
-//                 clearable
-//                 value={date}
-//                 onChange={(event) => {
-//                     console.log("Date picker value: ", event);
-//                     console.log(props.columnDef.tableData.id);
-
-//                     setDate(event);
-//                     props.onFilterChanged(props.columnDef.tableData.id, event);
-//                 }}
-//                 KeyboardButtonProps={{
-//                     "aria-label": "change date"
-//                 }}
-//             />
-//         </MuiPickersUtilsProvider>
-//     );
-// };

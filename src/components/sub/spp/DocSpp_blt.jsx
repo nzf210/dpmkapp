@@ -135,7 +135,7 @@ const DocSpp_blt = ({ dataselectspp }) => {
         isiMenimbang: { fontSize: 12, paddingTop: 10, position: 'absolute', paddingLeft: 165 },
         isiMenimbang2: { fontSize: 12, paddingTop: 60, position: 'absolute', paddingLeft: 165 },
         isiMenimbang22: { fontSize: 12, paddingTop: 90, position: 'absolute', paddingLeft: 165 },
-        text5: { fontSize: "12px", textAlign: "center", marginTop: 70, fontWeight: 'ultrabold', fontFamily: 'Roboto', fontWeight: 'semibold' },
+        text5: { fontSize: "12px", textAlign: "center", marginTop: 70, fontFamily: 'Roboto', fontWeight: 'semibold' },//fontWeight: 'ultrabold',
 
     });
 

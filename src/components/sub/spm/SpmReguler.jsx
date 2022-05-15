@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState, Fragment } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 
 import 'ag-grid-community/dist/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css'; // Optional theme CSS
 import axios from 'axios';
 import CurrencyFormat from 'react-currency-format';
-import DocSpm_reg from './DocSpm_reg';
+import DocSpmreg from './DocSpm_reg';
 import moment from "moment";
 
 //Redux
@@ -38,7 +38,8 @@ moment.updateLocale('id', {
 
 const SpmRegule = () => {
 
-    const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_lvl1 } = useSelector(state => state.userLogin);
+    // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
     const gridRef = useRef(); // Optional - for accessing Grid's API
     const gridRef_ = useRef(); // Optional - for accessing Grid's API
     const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
@@ -84,23 +85,7 @@ const SpmRegule = () => {
         { field: 'pagu', suppressSizeToFit: true, width: 150, maxWidth: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
         {
             headerName: 'Aksi', cellStyle: { textAlign: "right", alignItems: 'right' }, headerClass: 'ag-theme-text-aksi', width: 80, maxWidth: 80,
-            // cellRendererFramework: (e) =>
-            //     <div className='-pl-20 -ml-6'>
-            //         <Button onClick={() => { handleUpdateForm(e.data) }} style={{ height: 8, alignContent: 'center', marginTop: -6 }} >
-            //             <Tooltip title='Edit Data' style={{ height: 8, alignContent: 'center' }} >
-            //                 <IconButton style={{ height: 8, alignContent: 'center' }}>
-            //                     <EditIcon fontSize="small" sx={{ color: orange[500] }} style={{ alignContent: 'center' }} />
-            //                 </IconButton>
-            //             </Tooltip>
-            //         </Button>
-            //         <Button onClick={() => handleDelete(e.data)} style={{ height: 8, alignContent: 'center', marginTop: -6 }}>
-            //             <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center' }} >
-            //                 <IconButton style={{ height: 8, alignContent: 'center' }}>
-            //                     <DeleteForeverIcon fontSize="small" sx={{ color: pink[500] }} />
-            //                 </IconButton>
-            //             </Tooltip>
-            //         </Button>
-            //     </div>,
+
             cellRenderer: (e) => (!e.data.sts_sp2d ?
                 <div className=' -ml-10 -mt-1'>
                     <Button onClick={() => { handleUpdateForm(e.data); }} style={{ height: 8, alignContent: 'center', marginRight: -10, width: 2, maxWidth: '2px', padding: 0, }}   >
@@ -118,7 +103,6 @@ const SpmRegule = () => {
                         </Tooltip>
                     </Button>
                 </div> : null),
-            width: 50,
         }
     ]);
     const [columnDefs_] = useState([
@@ -260,9 +244,9 @@ const SpmRegule = () => {
     }
     const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
     const handleDelete = async (e) => {
-        setLoad(true);
         const confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
         if (confirm) {
+            setLoad(true);
             try {
                 const update = await axios.patch('/anggaran', { id: e.id, tgl_spm: '1900-01-01', sts_spm: false, no_spm: `data di hapus ${Date()}` })
                 if (update.status === 200) {
@@ -342,7 +326,7 @@ const SpmRegule = () => {
     const onSelectionChanged = (e) => {
         let selectedRows = e.api.getSelectedRows();
         let data = [...selectedRows]
-        if (data.length == 0) {
+        if (data.length === 0) {
             setPrint(false);
         } else {
             setPrint(true);
@@ -353,7 +337,7 @@ const SpmRegule = () => {
     const onSelectionChanged_ = (e) => {
         let selectedRows = e.api.getSelectedRows();
         let data = [...selectedRows]
-        if (data.length == 0) {
+        if (data.length === 0) {
             setPrint_(false);
         } else {
             setPrint_(true);
@@ -373,7 +357,7 @@ const SpmRegule = () => {
                     <div className='grow'>
                         <div className='mx-auto justify-center items-center h-screen w-[90%]'>
                             <PDFViewer style={{ width: "100%", height: "100vh", alignItems: 'center', alignSelf: 'center' }}
-                            ><DocSpm_reg dataselectspp={dataVprint} /></PDFViewer>
+                            ><DocSpmreg dataselectspp={dataVprint} /></PDFViewer>
                             <span className={`absolute text-red-500 bg-slate-900 rounded-full text-xl cursor-pointer z-20 w-6 m-4 right-20 -top-2 -translate-x-1/2 text-center`}
                                 onClick={() => { setViewprint(false); setDataVprint([]) }}>X</span>
                         </div>
@@ -390,7 +374,7 @@ const SpmRegule = () => {
                         <div className="flex border-2 rounded">
                             <input type="text" className="px-1.5 py-0.5 w-64" placeholder="Cari..." onChange={(e) => setSearch(e.target.value)} value={search} />
                             {searchdel ? <span className='rounded-full mx-1 cursor-pointer text-red-500 font-semibold' onClick={() => { setSearch(''); }}>X</span> : null}
-                            <utton className="flex items-center justify-center px-1.5 border-l" onClick={btnClick}>
+                            <Button className="flex items-center justify-center px-1.5 border-l" onClick={btnClick}>
                                 <Tooltip title='Cari / Reload Data' style={{ height: 12 }} >
                                     <IconButton>
                                         <svg className="w-3 h-3 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -398,15 +382,15 @@ const SpmRegule = () => {
                                         </svg>
                                     </IconButton>
                                 </Tooltip>
-                            </utton>
+                            </Button>
                         </div>
                         {print ? <div>
                             {viewbtn ?
-                                <><PDFDownloadLink placeholder='Print Data PDF' document={<DocSpm_reg dataselectspp={dataDlprint} />} fileName={`doc_spp-reg_${new Date().toLocaleTimeString().slice(0, 16)}`}>
+                                <><PDFDownloadLink placeholder='Print Data PDF' document={<DocSpmreg dataselectspp={dataDlprint} />} fileName={`doc_spp-reg_${new Date().toLocaleTimeString().slice(0, 16)}`}>
                                     {({ loading }) => loading && !viewbtn ? <Loader /> :
                                         <Tooltip title='SaveAs PDF' style={{ alignContent: 'center', height: 8, width: 8 }} >
                                             <IconButton style={{ alignContent: 'center', height: 8, marginTop: -4, width: 8, paddingLeft: 22 }}>
-                                                <utton className='w-8' onClick={() => setTimeout(() => { setDataDlprint([]); setBtn(false) }, 1500)}><SaveAsIcon sx={{ color: green[600] }} /></utton>
+                                                <Button className='w-8' onClick={() => setTimeout(() => { setDataDlprint([]); setBtn(false) }, 1500)}><SaveAsIcon sx={{ color: green[600] }} /></Button>
                                             </IconButton>
                                         </Tooltip>
                                     }
@@ -470,7 +454,7 @@ const SpmRegule = () => {
                         <div className="flex border-2 rounded">
                             <input type="text" className="px-1.5 py-0.5 w-64" placeholder="Cari..." onChange={(e) => setSearch_(e.target.value)} value={search_} />
                             {searchdel_ ? <span className='rounded-full mx-1 cursor-pointer text-red-500 font-semibold' onClick={() => { setSearch_(''); }}>X</span> : null}
-                            <utton className="flex items-center justify-center px-1.5 border-l" onClick={btnClick_}>
+                            <Button className="flex items-center justify-center px-1.5 border-l" onClick={btnClick_}>
                                 <Tooltip title='Cari / Reload Data' style={{ height: 12 }} >
                                     <IconButton>
                                         <svg className="w-3 h-3 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -478,7 +462,7 @@ const SpmRegule = () => {
                                         </svg>
                                     </IconButton>
                                 </Tooltip>
-                            </utton>
+                            </Button>
                         </div>
                         {print_ ? <div>
                             <Tooltip title='Save xlsx' style={{ height: 8, alignContent: 'center', paddingLeft: 22, width: 16, marginTop: -28 }} >

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import penggunaReducer from '../features/PenggunaSlice';
+//import penggunaReducer from '../features/PenggunaSlice';
 import userLoginSlice from '../features/userLoginSlice';
 import FilterSlice from '../features/FilterSlice';
 

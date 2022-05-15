@@ -38,10 +38,7 @@ import { dataUser } from '../features/userLoginSlice';
 axios.defaults.withCredentials = true;
 
 
-
-
 const Navbar = ({ ubahMenu }) => {
-
     function btnNav(e) {
         switch (e.target.id) {
             case 'btn-home':
@@ -195,7 +192,7 @@ const Navbar = ({ ubahMenu }) => {
             const respon = await axios.get('/user/token');
             setToken(respon.data.accestoken);
             const decode = jwt_decode(respon.data.accestoken);
-            console.log(decode);
+            //console.log(decode);
             setExpier(decode.exp);
             setNamauser(decode.nama);
             setKddistrik(decode.kd_distrik);
@@ -238,14 +235,14 @@ const Navbar = ({ ubahMenu }) => {
     }
     )
 
-    const getUser = async () => {
-        const respon = await axiosJWT.get('/user', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        console.log(respon.data);
-    }
+    // const getUser = async () => {
+    //     const respon = await axiosJWT.get('/user', {
+    //         headers: {
+    //             Authorization: `Bearer ${token}`
+    //         }
+    //     });
+    //     console.log(respon.data);
+    // }
 
     const logOut = async () => {
         try {

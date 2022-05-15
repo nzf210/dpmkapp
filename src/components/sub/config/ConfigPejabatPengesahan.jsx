@@ -9,7 +9,8 @@ import axios from 'axios';
 
 const ConfigPejabatPengesahan = () => {
 
-    const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_lvl1 } = useSelector(state => state.userLogin);
+    // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
     const [data_, setData_] = useState([]);
     const [data_2, setData_2] = useState([]);
     const [changests, setChangests] = useState('');
@@ -84,7 +85,7 @@ const ConfigPejabatPengesahan = () => {
     /*  Update data Pejabat Pengesahan */
     const updateData = async (e, ee) => {
         try {
-            const update = await axios.patch('/ppengesahan', {
+            await axios.patch('/ppengesahan', {
                 id: e.id,
                 nama: e.nama,
                 no_sk: e.no_sk,
@@ -112,7 +113,7 @@ const ConfigPejabatPengesahan = () => {
     /* Tambah Data Pejabat Pengesahan */
     const tambahData = async (e, ee) => {
         try {
-            const tambah = await axios.post('/ppengesahan', {
+            await axios.post('/ppengesahan', {
                 nama: e.nama,
                 no_sk: e.no_sk,
                 kd_jbtn: ee,
@@ -148,10 +149,10 @@ const ConfigPejabatPengesahan = () => {
     }
     /* Hapus Data Pejabat Pengesahan */
 
-    const actions = [{
-        icon: 'delete',
-        tooltip: 'Hapus data'
-    }]
+    // const actions = [{
+    //     icon: 'delete',
+    //     tooltip: 'Hapus data'
+    // }]
 
     const option = {
         rowStyle: (rowData) => ({

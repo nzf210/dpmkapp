@@ -16,7 +16,8 @@ const Filterkampung = () => {
     const setDis = (e) => { setstate(e) };
     const nmdis = (e) => { setNmdis_(e); };
 
-    const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2 } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_lvl1 } = useSelector(state => state.userLogin);
+    // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2 } = useSelector(state => state.userLogin);
 
     //console.log('first nama', nama, kd_distrik, kd_kampung, kd_lvl1, kd_lvl2);
     useEffect(

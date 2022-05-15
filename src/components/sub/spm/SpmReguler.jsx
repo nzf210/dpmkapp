@@ -124,7 +124,8 @@ const SpmRegule = () => {
     const [columnDefs_] = useState([
         { field: 'kampung', filter: true, minWidth: 150, maxWidth: 150, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, checkboxSelection: true },
         { field: 'distrik', filter: true, minWidth: 150, maxWidth: 150, }, //suppressSizeToFit: true
-        { field: 'thp_advis', headerName: 'Kegiatan', width: 280 },
+        { field: 'thp_advis', filter: true, headerName: 'Kegiatan', width: 280 },
+        { field: 'no_spp', headerName: 'No SP2SPD', width: 220, filter: true, suppressSizeToFit: true },
         { field: 'tgl_spp', headerName: 'Tgl SP2SPD', width: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
         { field: 'pagu', width: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
     ]);
@@ -192,6 +193,8 @@ const SpmRegule = () => {
         let tgl_spm = moment(tgl).locale('id').format("YYYY-MM-DD");
         try {
             setLoad(true);
+            let counter = 0;
+            let len = dataprint_.length;
             dataprint_.map(async (f, i) => {
                 const no = await axios.get(`/nodok/${f.kd_kampung}?kd_keg=1`);
                 const nodok_ = parseInt(no.data[0].no_spm);
@@ -223,19 +226,22 @@ const SpmRegule = () => {
                         console.log('>99');
                         break;
                     case (999 > nodok > 9999):
-                        nomor = `${nodok}/SKBK/DDREGI/${f.kampung}/2022`;
+                        nomor = `${nodok}/SKBK/DDREG${thp}/${f.kampung}/2022`;
                         console.log('>999');
                         break;
                     default:
                         break;
                 }
+                counter++
                 const update = await axios.patch('/anggaran', { id: f.id, tgl_spm, sts_spm: true, no_spm: nomor })
                 console.log(update.status);
-                if (update.status === 200) {
+                if (update.status === 200 && len === counter) {
                     setDateUpdate(new Date())
                 }
             })
-
+            // if (len === counter) {
+            //     setDateUpdate(new Date())
+            // }
         } catch (error) {
             console.log(error)
         }

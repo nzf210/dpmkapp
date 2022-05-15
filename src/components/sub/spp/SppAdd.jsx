@@ -123,7 +123,7 @@ const SppAdd = () => {
     const [columnDefs_] = useState([
         { field: 'kampung', filter: true, minWidth: 150, maxWidth: 150, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, checkboxSelection: true },
         { field: 'distrik', filter: true, minWidth: 150, maxWidth: 150, }, //suppressSizeToFit: true
-        { field: 'thp_advis', headerName: 'Kegiatan', width: 280 },
+        { field: 'thp_advis', headerName: 'Kegiatan', width: 280, filter: true },
         { field: 'tgl', headerName: 'Tgl Verf APBK', width: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
         { field: 'pagu', width: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
     ]);
@@ -190,6 +190,8 @@ const SppAdd = () => {
         setLoad(true);
         //console.log(dataprint_, `${moment(tgl).locale('id').format("YYYY-MM-DD")}`)
         let tgl_spp = moment(tgl).locale('id').format("YYYY-MM-DD");
+        let counter = 0;
+        let len = dataprint_.length
         try {
             dataprint_.map(async (f, i) => {
                 const no = await axios.get(`/nodok/${f.kd_kampung}?kd_keg=4`);
@@ -230,9 +232,9 @@ const SppAdd = () => {
                     default:
                         break;
                 }
+                counter++
                 const update = await axios.patch('/anggaran', { id: f.id, tgl_spp, sts_spp: true, no_spp: nomor })
-                console.log(update.status);
-                if (update.status === 200) {
+                if (update.status === 200 && counter === len) {
                     setDateUpdate(new Date())
                 }
             })

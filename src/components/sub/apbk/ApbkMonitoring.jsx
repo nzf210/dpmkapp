@@ -73,7 +73,7 @@ const ApbkMonitoring = () => {
         // { field: 'tgl_spp', headerName: 'Tgl SP2SPD', width: 150, cellRenderer: (e) => <span>{e.value}</span> },
         { field: 'tgl', suppressSizeToFit: true, filter: true, headerName: 'Tgl Verf', width: 150, maxWidth: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
         {
-            field: 'sts', suppressSizeToFit: true, filter: true, headerName: 'Status APBK', width: 150, maxWidth: 150, cellRenderer: (e) => (e.data.sts ? <spam className='bg-green-500 text-center justify-center w-10'>OK</spam>
+            field: 'sts', suppressSizeToFit: true, filter: true, headerName: 'Status APBK', width: 150, maxWidth: 150, cellRenderer: (e) => (e.data.sts ? <span className='bg-green-500 text-center justify-center w-10'>OK</span>
                 : <span className='bg-yellow-500 text-center justify-center w-20 p-1 rounded-sm h-2  align-top content-center items-center'>PROSES</span>)
         },
         { field: 'pagu', suppressSizeToFit: true, width: 150, maxWidth: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },

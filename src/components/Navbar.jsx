@@ -287,7 +287,7 @@ const Navbar = ({ ubahMenu }) => {
                             <div className="pl-4 pr-4 text-white font-thin sm:flex sm:flex-row hidden" id="div-nav">
                                 <ul className="py-1 my-1 pl-2 sm:flex sm:flex-row sm:-mt-[45px] sm:space-x-1 duration-100 md:space-x-2">
                                     <Link to="/home" onClick={() => { ubahMenu('home') }}>
-                                        <li id="li-dropdown-home" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-full flex cursor-pointer sm:py-1" onMouseEnter={() => { console.log('home in') }} onMouseLeave={() => { console.log('mouse left') }} onClick={(e) => { btnNav(e) }} >
+                                        <li id="li-dropdown-home" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-full flex cursor-pointer sm:py-1" /*onMouseEnter={() => { console.log('home in') }} onMouseLeave={() => { console.log('mouse left') }}*/ onClick={(e) => { btnNav(e) }} >
                                             <div className="mx-auto flex flex-1">
                                                 <i><img src={Home} alt="" className="h-6" /></i>
                                                 <span className="text-center  px-2">Home</span>

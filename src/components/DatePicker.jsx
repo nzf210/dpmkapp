@@ -1,5 +1,6 @@
 import React from "react";
-import AdapterDateFns_ from '@date-io/date-fns'
+import AdapterDateFn from '@date-io/date-fns';
+// import AdapterDateFn from '@date-io/moment';
 import ind from 'date-fns/locale/id'
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -12,14 +13,14 @@ function DatePicker_({ tgl, setTgl, nmpicker }) {
 
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={3} style={{ height: 8, position: 'absolute', marginLeft: 82, marginTop: -53, maxHeight: 14, padding: 0 }}>
-                <MuiPickersUtilsProvider utils={AdapterDateFns_} locale={ind}>
+                <MuiPickersUtilsProvider utils={AdapterDateFn} locale={ind}>
+
                     {/* <DatePicker
                 variant="inline"
                 label="Basic example"
                 value={selectedDate}
                 onChange={handleDateChange}
             />
-
             <DatePicker
                 disableToolbar
                 variant="inline"

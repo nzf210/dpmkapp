@@ -473,9 +473,9 @@ const Sp2dAdd = () => {
                                         <Button onClick={updateDataChecklist} className='mx-4 -mt-6'><BackupIcon sx={{ color: blue[500] }} /></Button>
                                     </IconButton>
                                 </Tooltip>
-                                {/*<div className='h-4 -mb-8'>
-                                    <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); }} nmpicker={nmpicker} />
-                                </div> */}
+                                <div className='h-4 -mb-8'>
+                                    <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); }} nmpicker={`SP2D ADD`} />
+                                </div>
                             </div> : null}
                     </div>
                     <div className='container w-full bg-slate-400 mx-auto -z-40 relative'>

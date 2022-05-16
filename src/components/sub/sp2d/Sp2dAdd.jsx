@@ -468,14 +468,14 @@ const Sp2dAdd = () => {
                                     </IconButton>
                                 </Tooltip>
                                 {/* =================== Form Tanggal dan button Terbitkan SP2SPD ===============================  */}
-                                {/* <Tooltip title='Terbitkan SP2SPD' style={{ height: 8, alignContent: 'center', paddingLeft: 22, width: 16, marginTop: -28 }} >
-                                <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22, marginTop: -18 }}>
-                                    <Button onClick={updateDataChecklist} className='mx-4 -mt-6'><BackupIcon sx={{ color: blue[500] }} /></Button>
-                                </IconButton>
-                            </Tooltip>
-                            <div className='h-4 -mb-8'>
-                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); }} nmpicker={nmpicker} />
-                            </div>*/}
+                                <Tooltip title='Terbitkan SP2SPD' style={{ height: 8, alignContent: 'center', paddingLeft: 22, width: 16, marginTop: -28 }} >
+                                    <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22, marginTop: -18 }}>
+                                        <Button onClick={updateDataChecklist} className='mx-4 -mt-6'><BackupIcon sx={{ color: blue[500] }} /></Button>
+                                    </IconButton>
+                                </Tooltip>
+                                {/*<div className='h-4 -mb-8'>
+                                    <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); }} nmpicker={nmpicker} />
+                                </div> */}
                             </div> : null}
                     </div>
                     <div className='container w-full bg-slate-400 mx-auto -z-40 relative'>

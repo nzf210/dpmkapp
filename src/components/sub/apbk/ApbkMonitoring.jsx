@@ -139,8 +139,8 @@ const ApbkMonitoring = () => {
         //console.log(dataprint_, `${moment(tgl).locale('id').format("YYYY-MM-DD")}`)
         const confirm = window.confirm(`Dengan Memverifikasi Data Yang Di Pilih akan Mengubah Status APBK OK`)
         let tgl = moment(new Date()).locale('id').format("YYYY-MM-DD");
-        setLoad(true);
         if (confirm) {
+            setLoad(true);
             dataprint.map(async (e, i) => {
                 await axios.patch('/anggaran', { id: e.id, sts: true, tgl })
                 if (dataprint.length === i + 1) {
@@ -166,7 +166,7 @@ const ApbkMonitoring = () => {
         if (confirm) {
             setLoad(true);
             try {
-                const update = await axios.patch('/anggaran', { id: e.id, sts: false })
+                const update = await axios.patch('/anggaran', { id: e.id, sts: false, tgl: null })
                 if (update.status === 200) {
                     // console.log(update.data.info)
                     handleClose();

@@ -1,8 +1,8 @@
 {
   "name": "dpmk-app",
   "version": "0.1.0",
-  "homepage": "http://localhost/",
-  "private": false,
+  "homepage": "https://dpmk.nzf.my.id/",
+  "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.3",
     "@emotion/cache": "^11.7.1",

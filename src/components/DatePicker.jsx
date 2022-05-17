@@ -14,27 +14,27 @@ import Stack from '@mui/material/Stack';
 function DatePicker_({ tgl, setTgl, nmpicker }) {
 
     return (
-        <div className="bg-red-300 w-72 absolute">
-            <LocalizationProvider dateAdapter={AdapterDateFns} locale={ind}>
-                <Stack spacing={3} style={{ height: 20 }}>
-                    <DatePicker
-                        // disableFuture
-                        // disablePast
-                        label={`TGL ${nmpicker}`}
-                        // openTo="day"
-                        //mask={`__-__-____`}
-                        views={['day']}
-                        // views={['year', 'month', 'day']}
-                        // tgl={tgl}
-                        value={tgl}
-                        onChange={(newtgl) => {
-                            setTgl(newtgl);
-                        }}
-                        renderInput={(params) => <TextField {...params} variant='outlined' margin="dense" style={{ width: 160, marginTop: -43, marginLeft: 74 }} />}
-                    />
-                </Stack>
-            </LocalizationProvider>
-        </div>
+
+        <LocalizationProvider dateAdapter={AdapterDateFns} locale={ind}>
+            <Stack spacing={3} style={{ height: 20 }}>
+                <DatePicker
+                    // disableFuture
+                    // disablePast
+                    label={`TGL ${nmpicker}`}
+                    // openTo="day"
+                    //mask={`__-__-____`}
+                    views={['day']}
+                    // views={['year', 'month', 'day']}
+                    // tgl={tgl}
+                    value={tgl}
+                    onChange={(newtgl) => {
+                        setTgl(newtgl);
+                    }}
+                    renderInput={(params) => <TextField {...params} variant='outlined' margin="dense" style={{ width: 160, marginTop: -43, marginLeft: 74 }} />}
+                />
+            </Stack>
+        </LocalizationProvider>
+
     );
 }
 

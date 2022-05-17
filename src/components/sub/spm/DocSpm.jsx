@@ -61,11 +61,11 @@ const SpmDoc = ({ dataselectspp }) => {
         />
     );
     const style = StyleSheet.create({
-        header: {
+        header_: {
             fontSize: 12, marginBottom: 20, textAlign: "center",
             color: "grey",
             fontFamily: 'Roboto',
-            fontWeight: 'extrabold', borderTop: 'none',
+            fontWeight: 'extrabold'
         },
         head: {
             backgroundColor: "blue",
@@ -79,6 +79,7 @@ const SpmDoc = ({ dataselectspp }) => {
         view3r: { fontWeight: 'semibold' },
         table: { width: '100%', },
         row: { display: 'flex', flexDirection: 'row', borderTop: '1px solid #EEE', paddingTop: 0, paddingBottom: 0, },
+        header: { borderTop: 'none', },
         bold: { fontWeight: 'semibold', fontSize: 11, textAlign: 'center', alignSelf: 'center', alignContent: 'center', alignItems: 'center' },
         // So Declarative and unDRY 👌
         row1: { width: '5%' },
@@ -352,7 +353,7 @@ const SpmDoc = ({ dataselectspp }) => {
                                     <Text style={[style.row7,]}>JUMLAH HARGA (Rp)</Text>
                                     <Text style={[style.row8,]}>TANDA TANGAN/ PARAF</Text>
                                 </View>
-                                <View style={[style.row, style.bold, style.header, { borderBottom: 0.7 }]}>
+                                <View style={[style.row, style.bold, style.header, { borderBottom: 0.7, }]}>
                                     <Text style={[{ width: '67%' }, style.bgbiru]}>PEMERINTAHAN KAMPUNG</Text>
                                     <Text style={[style.row7, style.bgbiru, { textAlign: 'right', paddingRight: 3 }]}>17.850.000</Text>
                                     <Text style={[style.row8, style.bgbiru, style.biru]}>.....</Text>

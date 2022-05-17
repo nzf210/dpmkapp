@@ -30,7 +30,8 @@ import { blue, green, pink } from '@mui/material/colors';
 import { Loader } from '../Font';
 
 import Pagination from '../../Pagination';
-
+import DatePicker from '../../DatePicker';
+import InfoDialog from '../../DialogInfo';
 moment.updateLocale('id', {
     weekdaysMin: ["Ahad", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
     months: ["Januari", "February", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Novenber", "Desember"]
@@ -62,7 +63,7 @@ const ApbkMonitoring = () => {
     const [load, setLoad] = useState(false);
 
     const [tgl, setTgl] = useState(new Date());
-    //const nmpicker = 'SP2SPD REG';
+    const nmpicker = 'Verf APBK';
 
 
     const [columnDefs] = useState([
@@ -138,13 +139,18 @@ const ApbkMonitoring = () => {
     const updateDataChecklist = () => {
         //console.log(dataprint_, `${moment(tgl).locale('id').format("YYYY-MM-DD")}`)
         const confirm = window.confirm(`Dengan Memverifikasi Data Yang Di Pilih akan Mengubah Status APBK OK`)
-        let tgl = moment(new Date()).locale('id').format("YYYY-MM-DD");
+        //let tgl_ = ;
         if (confirm) {
             setLoad(true);
             dataprint.map(async (e, i) => {
-                await axios.patch('/anggaran', { id: e.id, sts: true, tgl })
+                await axios.patch('/anggaran', { id: e.id, sts: true, tgl: moment(tgl).locale('id').format("YYYY-MM-DD") })
                 if (dataprint.length === i + 1) {
                     setLoad(false);
+                    setInfo('Data Diperbaharui');
+                    setDialogInfo(true);
+                    setTimeout(() => {
+                        setDialogInfo(false);
+                    }, 1700);
                     setDateUpdate(new Date());
                 }
             })
@@ -156,9 +162,9 @@ const ApbkMonitoring = () => {
     //================= Terbitkan SP2SPD =========================
 
     //================= Alert Dialog =========================
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => { setOpen(true); };
-    const handleClose = () => { setOpen(false); setDialogInfo(false) };
+    // const [open, setOpen] = React.useState(false);
+    // const handleClickOpen = () => { setOpen(true); };
+    const handleClose = () => { /*setOpen(false);*/ setDialogInfo(false) };
     // const onChangeForm = (e) => { const { value, id } = e.target; setDataform({ ...dataform, [id]: value }) }
     // const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
     const handleDelete = async (e) => {
@@ -175,7 +181,7 @@ const ApbkMonitoring = () => {
                     setDialogInfo(true);
                     setTimeout(() => {
                         setDialogInfo(false);
-                    }, 2000);
+                    }, 1700);
                     setLoad(false);
                 } else { setDialogInfo(true); setInfo('Gagal Hapus Data') }
             } catch (error) { console.log('Error Hapus spp reg', error) }
@@ -249,7 +255,7 @@ const ApbkMonitoring = () => {
         <>
             <div className='grid grid-flow-row h-0'>
                 {load ? <Loader /> : null}
-                <div >
+                <div className='mt-5'>
                     <div className="h-20"></div>
                     <span className='left-0 w-44 absolute ml-[20%] -z-50 font-semibold text-slate-900'>VALIDASI APBK</span>
                     <div className="flex items-center justify-center z-10">
@@ -277,16 +283,19 @@ const ApbkMonitoring = () => {
                                     <Button style={{ width: 8 }} onClick={() => { setViewprint(true); setDataVprint(dataprint) }} ><PictureAsPdfIcon sx={{ color: red[500] }} /></Button>
                                 </IconButton>
                             </Tooltip> */}
-                            <Tooltip title='Verifikasi APBK' style={{ height: 8, alignContent: 'center', paddingLeft: 22, width: 16, }} >
-                                <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22, }}>
-                                    <Button onClick={updateDataChecklist} className='mx-4 -mt-6'><BackupIcon sx={{ color: blue[500] }} /></Button>
-                                </IconButton>
-                            </Tooltip>
                             <Tooltip title='Save xlsx' style={{ height: 8, alignContent: 'center', width: 16 }} >
                                 <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22 }}>
                                     <Button style={{ width: 8 }} onClick={() => onBtnExport()} ><CloudDownloadIcon sx={{ color: green[500] }} /></Button>
                                 </IconButton>
                             </Tooltip>
+                            <Tooltip title='Verifikasi APBK' style={{ height: 8, alignContent: 'center', paddingLeft: 22, width: 16, }} >
+                                <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22, }}>
+                                    <Button onClick={updateDataChecklist} className='mx-4 -mt-6'><BackupIcon sx={{ color: blue[500] }} /></Button>
+                                </IconButton>
+                            </Tooltip>
+                            <div className='h-4 -mb-8'>
+                                <DatePicker tgl={tgl} setTgl={e => setTgl(e)} nmpicker={nmpicker} />
+                            </div>
                         </div> : null}
                     </div>
                     <div className='container w-full bg-slate-400 mx-auto -z-40 relative'>
@@ -318,6 +327,7 @@ const ApbkMonitoring = () => {
                                         // paginateBack={() => { if (page !== 1) { setPage(page - 1) } }}
                                         selectChanged={(e) => { setPerpage(e.target.value) }}
                                     />
+                                    <InfoDialog open={dialoginfo} text={info} handleClose={handleClose} />
                                 </div>
                             </div>
                         </div>

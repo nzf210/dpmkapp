@@ -61,7 +61,7 @@ const SpmDoc_blt = ({ dataselectspp }) => {
         />
     );
     const style = StyleSheet.create({
-        header: {
+        header_: {
             fontSize: 12, marginBottom: 20, textAlign: "center",
             color: "grey",
             fontFamily: 'Roboto',

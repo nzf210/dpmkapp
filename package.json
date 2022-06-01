@@ -1,8 +1,8 @@
 {
   "name": "dpmk-app",
   "version": "0.1.0",
-  "homepage": "https://dpmk.nzf.my.id/",
-  "private": true,
+  "homepage": "http://0.0.0.0:3000",
+  "private": false,
   "dependencies": {
     "@craco/craco": "^6.4.3",
     "@date-io/date-fns": "^1.3.13",
@@ -63,8 +63,8 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
+    "start": "react-scripts start --host=0.0.0.0",
+    "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build HTTPS=false",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "t": "npx tailwindcss -i ./cssinput.css -o ./src/style.css --watch",

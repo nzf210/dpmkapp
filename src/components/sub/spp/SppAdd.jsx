@@ -257,7 +257,7 @@ const SppAdd = () => {
         const confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
         if (confirm) {
             try {
-                const update = await axios.patch('/anggaran', { id: e.id, tgl_spp: '1900-01-01', sts_spp: false, no_spp: `data di hapus ${Date()}` })
+                const update = await axios.patch('/anggaran', { id: e.id, tgl_spp: '1900-01-01', sts_spp: false, no_spp: null /** `data di hapus ${Date()}` */ })
                 if (update.status === 200) {
                     console.log(update.data.info)
                     handleClose();

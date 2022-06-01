@@ -228,7 +228,7 @@ const SppDoc = ({ dataselectspp }) => {
                                 <View >
                                     <Text style={{ paddingLeft: 70, width: 260, }}>a. Jumlah Pagu ADD </Text>
                                     <Text style={{ paddingTop: -17, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -32, paddingLeft: 270, }}>Rp 134.000.000</Text>
+                                    <Text style={{ paddingTop: -32, paddingLeft: 270, }}>Rp 134.400.000</Text>
                                 </View>
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 70, width: 260, }}>b. Akumulasi Sebelumnya </Text>
@@ -238,7 +238,7 @@ const SppDoc = ({ dataselectspp }) => {
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 70, width: 260, }}>c. Sisa Dana yang belum dicairkan </Text>
                                     <Text style={{ paddingTop: -17, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -32, paddingLeft: 270, }}><CurrencyFormat value={parseInt(134000000 - (parseInt(e.thp_select) + parseInt(e.opt3) + parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
+                                    <Text style={{ paddingTop: -32, paddingLeft: 270, }}><CurrencyFormat value={parseInt(134400000 - (parseInt(e.thp_select) + parseInt(e.opt3) + parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                 </View>
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 70, width: 260, }}>d. Jumlah dana yang diminta saat ini </Text>
@@ -249,7 +249,7 @@ const SppDoc = ({ dataselectspp }) => {
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 70, width: 260, }}>e. Sisa Jumlah Dana ADD yang belum di Cairkan </Text>
                                     <Text style={{ paddingTop: -32, paddingLeft: 260, width: 2, maxWidth: 2 }}>:</Text>
-                                    <Text style={{ paddingTop: -47, paddingLeft: 270, }}><CurrencyFormat value={parseInt(134000000 - (parseInt(e.thp_select) + parseInt(e.opt3) + parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
+                                    <Text style={{ paddingTop: -47, paddingLeft: 270, }}><CurrencyFormat value={parseInt(134400000 - (parseInt(e.thp_select) + parseInt(e.opt3) + parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                 </View>
                                 <View style={{ marginTop: -30 }}>
                                     <Text style={{ paddingLeft: 50, width: 260, }}>8. Ketentuan - Ketentuan Lainnya</Text>
@@ -421,8 +421,8 @@ const SppDoc = ({ dataselectspp }) => {
                                                 <Text style={{ color: 'white' }}>0</Text>
                                                 <Text style={{ textAlign: 'right', width: 83, }}><CurrencyFormat value={parseInt(53400000 - 13350000 - (parseInt(e.opt3)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                                 <Text style={{ color: 'white' }}>0</Text>
-                                                <Text style={{ textAlign: 'right', width: 83, }}><CurrencyFormat value={parseInt(63300000 - 15750000 - (parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
-                                                <Text style={{ width: 83, marginTop: 2, fontWeight: 'semibold' }}><CurrencyFormat value={parseInt(134000000 - 33600000 - (parseInt(e.thp_select) + parseInt(e.opt3) + parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
+                                                <Text style={{ textAlign: 'right', width: 83, }}><CurrencyFormat value={parseInt(63000000 - 15750000 - (parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
+                                                <Text style={{ width: 83, marginTop: 2, fontWeight: 'semibold' }}><CurrencyFormat value={parseInt(134400000 - 33600000 - (parseInt(e.thp_select) + parseInt(e.opt3) + parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                             </View>
                                         </View>
                                     </View>

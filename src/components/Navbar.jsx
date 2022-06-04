@@ -494,6 +494,10 @@ const Navbar = ({ ubahMenu }) => {
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
                                                             <span id="btn-spd2-reguler" className="w-full inline-block"><MdAccountBalance className='inline-block -mt-1' /> B L T</span></li>
                                                     </Link>
+                                                    <Link onClick={() => { ubahMenu() }} to="/home/sp2d/dds">
+                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
+                                                            <span id="btn-spd2-reguler" className="w-full inline-block"><MdAccountBalance className='inline-block -mt-1' /> SP2D DDS</span></li>
+                                                    </Link>
                                                     <Link onClick={() => { ubahMenu() }} to="/home/sp2d/add-honor">
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
                                                             <span id="btn-sp2d-add" className="w-full inline-block"><MdAccountBalance className='inline-block -mt-1' /> ADD / Honor</span></li>

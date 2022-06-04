@@ -203,29 +203,29 @@ const SppReguler = () => {
                 let thp;
                 switch (f.id_thp) {
                     case 2:
-                        thp = 'I'
+                        thp = '1'
                         break;
                     case 3:
-                        thp = 'II'
+                        thp = '2'
                         break;
                     default:
-                        thp = 'III'
+                        thp = '3'
                 }
                 switch (true) {
                     case (nodok < 10):
-                        nomor = `000${nodok}/SP2SPD/DDREG-${thp}/${f.kampung}/2022`;
+                        nomor = `000${nodok}/SP2SPD/DD_REGULER${thp}/${f.kampung}/2022`; //........../SP2SPD/DD_REGULER1/HOM HOM/2022
                         console.log('<9', nomor);
                         break;
                     case (9 < nodok < 100):
-                        nomor = `00${nodok}/SP2SPD/DDREG-${thp}/${f.kampung}/2022`;
+                        nomor = `00${nodok}/SP2SPD/DD_REGULER${thp}/${f.kampung}/2022`;
                         console.log('>9', nomor);
                         break;
                     case (99 > nodok > 1000):
-                        nomor = `0${nodok}/SP2SPD/DDREG-${thp}/${f.kampung}/2022`;
+                        nomor = `0${nodok}/SP2SPD/DD_REGULER${thp}/${f.kampung}/2022`;
                         console.log('>99');
                         break;
                     case (999 > nodok > 9999):
-                        nomor = `${nodok}/SP2SPD/DDREG-${thp}/${f.kampung}/2022`;
+                        nomor = `${nodok}/SP2SPD/DD_REGULER${thp}/${f.kampung}/2022`;
                         console.log('>999');
                         break;
                     default:
@@ -257,7 +257,7 @@ const SppReguler = () => {
         if (confirm) {
             setLoad(true);
             try {
-                const update = await axios.patch('/anggaran', { id: e.id, tgl_spp: '1900-01-01', sts_spp: false, no_spp: `data di hapus ${Date()}` })
+                const update = await axios.patch('/anggaran', { id: e.id, tgl_spp: '1900-01-01', sts_spp: false, no_spp: null })
                 if (update.status === 200) {
                     console.log(update.data.info)
                     handleClose();

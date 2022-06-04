@@ -28,6 +28,7 @@ import Sp2dBlt from "./components/sub/sp2d/Sp2dBlt";
 import Sp2dCovid from "./components/sub/sp2d/Sp2dCovid";
 import Sp2dLaporan from "./components/sub/sp2d/Sp2dLaporan";
 import Sp2dReguler from "./components/sub/sp2d/Sp2dReguler";
+import Sp2ddds from "./components/sub/sp2d/Sp2ddds";
 /* SP2D */
 
 /* SPM */
@@ -90,6 +91,7 @@ function App() {
           <Route path="sp2d/laporan" element={<Sp2dLaporan />} />
           <Route path="sp2d/add-honor" element={<Sp2dAdd />} />
           <Route path="sp2d/reguler" element={<Sp2dReguler />} />
+          <Route path="sp2d/dds" element={<Sp2ddds />} />
 
           <Route path="spd/blt" element={<SpdBlt />} />
           <Route path="spd/covid" element={<SpdCovid />} />

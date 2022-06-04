@@ -5,7 +5,7 @@ import 'ag-grid-community/dist/styles/ag-grid.css'; // Core grid CSS, always nee
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css'; // Optional theme CSS
 import axios from 'axios';
 import CurrencyFormat from 'react-currency-format';
-import DocSppblt from './DocSpp_blt';
+import DocSp2ddds from './DocSp2ddds';
 import moment from "moment";
 
 //Redux
@@ -19,12 +19,12 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+//import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BackupIcon from '@mui/icons-material/Backup';
 
 import DatePicker from '../../DatePicker'
 
-import { blue, green, orange, pink, red } from '@mui/material/colors';
+import { blue, green, orange, red } from '@mui/material/colors';
 import AlertDialog from '../../DialogAlert';
 import InfoDialog from '../../DialogInfo';
 import { Loader } from '../Font';
@@ -36,7 +36,7 @@ moment.updateLocale('id', {
     months: ["Januari", "February", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Novenber", "Desember"]
 });
 
-const SppBlt = () => {
+const Sp2dBlt = () => {
 
     const { kd_kampung, kd_lvl1 } = useSelector(state => state.userLogin);
     // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
@@ -59,7 +59,7 @@ const SppBlt = () => {
     const [dataprint, setDataprint] = useState([]);
     const [dataVprint, setDataVprint] = useState([]);
     const [dataDlprint, setDataDlprint] = useState([]);
-    const [dataform, setDataform] = useState({ no_spp: '', tgl_spp: '', sts_spp: '' });
+    const [dataform, setDataform] = useState({ no_spp: '', tgl_spp: '', no_spm: '', tgl_spm: '', no_sp2d: '', tgl_sp2d: '' });
     const [load, setLoad] = useState(false);
 
     const [rowData_, setRowData_] = useState(); // Set rowData to Array of Objects, one Object per Row
@@ -73,19 +73,19 @@ const SppBlt = () => {
     const [print_, setPrint_] = useState(false);
     const [dataprint_, setDataprint_] = useState([]);
     const [tgl, setTgl] = useState(new Date());
-    const nmpicker = 'SP2SPD BLT';
+    let nmpicker = 'SP2D DDS';
 
     const [columnDefs] = useState([
         { field: 'kampung', filter: true, minWidth: 150, maxWidth: 150, suppressSizeToFit: true, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, checkboxSelection: true },
         { field: 'distrik', filter: true, minWidth: 150, maxWidth: 150, suppressSizeToFit: true }, //suppressSizeToFit: false 
         { field: 'thp_advis', headerName: 'Kegiatan', width: 270, filter: true, suppressSizeToFit: true },
-        { field: 'no_spp', headerName: 'No SP2SPD', width: 220, filter: true, suppressSizeToFit: true },
+        { field: 'no_sp2d', headerName: 'No SP2D', width: 220, filter: true, suppressSizeToFit: true },
         // { field: 'tgl_spp', headerName: 'Tgl SP2SPD', width: 150, cellRenderer: (e) => <span>{e.value}</span> },
-        { field: 'tgl_spp', suppressSizeToFit: true, filter: true, headerName: 'Tgl SP2SPD', width: 150, maxWidth: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
+        { field: 'tgl_sp2d', suppressSizeToFit: true, filter: true, headerName: 'Tgl SP2D', width: 150, maxWidth: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
         { field: 'pagu', suppressSizeToFit: true, width: 150, maxWidth: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
         {
             headerName: 'Aksi', cellStyle: { textAlign: "right", alignItems: 'right' }, headerClass: 'ag-theme-text-aksi', width: 80, maxWidth: 80,
-            cellRenderer: (e) => (!e.data.sts_spm ?
+            cellRenderer: (e) => (e.data.sts_sp2d ?
                 <div className=' -ml-10 -mt-1'>
                     <Button onClick={() => { handleUpdateForm(e.data); }} style={{ height: 8, alignContent: 'center', marginRight: -10, width: 2, maxWidth: '2px', padding: 0, }}   >
                         <Tooltip title='Edit Data' style={{ height: 8, alignContent: 'center' }} >
@@ -94,21 +94,22 @@ const SppBlt = () => {
                             </IconButton>
                         </Tooltip>
                     </Button>
-                    <Button onClick={() => handleDelete(e.data)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
+                    {/* <Button onClick={() => handleDelete(e.data)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
                         <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center' }} >
                             <IconButton style={{ height: 8, alignContent: 'center' }} >
                                 <DeleteForeverIcon fontSize="small" sx={{ color: pink[500] }} />
                             </IconButton>
                         </Tooltip>
-                    </Button>
+                    </Button> */}
                 </div> : null),
         }
     ]);
     const [columnDefs_] = useState([
         { field: 'kampung', filter: true, minWidth: 150, maxWidth: 150, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, checkboxSelection: true },
         { field: 'distrik', filter: true, minWidth: 150, maxWidth: 150, }, //suppressSizeToFit: true
-        { field: 'thp_advis', headerName: 'Kegiatan', width: 280, filter: true },
-        { field: 'tgl', headerName: 'Tgl Verf APBK', width: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
+        { field: 'thp_advis', headerName: 'Kegiatan', width: 280 },
+        { field: 'no_spm', headerName: 'No SKBK', width: 220, filter: true, suppressSizeToFit: true },
+        { field: 'tgl_spm', headerName: 'Tgl SKBK', width: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
         { field: 'pagu', width: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
     ]);
 
@@ -125,9 +126,10 @@ const SppBlt = () => {
     // Example load data from sever
     useEffect(async () => {
         setLoad(true);
-        let url = `/anggaran/blt?page=${page}&size=${perpage}&sts_spp=${true}&sts=${true}`;
+        let url = `/anggaran?page=${page}&size=${perpage}`;
+        //        let url = `/anggaran/blt?page=${page}&size=${perpage}&sts_spp=true&sts=true&sts_spm=true&kd_keg=2&sts_sp2d=true`;
         if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-        if (search !== '') { url += `&kampung=${search}` }
+        if (search) { url += `&kampung=${search}` }
         await axios.get(url).then((e) => {
             setRowData(e.data.result.data.data);
             setCount(e.data.result.data.count);
@@ -142,23 +144,34 @@ const SppBlt = () => {
         // .then(e => console.log(e))
     }, [page, perpage, dateupdate]);
 
+
+    // var array = ['John', 'Make', 'Mac', 'David', 'Smith', 'John', 'Mac', 'Make']
+    // var filterArray = array.filter(function (item, index) { return array.indexOf(item) >= index; });
+    // document.write('Output :- ' + filterArray);
+
+
     useEffect(async () => {
         setLoad(true);
-        let url = `/anggaran/blt?page=${page_}&size=${perpage_}&sts_spp=${false}&sts=${true}`;
+        let url = `/anggaran?page=${1}&size=${5000}`;
+        //let url = `/anggaran/blt?page=${page_}&size=${perpage_}&sts_spp=true&sts=true&sts_spm=true&kd_keg=2&sts_sp2d=false`;
         if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-        if (search_ !== '') { url += `&kampung=${search_}` }
+        if (search_) { url += `&kampung=${search_}` }
         await axios.get(url).then((e) => {
-            setRowData_(e.data.result.data.data);
-            setCount_(e.data.result.data.count);
-            setPage_(e.data.result.data.page);
-            setPerpage_(e.data.result.data.per_page);
-            setPrev_(e.data.result.pagination.previous_page);
-            setNext_(e.data.result.pagination.next_page);
+            const data = e.data.result.data.data.filter(function (item, pos) {
+                return item.kd_kampung;
+            })
+            let da = [...new Set(data)];
+            console.log('data new', da)
+            // setRowData_(e.data.result.data.data);
+            // setCount_(e.data.result.data.count);
+            // setPage_(e.data.result.data.page);
+            // setPerpage_(e.data.result.data.per_page);
+            // setPrev_(e.data.result.pagination.previous_page);
+            // setNext_(e.data.result.pagination.next_page);
             if (e.status === 200) {
                 setLoad(false);
             }
         })
-
     }, [page_, perpage_, dateupdate]);
 
     // Example using Grid's API
@@ -171,60 +184,42 @@ const SppBlt = () => {
     //================= Terbitkan SP2SPD =========================
     /* Funtiom Update Data +++++++++++ PENOMORAN ++++++++*/
     const updateDataChecklist = async () => {
-        setLoad(true);
         //console.log(dataprint_, `${moment(tgl).locale('id').format("YYYY-MM-DD")}`)
-        let tgl_spp = moment(tgl).locale('id').format("YYYY-MM-DD");
-        let len = dataprint_.length
-        let counter = 0
+        let len = dataprint_.length;
+        setLoad(true);
+        const nomor = await axios.get(`/nodok?kd_keg=2`);
+        const nor = parseInt(nomor.data[0].no_sp2d) + 1;
         try {
-            dataprint_.map(async (f, i) => {
-                const no = await axios.get(`/nodok/${f.kd_kampung}?kd_keg=2`);
-                const nodok_ = parseInt(no.data[0].no_spp);
-                let nomor = '';
-                let nodok = parseInt((nodok_ + 1))
-                let thp;
-                switch (f.id_thp) {
-                    case 6:
-                        thp = 'I'
-                        break;
-                    case 7:
-                        thp = 'II'
-                        break;
-                    default:
-                        thp = 'III'
+            let tgl_sp2d = moment(tgl).locale('id').format("YYYY-MM-DD");
+            for (let i = 0; i < len; i++) {
+                const { id } = dataprint_[i];
+                await axios.patch('/anggaran', { id, tgl_sp2d, sts_sp2d: true, no_sp2d: numbering(nor + i) })
+                if ((i + 1) === len) {
+                    setLoad(false);
+                    setDateUpdate(new Date());
                 }
-                switch (true) {
-                    case (nodok < 10):
-                        nomor = `000${nodok}/SP2SPD/DD_BLT${thp}/${f.kampung}/2022`; //SP2SPD/DD_BLT/SERENGAN/2022
-                        console.log('<9', nomor);
-                        break;
-                    case (9 < nodok < 100):
-                        nomor = `00${nodok}/SP2SPD/DD_BLT${thp}/${f.kampung}/2022`;
-                        console.log('>9', nomor);
-                        break;
-                    case (99 > nodok > 1000):
-                        nomor = `0${nodok}/SP2SPD/DD_BLT${thp}/${f.kampung}/2022`;
-                        console.log('>99');
-                        break;
-                    case (999 > nodok > 9999):
-                        nomor = `${nodok}/SP2SPD/DD_BLT${thp}/${f.kampung}/2022`;
-                        console.log('>999');
-                        break;
-                    default:
-                        break;
-                }
-                counter++
-                const update = await axios.patch('/anggaran', { id: f.id, tgl_spp, sts_spp: true, no_spp: nomor })
-                console.log(update.status);
-                if (update.status === 200 && counter === len) {
-                    setDateUpdate(new Date())
-                }
-            })
+            }
+        } catch (error) { console.log(error) }
+    }
 
-        } catch (error) {
-            console.log(error)
+    const numbering = (v) => {
+        switch (true) {
+            case v < 10:
+                return `000${v}/SP2D-BANTUANLANGSUNGTUNAI/2022`;
+            case v < 100:
+                return `00${v}/SP2D-BANTUANLANGSUNGTUNAI/2022`;
+            case v < 1000:
+                return `0${v}/SP2D-BANTUANLANGSUNGTUNAI/2022`;
+            default:
+                return `${v}/SP2D-BANTUANLANGSUNGTUNAI/2022`;
+            //break;
         }
     }
+    // async function* lazy(f, nomor) {
+    //     let tgl_sp2d = moment(tgl).locale('id').format("YYYY-MM-DD");
+    //     // await axios.get(`/nodok?kd_keg=4`)          
+    //     const number = async () => await axios.get(`/nodok?kd_keg=4`)
+    // }
     /* Funtiom Update Data */
     //================= Terbitkan SP2SPD =========================
 
@@ -232,35 +227,40 @@ const SppBlt = () => {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => { setOpen(true); };
     const handleClose = () => { setOpen(false); setDialogInfo(false) };
-    const onChangeForm = (e) => { const { value, id } = e.target; setDataform({ ...dataform, [id]: value }) }
-    const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
-    const handleDelete = async (e) => {
-        const confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
-        setLoad(true);
-        if (confirm) {
-            try {
-                const update = await axios.patch('/anggaran', { id: e.id, tgl_spp: '1900-01-01', sts_spp: false, no_spp: null })
-                if (update.status === 200) {
-                    console.log(update.data.info)
-                    handleClose();
-                    setInfo('Data Di Hapus');
-                    setDateUpdate(Date());
-                    setDialogInfo(true);
-                    setTimeout(() => {
-                        setDialogInfo(false);
-                    }, 2000);
-                    setLoad(false);
-                } else { setDialogInfo(true); setInfo('Gagal Hapus Data') }
-            } catch (error) { console.log('Error Hapus spp reg', error) }
-        }
+    const onChangeForm = (e) => {
+        const { value, id } = e.target;
+        console.log(value, id)
+        setDataform({ ...dataform, [id]: value })
     }
+    const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
+    //========================space Handle Delete===============================
+    // const handleDelete = async (e) => {
+    //     setLoad(true);
+    //     const confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
+    //     if (confirm) {
+    //         try {
+    //             const update = await axios.patch('/anggaran', { id: e.id, tgl_sp2d: '1900-01-01', sts_sp2d: false, no_sp2d: `data di hapus ${Date()}` })
+    //             if (update.status === 200) {
+    //                 console.log(update.data.info)
+    //                 handleClose();
+    //                 setInfo('Data Di Hapus');
+    //                 setDateUpdate(Date());
+    //                 setDialogInfo(true);
+    //                 setTimeout(() => {
+    //                     setDialogInfo(false);
+    //                 }, 2000);
+    //                 setLoad(false);
+    //             } else { setDialogInfo(true); setInfo('Gagal Hapus Data') }
+    //         } catch (error) { console.log('Error Hapus spm reg', error) }
+    //     }
+    // }
     const handleSubmitForm = async () => {
         const confirm = window.confirm(`Apa Anda Yakin Ubah Data ${dataform.kampung} Distrik ${dataform.distrik} ${dataform.thp_advis} `)
         if (confirm) {
             setLoad(true);
             try {
                 // console.log('submit', dataform.id, dataform.tgl_spp, dataform.no_spp)
-                const update = await axios.patch('/anggaran', { id: dataform.id, tgl_spp: dataform.tgl_spp, sts_spp: true, no_spp: dataform.no_spp })
+                const update = await axios.patch('/anggaran', { id: dataform.id, tgl_sp2d: dataform.tgl_sp2d, sts_sp2d: true, no_sp2d: dataform.no_sp2d })
                 if (update.status === 200) {
                     console.log(update.data.info)
                     handleClose();
@@ -272,15 +272,15 @@ const SppBlt = () => {
                     }, 2000);
                     setLoad(false);
                 } else { setDialogInfo(true); setInfo('Gagal Ubah Data') }
-            } catch (error) { console.log('Error Update spp reg', error) }
+            } catch (error) { console.log('Error Update spm reg', error) }
         }
     }
     //================= Alert Dialog =========================
 
     //================= btn click cari data ==================
-    const btnClick = async (e) => {
+    const btnClick = async () => {
         setLoad(true);
-        let url = `/anggaran/blt?page=${1}&size=${perpage}&kampung=${search}&sts_spp=${true}&sts=${true}`;
+        let url = `/anggaran/blt?page=${1}&size=${perpage}&kampung=${search}&sts_spp=${true}&sts=${true}&sts_spm=true&kd_keg=2&sts_sp2d=true`;
         if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
         // if (search) { url += `&kd_advis=${}` }
         await axios.get(url).then((e) => {
@@ -295,9 +295,9 @@ const SppBlt = () => {
             }
         })
     }
-    const btnClick_ = async (e) => {
+    const btnClick_ = async () => {
         setLoad(true);
-        let url = `/anggaran/blt?page=${1}&size=${perpage_}&kampung=${search_}&sts_spp=${false}&sts=${true}`;
+        let url = `/anggaran/blt?page=${1}&size=${perpage_}&kampung=${search_}&sts_spp=${true}&sts=${true}&sts_spm=true&kd_keg=2&sts_sp2d=false`;
         if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
         // if (search) { url += `&kd_advis=${}` }   
         await axios.get(url).then((e) => {
@@ -348,7 +348,7 @@ const SppBlt = () => {
                     <div className='grow'>
                         <div className='mx-auto justify-center items-center h-screen w-[90%]'>
                             <PDFViewer style={{ width: "100%", height: "100vh", alignItems: 'center', alignSelf: 'center' }}
-                            ><DocSppblt dataselectspp={dataVprint} /></PDFViewer>
+                            ><DocSp2ddds dataselectspp={dataVprint} /></PDFViewer>
                             <span className={`absolute text-red-500 bg-slate-900 rounded-full text-xl cursor-pointer z-20 w-6 m-4 right-20 -top-2 -translate-x-1/2 text-center`}
                                 onClick={() => { setViewprint(false); setDataVprint([]) }}>X</span>
                         </div>
@@ -360,7 +360,7 @@ const SppBlt = () => {
                 {load ? <Loader /> : null}
                 <div >
                     <div className="h-20"></div>
-                    <span className='left-0 w-44 absolute ml-[20%] -z-50 font-semibold text-slate-900'>SP2SPD BLT TERBIT</span>
+                    <span className='left-0 w-44 absolute ml-[20%] -z-50 font-semibold text-slate-900'>{nmpicker} TERBIT</span>
                     <div className="flex items-center justify-center z-10">
                         <div className="flex border-2 rounded">
                             <input type="text" className="px-1.5 py-0.5 w-64" placeholder="Cari..." onChange={(e) => setSearch(e.target.value)} value={search} />
@@ -377,7 +377,7 @@ const SppBlt = () => {
                         </div>
                         {print ? <div>
                             {viewbtn ?
-                                <><PDFDownloadLink placeholder='Print Data PDF' document={<DocSppblt dataselectspp={dataDlprint} />} fileName={`doc_spp-reg_${new Date().toLocaleTimeString().slice(0, 16)}`}>
+                                <><PDFDownloadLink placeholder='Print Data PDF' document={<DocSp2ddds dataselectspp={dataDlprint} />} fileName={`doc_spp-reg_${new Date().toLocaleTimeString().slice(0, 16)}`}>
                                     {({ loading }) => loading && !viewbtn ? <Loader /> :
                                         <Tooltip title='SaveAs PDF' style={{ alignContent: 'center', height: 8, width: 8 }} >
                                             <IconButton style={{ alignContent: 'center', height: 8, marginTop: -4, width: 8, paddingLeft: 22 }}>
@@ -432,7 +432,7 @@ const SppBlt = () => {
                                         // paginateBack={() => { if (page !== 1) { setPage(page - 1) } }}
                                         selectChanged={(e) => { setPerpage(e.target.value) }}
                                     />
-                                    <AlertDialog open={open} handleClose={handleClose} dataform={dataform} onChange={onChangeForm} handleSubmit={handleSubmitForm} nmpicker={nmpicker} ns={`SP2SPD`} />
+                                    <AlertDialog open={open} handleClose={handleClose} dataform={dataform} onChange={onChangeForm} handleSubmit={handleSubmitForm} nmpicker={nmpicker} ns={`SP2D`} />
                                     <InfoDialog open={dialoginfo} text={info} handleClose={handleClose} />
                                 </div>
                             </div>
@@ -440,7 +440,7 @@ const SppBlt = () => {
                     </div>
                 </div>
                 <div className='mt-72 -z-20'>
-                    <span className='left-0 w-44 absolute ml-[20%] -z-50 font-semibold text-slate-900'>SP2SPD BLT PROSES</span>
+                    <span className='left-0 w-44 absolute ml-[20%] -z-50 font-semibold text-slate-900'>{nmpicker} PROSES</span>
                     <div className="flex items-center justify-center z-10">
                         <div className="flex border-2 rounded">
                             <input type="text" className="px-1.5 py-0.5 w-64" placeholder="Cari..." onChange={(e) => setSearch_(e.target.value)} value={search_} />
@@ -511,4 +511,4 @@ const SppBlt = () => {
     )
 }
 
-export default SppBlt
+export default Sp2dBlt

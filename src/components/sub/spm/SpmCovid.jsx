@@ -196,35 +196,35 @@ const SpmCovid = () => {
             dataprint_.map(async (f, i) => {
                 const no = await axios.get(`/nodok/${f.kd_kampung}?kd_keg=3`);
                 const nodok_ = parseInt(no.data[0].no_spm);
-                let thp;
-                switch (f.id_thp) {
-                    case 2:
-                        thp = 'I'
-                        break;
-                    case 3:
-                        thp = 'II'
-                        break;
-                    default:
-                        thp = 'III'
-                }
+                // let thp;
+                // switch (f.id_thp) {
+                //     case 2:
+                //         thp = 'I'
+                //         break;
+                //     case 3:
+                //         thp = 'II'
+                //         break;
+                //     default:
+                //         thp = 'III'
+                // }
 
                 let nomor = '';
                 let nodok = parseInt((nodok_ + 1))
                 switch (true) {
                     case (nodok < 10):
-                        nomor = `000${nodok}/SKBK/DDCOVID-${thp}/${f.kampung}/2022`; //0001/SKBK/ADD1/TULPA/2022
+                        nomor = `000${nodok}/SKBK/DD_COVID-19/${f.kampung}/2022`; //........../SKBK/DD_COVID-19/HOM HOM/2022
                         console.log('<9', nomor);
                         break;
                     case (9 < nodok < 100):
-                        nomor = `00${nodok}/SKBK/DDCOVID-${thp}/${f.kampung}/2022`;
+                        nomor = `00${nodok}/SKBK/DD_COVID-19/${f.kampung}/2022`;
                         console.log('>9', nomor);
                         break;
                     case (99 > nodok > 1000):
-                        nomor = `0${nodok}/SKBK/DDCOVID-${thp}/${f.kampung}/2022`;
+                        nomor = `0${nodok}/SKBK/DD_COVID-19/${f.kampung}/2022`;
                         console.log('>99');
                         break;
                     case (999 > nodok > 9999):
-                        nomor = `${nodok}/SKBK/DDCOVID-${thp}/${f.kampung}/2022`;
+                        nomor = `${nodok}/SKBK/DD_COVID-19/${f.kampung}/2022`;
                         console.log('>999');
                         break;
                     default:
@@ -259,7 +259,7 @@ const SpmCovid = () => {
         setLoad(true);
         if (confirm) {
             try {
-                const update = await axios.patch('/anggaran', { id: e.id, tgl_spm: '1900-01-01', sts_spm: false, no_spm: `data di hapus ${Date()}` })
+                const update = await axios.patch('/anggaran', { id: e.id, tgl_spm: '1900-01-01', sts_spm: false, no_spm: null })
                 if (update.status === 200) {
                     console.log(update.data.info)
                     handleClose();

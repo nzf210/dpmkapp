@@ -262,7 +262,7 @@ const SpmBlt = () => {
         if (confirm) {
             setLoad(true);
             try {
-                const update = await axios.patch('/anggaran', { id: e.id, tgl_spm: '1900-01-01', sts_spm: false, no_spm: `data di hapus ${Date()}` })
+                const update = await axios.patch('/anggaran', { id: e.id, tgl_spm: '1900-01-01', sts_spm: false, no_spm: null })
                 if (update.status === 200) {
                     console.log(update.data.info)
                     handleClose();

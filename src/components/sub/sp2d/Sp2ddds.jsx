@@ -4,7 +4,7 @@ import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 import 'ag-grid-community/dist/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css'; // Optional theme CSS
 import axios from 'axios';
-import CurrencyFormat from 'react-currency-format';
+// import CurrencyFormat from 'react-currency-format';
 import DocSp2ddds from './DocSp2ddds';
 import moment from "moment";
 
@@ -19,12 +19,12 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import EditIcon from '@mui/icons-material/Edit';
-//import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BackupIcon from '@mui/icons-material/Backup';
 
 import DatePicker from '../../DatePicker'
 
-import { blue, green, orange, red } from '@mui/material/colors';
+import { blue, green, orange, pink, red } from '@mui/material/colors';
 import AlertDialog from '../../DialogAlert';
 import InfoDialog from '../../DialogInfo';
 import { Loader } from '../Font';
@@ -78,14 +78,12 @@ const Sp2dBlt = () => {
     const [columnDefs] = useState([
         { field: 'kampung', filter: true, minWidth: 150, maxWidth: 150, suppressSizeToFit: true, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, checkboxSelection: true },
         { field: 'distrik', filter: true, minWidth: 150, maxWidth: 150, suppressSizeToFit: true }, //suppressSizeToFit: false 
-        { field: 'thp_advis', headerName: 'Kegiatan', width: 270, filter: true, suppressSizeToFit: true },
+        { field: 'opt1', headerName: 'Tahap Kegiatan', width: 270, filter: true, suppressSizeToFit: true },
         { field: 'no_sp2d', headerName: 'No SP2D', width: 220, filter: true, suppressSizeToFit: true },
-        // { field: 'tgl_spp', headerName: 'Tgl SP2SPD', width: 150, cellRenderer: (e) => <span>{e.value}</span> },
-        { field: 'tgl_sp2d', suppressSizeToFit: true, filter: true, headerName: 'Tgl SP2D', width: 150, maxWidth: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
-        { field: 'pagu', suppressSizeToFit: true, width: 150, maxWidth: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
+        { field: 'tgl_sp2d', headerName: 'TGL SP2D', width: 220, filter: true, suppressSizeToFit: true, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
         {
             headerName: 'Aksi', cellStyle: { textAlign: "right", alignItems: 'right' }, headerClass: 'ag-theme-text-aksi', width: 80, maxWidth: 80,
-            cellRenderer: (e) => (e.data.sts_sp2d ?
+            cellRenderer: (e) =>
                 <div className=' -ml-10 -mt-1'>
                     <Button onClick={() => { handleUpdateForm(e.data); }} style={{ height: 8, alignContent: 'center', marginRight: -10, width: 2, maxWidth: '2px', padding: 0, }}   >
                         <Tooltip title='Edit Data' style={{ height: 8, alignContent: 'center' }} >
@@ -94,25 +92,35 @@ const Sp2dBlt = () => {
                             </IconButton>
                         </Tooltip>
                     </Button>
-                    {/* <Button onClick={() => handleDelete(e.data)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
+                    <Button onClick={() => handleDelete(e.data)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
                         <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center' }} >
                             <IconButton style={{ height: 8, alignContent: 'center' }} >
                                 <DeleteForeverIcon fontSize="small" sx={{ color: pink[500] }} />
                             </IconButton>
                         </Tooltip>
-                    </Button> */}
-                </div> : null),
+                    </Button>
+                </div>,
         }
     ]);
     const [columnDefs_] = useState([
-        { field: 'kampung', filter: true, minWidth: 150, maxWidth: 150, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, checkboxSelection: true },
+        { field: 'kampung', filter: true, minWidth: 150, maxWidth: 150, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, checkboxSelection: true, },
         { field: 'distrik', filter: true, minWidth: 150, maxWidth: 150, }, //suppressSizeToFit: true
-        { field: 'thp_advis', headerName: 'Kegiatan', width: 280 },
-        { field: 'no_spm', headerName: 'No SKBK', width: 220, filter: true, suppressSizeToFit: true },
-        { field: 'tgl_spm', headerName: 'Tgl SKBK', width: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
-        { field: 'pagu', width: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
+        { field: 'opt1', headerName: 'Tahap Kegiatan', width: 280, filter: true },
+        // { field: 'no_spm', headerName: 'No SKBK', width: 220, filter: true, suppressSizeToFit: true },
+        // { field: 'tgl_spm', headerName: 'Tgl SKBK', width: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
+        // { field: 'pagu', width: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
     ]);
 
+    const autoGroupColumnDef = useMemo(() => {
+        return {
+            headerName: 'Kampung',
+            minWidth: 220,
+            cellRendererParams: {
+                suppressCount: true,
+                checkbox: true,
+            },
+        };
+    }, []);
     // DefaultColDef sets props common to all Columns
     const defaultColDef = useMemo(() => ({
         sortable: true, flex: 1, minWidth: 100,
@@ -126,8 +134,7 @@ const Sp2dBlt = () => {
     // Example load data from sever
     useEffect(async () => {
         setLoad(true);
-        let url = `/anggaran?page=${page}&size=${perpage}`;
-        //        let url = `/anggaran/blt?page=${page}&size=${perpage}&sts_spp=true&sts=true&sts_spm=true&kd_keg=2&sts_sp2d=true`;
+        let url = `/anggaran/dds_?page=${page}&size=${perpage}&no_sp2d=hapusnull`;
         if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
         if (search) { url += `&kampung=${search}` }
         await axios.get(url).then((e) => {
@@ -137,6 +144,7 @@ const Sp2dBlt = () => {
             setPerpage(e.data.result.data.per_page);
             setPrev(e.data.result.pagination.previous_page);
             setNext(e.data.result.pagination.next_page);
+            //console.log(e.status, 'eeeeeeeeffffff')
             if (e.status === 200) {
                 setLoad(false);
             }
@@ -152,22 +160,23 @@ const Sp2dBlt = () => {
 
     useEffect(async () => {
         setLoad(true);
-        let url = `/anggaran?page=${1}&size=${5000}`;
+        let url = `/anggaran/dds?page=${page_}&size=${perpage_}`;
         //let url = `/anggaran/blt?page=${page_}&size=${perpage_}&sts_spp=true&sts=true&sts_spm=true&kd_keg=2&sts_sp2d=false`;
-        if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
+        //if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
         if (search_) { url += `&kampung=${search_}` }
         await axios.get(url).then((e) => {
-            const data = e.data.result.data.data.filter(function (item, pos) {
-                return item.kd_kampung;
-            })
-            let da = [...new Set(data)];
-            console.log('data new', da)
-            // setRowData_(e.data.result.data.data);
-            // setCount_(e.data.result.data.count);
-            // setPage_(e.data.result.data.page);
-            // setPerpage_(e.data.result.data.per_page);
-            // setPrev_(e.data.result.pagination.previous_page);
-            // setNext_(e.data.result.pagination.next_page);
+            // const data = e.data.result.data.data.filter(function (item, pos) {
+            //     return item.kd_kampung;
+            // })
+            //let da = [...new Set(data)];
+            // console.log('data new', e.data.result.data.data);
+            setRowData_(e.data.result.data.data);
+            setCount_(e.data.result.data.count);
+            setPage_(e.data.result.data.page);
+            setPerpage_(e.data.result.data.per_page);
+            setPrev_(e.data.result.pagination.previous_page);
+            setNext_(e.data.result.pagination.next_page);
+            //console.log(e.status, 'eeeeeeee')
             if (e.status === 200) {
                 setLoad(false);
             }
@@ -187,40 +196,54 @@ const Sp2dBlt = () => {
         //console.log(dataprint_, `${moment(tgl).locale('id').format("YYYY-MM-DD")}`)
         let len = dataprint_.length;
         setLoad(true);
-        const nomor = await axios.get(`/nodok?kd_keg=2`);
-        const nor = parseInt(nomor.data[0].no_sp2d) + 1;
+        const nomor = await axios.get(`/nodok/sp2d`);
+        const nor = parseInt(nomor.data[0].no_sp2d_gab) + 1;
         try {
             let tgl_sp2d = moment(tgl).locale('id').format("YYYY-MM-DD");
             for (let i = 0; i < len; i++) {
-                const { id } = dataprint_[i];
-                await axios.patch('/anggaran', { id, tgl_sp2d, sts_sp2d: true, no_sp2d: numbering(nor + i) })
+                const { kd_kampung, j_kk, kampung, distrik, nama, no_sk, no_sk_kepala, tgl_sk,
+                    nama_kepala, tgl_sk_kepala, bank, rek, no_rek, opt1, sub } = dataprint_[i];
+                let sub_ = JSON.stringify(sub);
+                console.log('data print i', dataprint_[i], opt1, 'Numbering', numbering(nor, opt1), 'tgl=>', tgl_sp2d)
+                //await axios.patch('/anggaran', { id, tgl_sp2d, sts_sp2d: true, no_sp2d: numbering(nor + i, opt1) })
+                const hasil = await axios.post('/anggaran/dds', {
+                    kd_kampung, j_kk, kampung, distrik, nama, no_sk, no_sk_kepala,
+                    tgl_sk, nama_kepala, tgl_sk_kepala, bank, rek, no_rek, opt1, tgl_sp2d, no_sp2d: numbering(nor + i, opt1), sub: sub_
+                })
                 if ((i + 1) === len) {
                     setLoad(false);
                     setDateUpdate(new Date());
+                    console.log('hasil', hasil)
                 }
             }
         } catch (error) { console.log(error) }
     }
 
-    const numbering = (v) => {
+    const numbering = (v, vv) => {
+        let no;
+        switch (true) {
+            case vv === 'Tahap I':
+                no = 'THPI';
+                break;
+            case vv === 'Tahap II':
+                no = 'THPII';
+                break;
+            default:
+                no = 'THPIII'
+        }
+
         switch (true) {
             case v < 10:
-                return `000${v}/SP2D-BANTUANLANGSUNGTUNAI/2022`;
+                return `000${v}/SP2D-DD/${no}/2022`; //......./SP2D-DD/${no}/2022
             case v < 100:
-                return `00${v}/SP2D-BANTUANLANGSUNGTUNAI/2022`;
+                return `00${v}/SP2D-DD/${no}/2022`;
             case v < 1000:
-                return `0${v}/SP2D-BANTUANLANGSUNGTUNAI/2022`;
+                return `0${v}/SP2D-DD/${no}/2022`;
             default:
-                return `${v}/SP2D-BANTUANLANGSUNGTUNAI/2022`;
+                return `${v}/SP2D-DD/${no}/2022`;
             //break;
         }
     }
-    // async function* lazy(f, nomor) {
-    //     let tgl_sp2d = moment(tgl).locale('id').format("YYYY-MM-DD");
-    //     // await axios.get(`/nodok?kd_keg=4`)          
-    //     const number = async () => await axios.get(`/nodok?kd_keg=4`)
-    // }
-    /* Funtiom Update Data */
     //================= Terbitkan SP2SPD =========================
 
     //================= Alert Dialog =========================
@@ -234,33 +257,14 @@ const Sp2dBlt = () => {
     }
     const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
     //========================space Handle Delete===============================
-    // const handleDelete = async (e) => {
-    //     setLoad(true);
-    //     const confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
-    //     if (confirm) {
-    //         try {
-    //             const update = await axios.patch('/anggaran', { id: e.id, tgl_sp2d: '1900-01-01', sts_sp2d: false, no_sp2d: `data di hapus ${Date()}` })
-    //             if (update.status === 200) {
-    //                 console.log(update.data.info)
-    //                 handleClose();
-    //                 setInfo('Data Di Hapus');
-    //                 setDateUpdate(Date());
-    //                 setDialogInfo(true);
-    //                 setTimeout(() => {
-    //                     setDialogInfo(false);
-    //                 }, 2000);
-    //                 setLoad(false);
-    //             } else { setDialogInfo(true); setInfo('Gagal Hapus Data') }
-    //         } catch (error) { console.log('Error Hapus spm reg', error) }
-    //     }
-    // }
     const handleSubmitForm = async () => {
         const confirm = window.confirm(`Apa Anda Yakin Ubah Data ${dataform.kampung} Distrik ${dataform.distrik} ${dataform.thp_advis} `)
         if (confirm) {
             setLoad(true);
+            const tgl_sp2d_ = moment(dataform.tgl_sp2d).locale('id').format("YYYY-MM-DD")
             try {
-                // console.log('submit', dataform.id, dataform.tgl_spp, dataform.no_spp)
-                const update = await axios.patch('/anggaran', { id: dataform.id, tgl_sp2d: dataform.tgl_sp2d, sts_sp2d: true, no_sp2d: dataform.no_sp2d })
+                console.log('submit', dataform.id, tgl_sp2d_, dataform.no_sp2d)
+                const update = await axios.patch('/anggaran/dds', { id: dataform.id, tgl_sp2d: tgl_sp2d_, no_sp2d: dataform.no_sp2d })
                 if (update.status === 200) {
                     console.log(update.data.info)
                     handleClose();
@@ -276,13 +280,36 @@ const Sp2dBlt = () => {
         }
     }
     //================= Alert Dialog =========================
-
+    const handleDelete = async (e) => {
+        const confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
+        if (confirm) {
+            setLoad(true);
+            const tgl_sp2d_ = moment(new Date()).locale('id').format("YYYY-MM-DD")
+            try {
+                console.log('submit', e, 'xxx', e.id)
+                const update = await axios.patch('/anggaran/dds', { id: e.id, tgl_sp2d: tgl_sp2d_, no_sp2d: null })
+                if (update.status === 200) {
+                    //console.log(update.data.info)
+                    handleClose();
+                    setInfo('Data Berhasil Di Hapus');
+                    setDateUpdate(Date());
+                    setDialogInfo(true);
+                    setTimeout(() => {
+                        setDialogInfo(false);
+                    }, 2000);
+                    setLoad(false);
+                } else { setDialogInfo(true); setInfo('Gagal Di Hapus') }
+            } catch (error) { console.log('Error Hapus Data', error) }
+        }
+    }
     //================= btn click cari data ==================
     const btnClick = async () => {
-        setLoad(true);
-        let url = `/anggaran/blt?page=${1}&size=${perpage}&kampung=${search}&sts_spp=${true}&sts=${true}&sts_spm=true&kd_keg=2&sts_sp2d=true`;
-        if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-        // if (search) { url += `&kd_advis=${}` }
+        //setLoad(true);
+        let url = `/anggaran/dds_?page=${1}&size=${perpage}&no_sp2d=hpsnull`;
+        // let url = `/anggaran/dds_?page=${1}&size=${perpage}&kampung=${search}&sts_spp=${true}&sts=${true}&sts_spm=true&kd_keg=2&sts_sp2d=true`;
+        //if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
+        //console.log('urlll', url)
+        if (search) { url += `&kampung=${search}` }
         await axios.get(url).then((e) => {
             setRowData(e.data.result.data.data);
             setCount(e.data.result.data.count);
@@ -297,9 +324,9 @@ const Sp2dBlt = () => {
     }
     const btnClick_ = async () => {
         setLoad(true);
-        let url = `/anggaran/blt?page=${1}&size=${perpage_}&kampung=${search_}&sts_spp=${true}&sts=${true}&sts_spm=true&kd_keg=2&sts_sp2d=false`;
-        if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-        // if (search) { url += `&kd_advis=${}` }   
+        let url = `/anggaran/dds?page=${1}&size=${perpage_}`;
+        // let url = `/anggaran/dds?page=${1}&size=${perpage_}&kampung=${search_}&sts_spp=${true}&sts=${true}&sts_spm=true&kd_keg=2&sts_sp2d=false`;
+        if (search_) { url += `&kampung=${search_}` }
         await axios.get(url).then((e) => {
             setRowData_(e.data.result.data.data);
             setCount_(e.data.result.data.count);
@@ -317,6 +344,16 @@ const Sp2dBlt = () => {
     const onSelectionChanged = (e) => {
         let selectedRows = e.api.getSelectedRows();
         let data = [...selectedRows]
+        // if (data[0].sub !== undefined) {
+        //     var arr = JSON.parse(data[0].sub);
+        //     console.log('onselect', arr)
+        // }
+        //if (JSON.parse(data[0].sub)[0].pagu) {
+        let a;
+        a = JSON.parse((data[0] && data[0].sub) ? data[0].sub : '[{}]')[0].pagu;
+        console.log(a)
+        console.log(data)
+
         if (data.length === 0) {
             setPrint(false);
         } else {
@@ -491,6 +528,7 @@ const Sp2dBlt = () => {
                                         suppressRowClickSelection={true} // Option Disable selection saat buutton click
                                         overlayLoadingTemplate={'<span class="ag-overlay-loading-center">Tunggu ... Memuat Data</span>'}
                                         overlayNoRowsTemplate={'<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow">Data Tidak Tersedia / Tidak Di temukan</span>'}
+                                        autoGroupColumnDef={autoGroupColumnDef}
                                     />
                                     <Pagination
                                         postsPerPage={perpage_} totalPosts={count_} currentPage={page_}

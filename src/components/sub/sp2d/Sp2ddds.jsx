@@ -247,7 +247,7 @@ const Sp2dBlt = () => {
                 const { kd_kampung, j_kk, kampung, distrik, nama, no_sk, no_sk_kepala, tgl_sk,
                     nama_kepala, tgl_sk_kepala, bank, rek, no_rek, opt1, sub } = dataprint_[i];
                 let sub_ = JSON.stringify(sub);
-                console.log('data print i', dataprint_[i], opt1, 'Numbering', numbering(nor, opt1), 'tgl=>', tgl_sp2d)
+                //console.log('data print i', dataprint_[i], opt1, 'Numbering', numbering(nor, opt1), 'tgl=>', tgl_sp2d)
                 //await axios.patch('/anggaran', { id, tgl_sp2d, sts_sp2d: true, no_sp2d: numbering(nor + i, opt1) })
                 const hasil = await axios.post('/anggaran/dds', {
                     kd_kampung, j_kk, kampung, distrik, nama, no_sk, no_sk_kepala,
@@ -256,7 +256,7 @@ const Sp2dBlt = () => {
                 if ((i + 1) === len) {
                     setLoad(false);
                     setDateUpdate(new Date());
-                    console.log('hasil', hasil)
+                    //console.log('hasil', hasil)
                 }
             }
         } catch (error) { console.log(error) }
@@ -295,7 +295,7 @@ const Sp2dBlt = () => {
     const handleClose = () => { setOpen(false); setDialogInfo(false) };
     const onChangeForm = (e) => {
         const { value, id } = e.target;
-        console.log(value, id)
+        // console.log(value, id)
         setDataform({ ...dataform, [id]: value })
     }
     const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
@@ -306,10 +306,10 @@ const Sp2dBlt = () => {
             setLoad(true);
             const tgl_sp2d_ = moment(dataform.tgl_sp2d).locale('id').format("YYYY-MM-DD")
             try {
-                console.log('submit', dataform.id, tgl_sp2d_, dataform.no_sp2d)
+                //console.log('submit', dataform.id, tgl_sp2d_, dataform.no_sp2d)
                 const update = await axios.patch('/anggaran/dds', { id: dataform.id, tgl_sp2d: tgl_sp2d_, no_sp2d: dataform.no_sp2d })
                 if (update.status === 200) {
-                    console.log(update.data.info)
+                    // console.log(update.data.info)
                     handleClose();
                     setInfo(update.data.info);
                     setDateUpdate(Date());
@@ -329,7 +329,7 @@ const Sp2dBlt = () => {
             setLoad(true);
             const tgl_sp2d_ = moment(new Date()).locale('id').format("YYYY-MM-DD")
             try {
-                console.log('submit', e, 'xxx', e.id)
+                //console.log('submit', e, 'xxx', e.id)
                 const update = await axios.patch('/anggaran/dds', { id: e.id, tgl_sp2d: tgl_sp2d_, no_sp2d: null })
                 if (update.status === 200) {
                     //console.log(update.data.info)
@@ -392,10 +392,10 @@ const Sp2dBlt = () => {
         //     console.log('onselect', arr)
         // }
         //if (JSON.parse(data[0].sub)[0].pagu) {
-        let a;
-        a = JSON.parse((data[0] && data[0].sub) ? data[0].sub : '[{}]')[0].pagu;
-        console.log(a)
-        console.log(data)
+        // let a;
+        // a = JSON.parse((data[0] && data[0].sub) ? data[0].sub : '[{}]')[0].pagu;
+        // console.log(a)
+        // console.log(data)
 
         if (data.length === 0) {
             setPrint(false);
@@ -548,7 +548,7 @@ const Sp2dBlt = () => {
                                 </IconButton>
                             </Tooltip>
                             <div className='h-4 -mb-8'>
-                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); console.log(e) }} nmpicker={nmpicker} />
+                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); }} nmpicker={nmpicker} />
                             </div>
                         </div> : null}
                     </div>

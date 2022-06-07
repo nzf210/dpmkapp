@@ -141,42 +141,91 @@ const SpmAdd = () => {
     // }, []);
 
     // Example load data from sever
-    useEffect(async () => {
-        setLoad(true);
-        let url = `/anggaran/add?page=${page}&size=${perpage}&sts_spp=true&sts=true&sts_spm=true&kd_keg=4`;
-        if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-        if (search) { url += `&kampung=${search}` }
-        await axios.get(url).then((e) => {
-            setRowData(e.data.result.data.data);
-            setCount(e.data.result.data.count);
-            setPage(e.data.result.data.page);
-            setPerpage(e.data.result.data.per_page);
-            setPrev(e.data.result.pagination.previous_page);
-            setNext(e.data.result.pagination.next_page);
-            if (e.status === 200) {
-                setLoad(false);
-            }
-        })
-        // .then(e => console.log(e))
+    // useEffect(async () => {
+    //     setLoad(true);
+    //     let url = `/anggaran/add?page=${page}&size=${perpage}&sts_spp=true&sts=true&sts_spm=true&kd_keg=4`;
+    //     if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
+    //     if (search) { url += `&kampung=${search}` }
+    //     await axios.get(url).then((e) => {
+    //         setRowData(e.data.result.data.data);
+    //         setCount(e.data.result.data.count);
+    //         setPage(e.data.result.data.page);
+    //         setPerpage(e.data.result.data.per_page);
+    //         setPrev(e.data.result.pagination.previous_page);
+    //         setNext(e.data.result.pagination.next_page);
+    //         if (e.status === 200) {
+    //             setLoad(false);
+    //         }
+    //     })
+    //     // .then(e => console.log(e))
+    // }, [page, perpage, dateupdate]);
+
+    useEffect(() => {
+        let a = true;
+        async function geT() {
+            setLoad(true);
+            let url = `/anggaran/add?page=${page}&size=${perpage}&sts_spp=true&sts=true&sts_spm=true&kd_keg=4`;
+            if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
+            if (search) { url += `&kampung=${search}` }
+            await axios.get(url).then((e) => {
+                if (a) {
+                    setRowData(e.data.result.data.data);
+                    setCount(e.data.result.data.count);
+                    setPage(e.data.result.data.page);
+                    setPerpage(e.data.result.data.per_page);
+                    setPrev(e.data.result.pagination.previous_page);
+                    setNext(e.data.result.pagination.next_page);
+                    if (e.status === 200) {
+                        setLoad(false);
+                    }
+                }
+            })
+        }
+        geT();
+        return () => { a = false; };
     }, [page, perpage, dateupdate]);
 
-    useEffect(async () => {
-        setLoad(true);
-        let url = `/anggaran/add?page=${page_}&size=${perpage_}&sts_spp=true&sts=true&sts_spm=false&kd_keg=4`;
-        if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-        if (search_) { url += `&kampung=${search_}` }
-        await axios.get(url).then((e) => {
-            setRowData_(e.data.result.data.data);
-            setCount_(e.data.result.data.count);
-            setPage_(e.data.result.data.page);
-            setPerpage_(e.data.result.data.per_page);
-            setPrev_(e.data.result.pagination.previous_page);
-            setNext_(e.data.result.pagination.next_page);
-            if (e.status === 200) {
-                setLoad(false);
-            }
-        })
+    // useEffect(async () => {
+    //     setLoad(true);
+    //     let url = `/anggaran/add?page=${page_}&size=${perpage_}&sts_spp=true&sts=true&sts_spm=false&kd_keg=4`;
+    //     if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
+    //     if (search_) { url += `&kampung=${search_}` }
+    //     await axios.get(url).then((e) => {
+    //         setRowData_(e.data.result.data.data);
+    //         setCount_(e.data.result.data.count);
+    //         setPage_(e.data.result.data.page);
+    //         setPerpage_(e.data.result.data.per_page);
+    //         setPrev_(e.data.result.pagination.previous_page);
+    //         setNext_(e.data.result.pagination.next_page);
+    //         if (e.status === 200) {
+    //             setLoad(false);
+    //         }
+    //     })
+    // }, [page_, perpage_, dateupdate]);
 
+    useEffect(() => {
+        let a = true;
+        async function geT() {
+            setLoad(true);
+            let url = `/anggaran/add?page=${page_}&size=${perpage_}&sts_spp=true&sts=true&sts_spm=false&kd_keg=4`;
+            if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
+            if (search_) { url += `&kampung=${search_}` }
+            await axios.get(url).then((e) => {
+                if (a) {
+                    setRowData_(e.data.result.data.data);
+                    setCount_(e.data.result.data.count);
+                    setPage_(e.data.result.data.page);
+                    setPerpage_(e.data.result.data.per_page);
+                    setPrev_(e.data.result.pagination.previous_page);
+                    setNext_(e.data.result.pagination.next_page);
+                    if (e.status === 200) {
+                        setLoad(false);
+                    }
+                }
+            })
+        }
+        geT();
+        return () => { a = false; };
     }, [page_, perpage_, dateupdate]);
 
     // Example using Grid's API
@@ -379,7 +428,7 @@ const SpmAdd = () => {
                     <div className="flex items-center justify-center z-10">
                         <div className="flex border-2 rounded">
                             <input type="text" className="px-1.5 py-0.5 w-64" placeholder="Cari..." onChange={(e) => setSearch(e.target.value)} value={search} />
-                            {searchdel ? <span className='rounded-full mx-1 cursor-pointer text-red-500 font-semibold' onClick={() => { setSearch(''); }}>X</span> : null}
+                            {searchdel ? <span className='rounded-full mx-1 my-auto cursor-pointer text-red-500 font-semibold' onClick={() => { setSearch(''); }}>X</span> : null}
                             <Button className="flex items-center justify-center px-1.5 border-l" onClick={btnClick}>
                                 <Tooltip title='Cari / Reload Data' style={{ height: 12 }} >
                                     <IconButton>
@@ -459,7 +508,7 @@ const SpmAdd = () => {
                     <div className="flex items-center justify-center z-10">
                         <div className="flex border-2 rounded">
                             <input type="text" className="px-1.5 py-0.5 w-64" placeholder="Cari..." onChange={(e) => setSearch_(e.target.value)} value={search_} />
-                            {searchdel_ ? <span className='rounded-full mx-1 cursor-pointer text-red-500 font-semibold' onClick={() => { setSearch_(''); }}>X</span> : null}
+                            {searchdel_ ? <span className='rounded-full mx-1 my-auto cursor-pointer text-red-500 font-semibold' onClick={() => { setSearch_(''); }}>X</span> : null}
                             <Button className="flex items-center justify-center px-1.5 border-l" onClick={btnClick_}>
                                 <Tooltip title='Cari / Reload Data' style={{ height: 12 }} >
                                     <IconButton>

@@ -357,9 +357,7 @@ const SpmDoc_cov = ({ dataselectspp }) => {
                                         <Text style={{ textAlign: 'center', border: '1px', borderColor: 'black', borderStyle: 'dashed', paddingVertical: 3, alignItems: 'flex-start', fontWeight: 'semibold', paddingTop: 1 }}>TAHAP</Text>
 
                                         <View style={{ border: '1px', borderColor: 'black', borderStyle: 'dashed', height: '100%' }}>
-                                            <Text style={{ textAlign: 'center', alignItems: 'center', paddingTop: 15 }}>Dana Desa
-                                                Tahap I (Covid-
-                                                19)</Text>
+                                            <Text style={{ textAlign: 'center', alignItems: 'center', paddingTop: 15 }}>Dana Desa Tahap I (Covid-19)</Text>
                                         </View>
 
                                     </View>

@@ -240,7 +240,7 @@ const Sp2dDoc = ({ dataselectspp }) => {
                                         </View>
                                         <View style={{ alignContent: 'center', alignItems: 'center', alignSelf: "center", width: '100%' }}>
                                             <View style={{ marginBottom: -5 }}>
-                                                <PdfWithQrCode ssf_id={`${e.thp_advis}DISTRIK${e.distrik}KAMPUNG${e.kampung}@${e.nama_kepala}/${e.nama}$${e.no_rek}>${JSON.parse(e.sub)[0].pagu} `} />
+                                                <PdfWithQrCode ssf_id={`SURAT PENGANTAR PENCAIRAN DANA ${e.opt1} DISTRIK${e.distrik}KAMPUNG${e.kampung}@${e.nama_kepala}/${e.nama}$${e.no_rek}>${(JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].pagu : 0) + (JSON.parse(e.sub).length >= 2 ? JSON.parse(e.sub)[1].pagu : 0) + (JSON.parse(e.sub).length === 3 ? JSON.parse(e.sub)[2].pagu : 0)} `} />
                                             </View>
                                         </View>
                                     </View>

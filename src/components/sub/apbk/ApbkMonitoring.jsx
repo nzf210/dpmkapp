@@ -137,9 +137,7 @@ const ApbkMonitoring = () => {
     //================= Terbitkan SP2SPD =========================
     /* Funtiom Update Data +++++++++++ PENOMORAN ++++++++*/
     const updateDataChecklist = () => {
-        //console.log(dataprint_, `${moment(tgl).locale('id').format("YYYY-MM-DD")}`)
         const confirm = window.confirm(`Dengan Memverifikasi Data Yang Di Pilih akan Mengubah Status APBK OK`)
-        //let tgl_ = ;
         if (confirm) {
             setLoad(true);
             dataprint.map(async (e, i) => {
@@ -241,8 +239,6 @@ const ApbkMonitoring = () => {
             setDataprint(data);
         }
     }
-
-
 
     const onBtnExport = useCallback(() => { gridRef.current.api.exportDataAsCsv(); }, []);
 

@@ -189,7 +189,7 @@ const SpmDoc_reg = ({ dataselectspp }) => {
                                         <View style={style.view1}>
                                             <Text style={style.view1r}>Terbilang</Text>
                                             <Text style={style.view2r}>:</Text>
-                                            <Text style={{ fontFamily: 'Raleway', fontWeight: "thin", fontStyle: 'italic', textTransform: 'capitalize' }}>{sayit_v2(e.pagu)}</Text>
+                                            <Text style={{ fontFamily: 'Raleway', fontWeight: "thin", fontStyle: 'italic', width: 330, textTransform: 'capitalize' }}>{sayit_v2(e.pagu)}</Text>
                                         </View>
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>

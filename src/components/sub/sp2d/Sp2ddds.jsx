@@ -249,7 +249,7 @@ const Sp2dBlt = () => {
                 let sub_ = JSON.stringify(sub);
                 //console.log('data print i', dataprint_[i], opt1, 'Numbering', numbering(nor, opt1), 'tgl=>', tgl_sp2d)
                 //await axios.patch('/anggaran', { id, tgl_sp2d, sts_sp2d: true, no_sp2d: numbering(nor + i, opt1) })
-                const hasil = await axios.post('/anggaran/dds', {
+                await axios.post('/anggaran/dds', {
                     kd_kampung, j_kk, kampung, distrik, nama, no_sk, no_sk_kepala,
                     tgl_sk, nama_kepala, tgl_sk_kepala, bank, rek, no_rek, opt1, tgl_sp2d, no_sp2d: numbering(nor + i, opt1), sub: sub_
                 })

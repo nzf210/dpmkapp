@@ -135,7 +135,7 @@ const SpmDoc_cov = ({ dataselectspp }) => {
                                 <ColoredLine color="black" />
                             </View>
                             <View style={{ fontSize: 12, marginTop: -3 }}>
-                                <Text style={{ textDecoration: 'underline', fontWeight: 'semibold', textAlign: 'center' }}>SURAT PERNYATAN</Text>
+                                <Text style={{ textDecoration: 'underline', fontWeight: 'semibold', textAlign: 'center' }}>SURAT PERNYATAAN</Text>
                                 <Text style={{ fontWeight: 'semibold', textAlign: 'center' }}>SURAT KELENGKAPAN BERKAS KAMPUNG (SKBK)</Text>
                                 <Text style={{ fontWeight: 'semibold', textAlign: 'center', fontSize: 10 }}>NOMOR: {e.no_spm}</Text>
                             </View>
@@ -333,7 +333,7 @@ const SpmDoc_cov = ({ dataselectspp }) => {
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={style.nData2}>Bidang</Text>
                                     <Text style={style.nData}>:</Text>
-                                    <Text style={style.nData1}>Kepala Kantor Pelayanan Penbendaharaan Negara, Direktorat Jenderal
+                                    <Text style={style.nData1}>Kepala Kantor Pelayanan Perbendaharaan Negara, Direktorat Jenderal
                                         Perbendaharaan selaku Kuasa Pengguna Anggaran Penyaluran DAK Fisik dan
                                         Dana Desa</Text>
                                 </View>

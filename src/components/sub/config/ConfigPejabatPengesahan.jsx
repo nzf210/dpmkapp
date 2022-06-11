@@ -133,7 +133,7 @@ const ConfigPejabatPengesahan = () => {
     /* Hapus Data Pejabat Pengesahan */
     const hapusDataPejabat = async (e) => {
         try {
-            const hapus = await axios.delete('/ppengesahan', {
+            await axios.delete('/ppengesahan', {
                 data: {
                     id: e.id,
                     kd_jbtn: e.kd_jbtn,
@@ -142,7 +142,7 @@ const ConfigPejabatPengesahan = () => {
             })
             const date = new Date();
             setChangests(date);
-            console.log(hapus.data.info)
+            // console.log(hapus.data.info)
         } catch (error) {
             console.log(error);
         }
@@ -208,7 +208,7 @@ const ConfigPejabatPengesahan = () => {
                 reso();
             }),
             onRowDelete: (dataLama) => new Promise((reso, rej) => {
-                console.log('data', dataLama);
+                //console.log('data', dataLama);
                 hapusDataPejabat(dataLama);
                 reso();
             })
@@ -243,7 +243,7 @@ const ConfigPejabatPengesahan = () => {
                 reso();
             }),
             onRowDelete: (dataLama) => new Promise((reso, rej) => {
-                console.log('data', dataLama);
+                //'data', dataLama);
                 hapusDataPejabat(dataLama);
                 reso();
             })

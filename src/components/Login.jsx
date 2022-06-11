@@ -57,7 +57,7 @@ const Login = () => {
                         <div className="container min-h-screen mx-auto">
                             <div className="min-h-screen flex">
                                 <div className="my-auto mx-auto">
-                                    <div className="container w-[90%] rounded-lg sm:w-[750px] md:w-[882px] lg:w-[950px] sm:h-90 shadow-2xl">
+                                    <div className="mx-auto container w-[90%] rounded-lg sm:w-[750px] md:w-[882px] lg:w-[950px] sm:h-90 shadow-2xl">
                                         <h2 className="text-black text-center font-bold sm:text-left sm:ml-8 pt-2">Login DPMK</h2>
                                         <hr className="border-2 border-slate-600 w-[95%] mx-auto mt-1" />
                                         <div className="sm:grid sm:grid-cols-2">

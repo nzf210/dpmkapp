@@ -247,26 +247,26 @@ const SppBlt = () => {
                 switch (true) {
                     case (nodok < 10):
                         nomor = `000${nodok}/SP2SPD/DD_BLT${thp}/${f.kampung}/2022`; //SP2SPD/DD_BLT/SERENGAN/2022
-                        console.log('<9', nomor);
+                        //console.log('<9', nomor);
                         break;
                     case (9 < nodok < 100):
                         nomor = `00${nodok}/SP2SPD/DD_BLT${thp}/${f.kampung}/2022`;
-                        console.log('>9', nomor);
+                        //console.log('>9', nomor);
                         break;
                     case (99 > nodok > 1000):
                         nomor = `0${nodok}/SP2SPD/DD_BLT${thp}/${f.kampung}/2022`;
-                        console.log('>99');
+                        //console.log('>99');
                         break;
                     case (999 > nodok > 9999):
                         nomor = `${nodok}/SP2SPD/DD_BLT${thp}/${f.kampung}/2022`;
-                        console.log('>999');
+                        //console.log('>999');
                         break;
                     default:
                         break;
                 }
                 counter++
                 const update = await axios.patch('/anggaran', { id: f.id, tgl_spp, sts_spp: true, no_spp: nomor })
-                console.log(update.status);
+                //console.log(update.status);
                 if (update.status === 200 && counter === len) {
                     setDateUpdate(new Date())
                 }
@@ -292,7 +292,7 @@ const SppBlt = () => {
             try {
                 const update = await axios.patch('/anggaran', { id: e.id, tgl_spp: '1900-01-01', sts_spp: false, no_spp: null })
                 if (update.status === 200) {
-                    console.log(update.data.info)
+                    //  console.log(update.data.info)
                     handleClose();
                     setInfo('Data Di Hapus');
                     setDateUpdate(Date());
@@ -313,7 +313,7 @@ const SppBlt = () => {
                 // console.log('submit', dataform.id, dataform.tgl_spp, dataform.no_spp)
                 const update = await axios.patch('/anggaran', { id: dataform.id, tgl_spp: dataform.tgl_spp, sts_spp: true, no_spp: dataform.no_spp })
                 if (update.status === 200) {
-                    console.log(update.data.info)
+                    //  console.log(update.data.info)
                     handleClose();
                     setInfo(update.data.info);
                     setDateUpdate(Date());
@@ -519,7 +519,7 @@ const SppBlt = () => {
                                 </IconButton>
                             </Tooltip>
                             <div className='h-4 -mb-8'>
-                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); console.log(e) }} nmpicker={nmpicker} />
+                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); }} nmpicker={nmpicker} />
                             </div>
                         </div> : null}
                     </div>

@@ -35,7 +35,7 @@ const Table = ({ title, option, kolom, data, setKolom, setData }) => {
             const fileData = XLSX.utils.sheet_to_json(workSheet, { header: 1 });
             const header = fileData[0];
             const head = header.map(e => ({ title: e, field: e }))
-            console.log(head);
+            //console.log(head);
             setKolom(head);
 
             //Hapus Header

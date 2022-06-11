@@ -24,7 +24,7 @@ export default function MyModalEdit({ editData, setIdEdit_ }) {
             nohp_: ''
         },
         onSubmit: v => {
-            console.log(v)
+            // console.log(v)
             updateUser(v);
             formik.resetForm({
                 nama_: "",

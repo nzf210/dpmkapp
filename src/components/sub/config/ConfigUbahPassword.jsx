@@ -32,7 +32,7 @@ const ConfigUbahPassword = () => {
         }
     }
 
-    const setgetInfoEdit = (e) => { setgetInfoEdit_(e); console.log('induk', e) };
+    const setgetInfoEdit = (e) => { setgetInfoEdit_(e); };
 
     useEffect(() => {
         getUser();
@@ -126,7 +126,7 @@ function DataTable({ user, setgetInfoEdit, setInfoHasil, setgetUserInfo, kd_lvl2
     const hpsUser = async (e) => {
         try {
             const res = await axios.delete(`/user/${e}`);
-            console.log('hps', res.data.info);
+            // console.log('hps', res.data.info);
             if (res.status === 200) {
                 setgetUserInfo(res.data.info);
                 setInfoHasil(true);

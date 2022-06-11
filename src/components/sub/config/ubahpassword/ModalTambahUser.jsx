@@ -102,7 +102,7 @@ export default function MyModal({ setgetUserInfo, setInfoHasil }) {
                 }),
             onSubmit: values => {
                 simpanPengguna(values);
-                console.log('lvl 2', values);
+                // console.log('lvl 2', values);
                 formik.resetForm({
                     nama: "",
                     email: "",
@@ -220,7 +220,7 @@ export default function MyModal({ setgetUserInfo, setInfoHasil }) {
         }
         catch (e) {
             if (e.response) {
-                console.log('xx', e.response.data.info);
+                // console.log('xx', e.response.data.info);
                 setgetUserInfo(`err: ${e.response.data.info}`)
                 setIsOpen(true);
                 setInfoHasil(true);

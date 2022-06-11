@@ -118,31 +118,6 @@ const Sp2dReguler = () => {
         sortable: true, flex: 1, minWidth: 100,
     }));
 
-    // Example of consuming Grid Event
-    // const cellClickedListener = useCallback(event => {
-    //     console.log('cellClicked', event.data);
-    // }, []);
-
-    // Example load data from sever
-    // useEffect(async () => {
-    //     setLoad(true);
-    //     let url = `/anggaran/reg?page=${page}&size=${perpage}&sts_spp=true&sts=true&sts_spm=true&kd_keg=1&sts_sp2d=true`;
-    //     if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-    //     if (search) { url += `&kampung=${search}` }
-    //     await axios.get(url).then((e) => {
-    //         setRowData(e.data.result.data.data);
-    //         setCount(e.data.result.data.count);
-    //         setPage(e.data.result.data.page);
-    //         setPerpage(e.data.result.data.per_page);
-    //         setPrev(e.data.result.pagination.previous_page);
-    //         setNext(e.data.result.pagination.next_page);
-    //         if (e.status === 200) {
-    //             setLoad(false);
-    //         }
-    //     })
-    //     // .then(e => console.log(e))
-    // }, [page, perpage, dateupdate]);
-
     useEffect(() => {
         let a = true;
         async function geT() {
@@ -266,31 +241,10 @@ const Sp2dReguler = () => {
     const handleClose = () => { setOpen(false); setDialogInfo(false) };
     const onChangeForm = (e) => {
         const { value, id } = e.target;
-        console.log(value, id)
         setDataform({ ...dataform, [id]: value })
     }
     const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
     //========================space Handle Delete===============================
-    // const handleDelete = async (e) => {
-    //     setLoad(true);
-    //     const confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
-    //     if (confirm) {
-    //         try {
-    //             const update = await axios.patch('/anggaran', { id: e.id, tgl_sp2d: '1900-01-01', sts_sp2d: false, no_sp2d: `data di hapus ${Date()}` })
-    //             if (update.status === 200) {
-    //                 console.log(update.data.info)
-    //                 handleClose();
-    //                 setInfo('Data Di Hapus');
-    //                 setDateUpdate(Date());
-    //                 setDialogInfo(true);
-    //                 setTimeout(() => {
-    //                     setDialogInfo(false);
-    //                 }, 2000);
-    //                 setLoad(false);
-    //             } else { setDialogInfo(true); setInfo('Gagal Hapus Data') }
-    //         } catch (error) { console.log('Error Hapus spm reg', error) }
-    //     }
-    // }
     const handleSubmitForm = async () => {
         const confirm = window.confirm(`Apa Anda Yakin Ubah Data ${dataform.kampung} Distrik ${dataform.distrik} ${dataform.thp_advis} `)
         if (confirm) {
@@ -299,7 +253,7 @@ const Sp2dReguler = () => {
                 // console.log('submit', dataform.id, dataform.tgl_spp, dataform.no_spp)
                 const update = await axios.patch('/anggaran', { id: dataform.id, tgl_sp2d: dataform.tgl_sp2d, sts_sp2d: true, no_sp2d: dataform.no_sp2d })
                 if (update.status === 200) {
-                    console.log(update.data.info)
+                    //console.log(update.data.info)
                     handleClose();
                     setInfo(update.data.info);
                     setDateUpdate(Date());
@@ -505,7 +459,7 @@ const Sp2dReguler = () => {
                                 </IconButton>
                             </Tooltip>
                             <div className='h-4 -mb-8'>
-                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); console.log(e) }} nmpicker={nmpicker} />
+                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); }} nmpicker={nmpicker} />
                             </div>
                         </div> : null}
                     </div>

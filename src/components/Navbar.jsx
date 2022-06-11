@@ -201,7 +201,7 @@ const Navbar = ({ ubahMenu }) => {
             setKdlvl2(decode.kd_lvl2);
             setUserId(decode.userId);
         } catch (e) {
-            console.log('error refresh token', e.message);
+            //console.log('error refresh token', e.message);
             navLink('/');
         }
     }
@@ -225,7 +225,7 @@ const Navbar = ({ ubahMenu }) => {
             config.headers.Authorization = `Bearer ${respon.data.accestoken}`;
             setToken(respon.data.accestoken);
             const decode = jwt_decode(respon.data.accestoken);
-            console.log(decode);
+            // console.log(decode);
             setNamauser(decode.nama);
             setExpier(decode.exp);
         }

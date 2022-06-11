@@ -267,7 +267,7 @@ const Sp2dBlt = () => {
     const handleClose = () => { setOpen(false); setDialogInfo(false) };
     const onChangeForm = (e) => {
         const { value, id } = e.target;
-        console.log(value, id)
+        // console.log(value, id)
         setDataform({ ...dataform, [id]: value })
     }
     const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
@@ -300,7 +300,7 @@ const Sp2dBlt = () => {
                 // console.log('submit', dataform.id, dataform.tgl_spp, dataform.no_spp)
                 const update = await axios.patch('/anggaran', { id: dataform.id, tgl_sp2d: dataform.tgl_sp2d, sts_sp2d: true, no_sp2d: dataform.no_sp2d })
                 if (update.status === 200) {
-                    console.log(update.data.info)
+                    //console.log(update.data.info)
                     handleClose();
                     setInfo(update.data.info);
                     setDateUpdate(Date());
@@ -506,7 +506,7 @@ const Sp2dBlt = () => {
                                 </IconButton>
                             </Tooltip>
                             <div className='h-4 -mb-8'>
-                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); console.log(e) }} nmpicker={nmpicker} />
+                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); }} nmpicker={nmpicker} />
                             </div>
                         </div> : null}
                     </div>

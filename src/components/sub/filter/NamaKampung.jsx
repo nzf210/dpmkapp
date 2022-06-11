@@ -26,7 +26,7 @@ const NamaKampung = ({ setDis, nmdis_, disable, kdkampung }) => {
             const data = dt.filter((e) => e.kd_kampung === kdkampung)
             setSelected(data[0]);
             setDis(data[0]);
-            console.log(data[0])
+            //console.log(data[0])
         } else {
             setSelected(nmdis_[0]);
         }
@@ -45,7 +45,7 @@ const NamaKampung = ({ setDis, nmdis_, disable, kdkampung }) => {
 
     return (
         <div className="w-72 top-20 border rounded-lg cursor-pointer">
-            <Combobox value={selected} onChange={(e) => { setSelected(e); setDis(e); console.log('cbx', e) }} disabled={disable}>
+            <Combobox value={selected} onChange={(e) => { setSelected(e); setDis(e); }} disabled={disable}>
                 <div className="mt-1">
                     <div className="flex flex-row w-full text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-teal-300 focus-visible:ring-offset-2 sm:text-sm overflow-hidden">
                         <Combobox.Input placeholder='Nama Kampung ... '

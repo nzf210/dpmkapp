@@ -126,31 +126,7 @@ const Sp2dBlt = () => {
         sortable: true, flex: 1, minWidth: 100,
     }));
 
-    // Example of consuming Grid Event
-    // const cellClickedListener = useCallback(event => {
-    //     console.log('cellClicked', event.data);
-    // }, []);
 
-    // Example load data from sever
-    // useEffect(async () => {
-    //     setLoad(true);
-    //     let url = `/anggaran/dds_?page=${page}&size=${perpage}&no_sp2d=hapusnull`;
-    //     if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-    //     if (search) { url += `&kampung=${search}` }
-    //     await axios.get(url).then((e) => {
-    //         setRowData(e.data.result.data.data);
-    //         setCount(e.data.result.data.count);
-    //         setPage(e.data.result.data.page);
-    //         setPerpage(e.data.result.data.per_page);
-    //         setPrev(e.data.result.pagination.previous_page);
-    //         setNext(e.data.result.pagination.next_page);
-    //         //console.log(e.status, 'eeeeeeeeffffff')
-    //         if (e.status === 200) {
-    //             setLoad(false);
-    //         }
-    //     })
-    //     // .then(e => console.log(e))
-    // }, [page, perpage, dateupdate]);
 
     useEffect(() => {
         let a = true;

@@ -118,31 +118,6 @@ const Sp2dCovid = () => {
         sortable: true, flex: 1, minWidth: 100,
     }));
 
-    // Example of consuming Grid Event
-    // const cellClickedListener = useCallback(event => {
-    //     console.log('cellClicked', event.data);
-    // }, []);
-
-    // Example load data from sever
-    // useEffect(async () => {
-    //     setLoad(true);
-    //     let url = `/anggaran/cov?page=${page}&size=${perpage}&sts_spp=true&sts=true&sts_spm=true&kd_keg=3&sts_sp2d=true`;
-    //     if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-    //     if (search) { url += `&kampung=${search}` }
-    //     await axios.get(url).then((e) => {
-    //         setRowData(e.data.result.data.data);
-    //         setCount(e.data.result.data.count);
-    //         setPage(e.data.result.data.page);
-    //         setPerpage(e.data.result.data.per_page);
-    //         setPrev(e.data.result.pagination.previous_page);
-    //         setNext(e.data.result.pagination.next_page);
-    //         if (e.status === 200) {
-    //             setLoad(false);
-    //         }
-    //     })
-    //     // .then(e => console.log(e))
-    // }, [page, perpage, dateupdate]);
-
     useEffect(() => {
         let a = true;
         async function geT() {
@@ -168,24 +143,7 @@ const Sp2dCovid = () => {
         return () => { a = false; };
     }, [page, perpage, dateupdate]);
 
-    // useEffect(async () => {
-    //     setLoad(true);
-    //     let url = `/anggaran/cov?page=${page_}&size=${perpage_}&sts_spp=true&sts=true&sts_spm=true&kd_keg=3&sts_sp2d=false`;
-    //     if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-    //     if (search_) { url += `&kampung=${search_}` }
-    //     await axios.get(url).then((e) => {
-    //         setRowData_(e.data.result.data.data);
-    //         setCount_(e.data.result.data.count);
-    //         setPage_(e.data.result.data.page);
-    //         setPerpage_(e.data.result.data.per_page);
-    //         setPrev_(e.data.result.pagination.previous_page);
-    //         setNext_(e.data.result.pagination.next_page);
-    //         if (e.status === 200) {
-    //             setLoad(false);
-    //         }
-    //     })
 
-    // }, [page_, perpage_, dateupdate]);
 
     useEffect(() => {
         let a = true;
@@ -266,7 +224,7 @@ const Sp2dCovid = () => {
     const handleClose = () => { setOpen(false); setDialogInfo(false) };
     const onChangeForm = (e) => {
         const { value, id } = e.target;
-        console.log(value, id)
+        //console.log(value, id)
         setDataform({ ...dataform, [id]: value })
     }
     const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
@@ -299,7 +257,7 @@ const Sp2dCovid = () => {
                 // console.log('submit', dataform.id, dataform.tgl_spp, dataform.no_spp)
                 const update = await axios.patch('/anggaran', { id: dataform.id, tgl_sp2d: dataform.tgl_sp2d, sts_sp2d: true, no_sp2d: dataform.no_sp2d })
                 if (update.status === 200) {
-                    console.log(update.data.info)
+                    //console.log(update.data.info)
                     handleClose();
                     setInfo(update.data.info);
                     setDateUpdate(Date());
@@ -505,7 +463,7 @@ const Sp2dCovid = () => {
                                 </IconButton>
                             </Tooltip>
                             <div className='h-4 -mb-8'>
-                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); console.log(e) }} nmpicker={nmpicker} />
+                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); }} nmpicker={nmpicker} />
                             </div>
                         </div> : null}
                     </div>

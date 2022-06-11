@@ -135,30 +135,6 @@ const SpmAdd = () => {
         sortable: true, flex: 1, minWidth: 100,
     }));
 
-    // Example of consuming Grid Event
-    // const cellClickedListener = useCallback(event => {
-    //     console.log('cellClicked', event.data);
-    // }, []);
-
-    // Example load data from sever
-    // useEffect(async () => {
-    //     setLoad(true);
-    //     let url = `/anggaran/add?page=${page}&size=${perpage}&sts_spp=true&sts=true&sts_spm=true&kd_keg=4`;
-    //     if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-    //     if (search) { url += `&kampung=${search}` }
-    //     await axios.get(url).then((e) => {
-    //         setRowData(e.data.result.data.data);
-    //         setCount(e.data.result.data.count);
-    //         setPage(e.data.result.data.page);
-    //         setPerpage(e.data.result.data.per_page);
-    //         setPrev(e.data.result.pagination.previous_page);
-    //         setNext(e.data.result.pagination.next_page);
-    //         if (e.status === 200) {
-    //             setLoad(false);
-    //         }
-    //     })
-    //     // .then(e => console.log(e))
-    // }, [page, perpage, dateupdate]);
 
     useEffect(() => {
         let a = true;
@@ -264,19 +240,19 @@ const SpmAdd = () => {
                 switch (true) {
                     case (nodok < 10):
                         nomor = `000${nodok}/SKBK/${f.opt2}/${f.kampung}/2022`; //00${nodok}/SKBK/${f.opt2}/${f.kampung}/2022
-                        console.log('<9', nomor);
+
                         break;
                     case (9 < nodok < 100):
                         nomor = `00${nodok}/SKBK/${f.opt2}/${f.kampung}/2022`;
-                        console.log('>9', nomor);
+
                         break;
                     case (99 > nodok > 1000):
                         nomor = `0${nodok}/SKBK/${f.opt2}/${f.kampung}/2022`;
-                        console.log('>99');
+
                         break;
                     case (999 > nodok > 9999):
                         nomor = `${nodok}/SKBK/${f.opt2}/${f.kampung}/2022`;
-                        console.log('>999');
+
                         break;
                     default:
                         break;
@@ -331,7 +307,6 @@ const SpmAdd = () => {
                 // console.log('submit', dataform.id, dataform.tgl_spp, dataform.no_spp)
                 const update = await axios.patch('/anggaran', { id: dataform.id, tgl_spm: dataform.tgl_spm, sts_spm: true, no_spm: dataform.no_spm })
                 if (update.status === 200) {
-                    console.log(update.data.info)
                     handleClose();
                     setInfo(update.data.info);
                     setDateUpdate(Date());

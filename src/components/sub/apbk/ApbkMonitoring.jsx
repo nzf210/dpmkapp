@@ -185,27 +185,7 @@ const ApbkMonitoring = () => {
             } catch (error) { console.log('Error Hapus spp reg', error) }
         }
     }
-    // const handleSubmitForm = async () => {
-    //     const confirm = window.confirm(`Apa Anda Yakin Ubah Data ${dataform.kampung} Distrik ${dataform.distrik} ${dataform.thp_advis} `)
-    //     if (confirm) {
-    //         setLoad(true);
-    //         try {
-    //             // console.log('submit', dataform.id, dataform.tgl_spp, dataform.no_spp)
-    //             const update = await axios.patch('/anggaran', { id: dataform.id, tgl_spp: dataform.tgl_spp, sts_spp: true, no_spp: dataform.no_spp })
-    //             if (update.status === 200) {
-    //                 console.log(update.data.info)
-    //                 handleClose();
-    //                 setInfo(update.data.info);
-    //                 setDateUpdate(Date());
-    //                 setDialogInfo(true);
-    //                 setTimeout(() => {
-    //                     setDialogInfo(false);
-    //                 }, 2000);
-    //                 setLoad(false);
-    //             } else { setDialogInfo(true); setInfo('Gagal Ubah Data') }
-    //         } catch (error) { console.log('Error Update spp reg', error) }
-    //     }
-    // }
+
     //================= Alert Dialog =========================
 
     //================= btn click cari data ==================

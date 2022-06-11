@@ -119,30 +119,7 @@ const SpmRegule = () => {
         sortable: true, flex: 1, minWidth: 100,
     }));
 
-    // Example of consuming Grid Event
-    // const cellClickedListener = useCallback(event => {
-    //     console.log('cellClicked', event.data);
-    // }, []);
 
-    // Example load data from sever
-    // useEffect(async () => {
-    //     setLoad(true);
-    //     let url = `/anggaran/reg?page=${page}&size=${perpage}&sts_spp=true&sts=true&sts_spm=true`;
-    //     if (kd_lvl1 === 2) { url += `&kd_kampung=${kd_kampung}` }
-    //     if (search !== '') { url += `&kampung=${search}` }
-    //     await axios.get(url).then((e) => {
-    //         setRowData(e.data.result.data.data);
-    //         setCount(e.data.result.data.count);
-    //         setPage(e.data.result.data.page);
-    //         setPerpage(e.data.result.data.per_page);
-    //         setPrev(e.data.result.pagination.previous_page);
-    //         setNext(e.data.result.pagination.next_page);
-    //         if (e.status === 200) {
-    //             setLoad(false);
-    //         }
-    //     })
-    //     // .then(e => console.log(e))
-    // }, [page, perpage, dateupdate]);
     useEffect(() => {
         let a = true;
         async function geT() {
@@ -247,26 +224,26 @@ const SpmRegule = () => {
                 switch (true) {
                     case (nodok < 10):
                         nomor = `000${nodok}/SKBK/DD_REGULER${thp}/${f.kampung}/2022`; //........../SKBK/DD_REGULER1/HOM HOM/2022
-                        console.log('<9', nomor);
+
                         break;
                     case (9 < nodok < 100):
                         nomor = `00${nodok}/SKBK/DD_REGULER${thp}/${f.kampung}/2022`;
-                        console.log('>9', nomor);
+
                         break;
                     case (99 > nodok > 1000):
                         nomor = `0${nodok}/SKBK/DD_REGULER${thp}/${f.kampung}/2022`;
-                        console.log('>99');
+
                         break;
                     case (999 > nodok > 9999):
                         nomor = `${nodok}/SKBK/DD_REGULER${thp}/${f.kampung}/2022`;
-                        console.log('>999');
+
                         break;
                     default:
                         break;
                 }
                 counter++
                 const update = await axios.patch('/anggaran', { id: f.id, tgl_spm, sts_spm: true, no_spm: nomor })
-                console.log(update.status);
+                // console.log(update.status);
                 if (update.status === 200 && len === counter) {
                     setDateUpdate(new Date())
                 }
@@ -287,7 +264,7 @@ const SpmRegule = () => {
     const handleClose = () => { setOpen(false); setDialogInfo(false) };
     const onChangeForm = (e) => {
         const { value, id } = e.target;
-        console.log(value, id)
+        // console.log(value, id)
         setDataform({ ...dataform, [id]: value })
     }
     const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
@@ -298,7 +275,7 @@ const SpmRegule = () => {
             try {
                 const update = await axios.patch('/anggaran', { id: e.id, tgl_spm: '1900-01-01', sts_spm: false, no_spm: null })
                 if (update.status === 200) {
-                    console.log(update.data.info)
+                    //console.log(update.data.info)
                     handleClose();
                     setInfo('Data Di Hapus');
                     setDateUpdate(Date());
@@ -319,7 +296,7 @@ const SpmRegule = () => {
                 // console.log('submit', dataform.id, dataform.tgl_spp, dataform.no_spp)
                 const update = await axios.patch('/anggaran', { id: dataform.id, tgl_spm: dataform.tgl_spm, sts_spm: true, no_spm: dataform.no_spm })
                 if (update.status === 200) {
-                    console.log(update.data.info)
+                    // console.log(update.data.info)
                     handleClose();
                     setInfo(update.data.info);
                     setDateUpdate(Date());
@@ -525,7 +502,7 @@ const SpmRegule = () => {
                                 </IconButton>
                             </Tooltip>
                             <div className='h-4 -mb-8'>
-                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); console.log(e) }} nmpicker={nmpicker} />
+                                <DatePicker tgl={tgl} setTgl={(e) => { setTgl(e); }} nmpicker={nmpicker} />
                             </div>
                         </div> : null}
                     </div>

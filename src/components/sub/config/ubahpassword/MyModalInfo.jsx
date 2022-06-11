@@ -9,7 +9,7 @@ export default function MyModalInfo({ datahasil }) {
     function openModal() { setIsOpen(true) }
 
     useEffect(() => {
-        console.log('dt hasil', datahasil)
+        // console.log('dt hasil', datahasil)
         if (datahasil === '') {
             return;
         } openModal();

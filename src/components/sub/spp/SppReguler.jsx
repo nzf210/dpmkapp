@@ -417,10 +417,9 @@ const SppReguler = () => {
                 <div className='fixed  mt-10 w-full z-50 flex'>
                     <div className='flex-none w-14 h-14'></div>
                     <div className='grow'>
-                        <div className='mx-auto justify-center items-center h-screen w-[90%]'>
-                            <PDFViewer style={{ width: "100%", height: "100vh", alignItems: 'center', alignSelf: 'center' }}
-                            ><DocSppreg dataselectspp={dataVprint} /></PDFViewer>
-                            <span className={`absolute text-red-500 bg-slate-900 rounded-full text-xl cursor-pointer z-20 w-6 m-4 right-20 -top-2 -translate-x-1/2 text-center`}
+                        <div className='mx-auto justify-center items-center h-screen w-[90%] relative'>
+                            <PDFViewer style={{ width: "100%", height: "100vh", alignItems: 'center', alignSelf: 'center' }}><DocSppreg dataselectspp={dataVprint} /></PDFViewer>
+                            <span className={`absolute text-red-500 bg-slate-900 rounded-full text-xl cursor-pointer z-20 w-6 m-4 -top-7 text-center -right-6`}
                                 onClick={() => { setViewprint(false); setDataVprint([]) }}>X</span>
                         </div>
                     </div>

@@ -326,7 +326,6 @@ const SppAdd = () => {
                             setLoad(false);
                         }
                     }
-
                 } catch (error) { console.log(error) }
             }
         }

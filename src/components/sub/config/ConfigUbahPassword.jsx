@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 
 const ConfigUbahPassword = () => {
 
-    const { kd_kampung, kd_lvl1, kd_lvl2, userId } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_lvl1, kd_lvl2, nama, userId } = useSelector(state => state.userLogin);
     //const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, userId } = useSelector(state => state.userLogin);
     const [user, setUser] = useState([]);
     const [getUserInfo, setgetUserInfo] = useState(null);
@@ -79,7 +79,7 @@ const ConfigUbahPassword = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {<DataTable user={user} setgetInfoEdit={(e) => setgetInfoEdit(e)} setInfoHasil={setInfoHasil} setgetUserInfo={setgetUserInfo} kd_lvl2={kd_lvl2} />}
+                                        {<DataTable user={user} setgetInfoEdit={(e) => setgetInfoEdit(e)} setInfoHasil={setInfoHasil} setgetUserInfo={setgetUserInfo} kd_lvl2={kd_lvl2} nama={nama} />}
                                     </tbody>
                                 </table>
                             </div>
@@ -105,7 +105,7 @@ export default ConfigUbahPassword;
 
 
 
-function DataTable({ user, setgetInfoEdit, setInfoHasil, setgetUserInfo, kd_lvl2 }) {
+function DataTable({ user, setgetInfoEdit, setInfoHasil, setgetUserInfo, kd_lvl2, nama }) {
     const navLink = useNavigate();
     const [idEdit, setIdEdit] = useState('');
     //const [idhapus, setIdhapus] = useState('');
@@ -159,8 +159,25 @@ function DataTable({ user, setgetInfoEdit, setInfoHasil, setgetUserInfo, kd_lvl2
                     <td className="px-2 py-1">{e.kampung}</td>
                     <td className="text-center mr-3">
                         <div className="space-x-1  mr-4 flex flex-row justify-center">
-                            <MyModalEdit infoUpdate={(e) => infoUpdate(e)} idEdit={idEdit} editData={() => editData(e.id)} setIdEdit_={(e) => setIdEdit_(e)} />
-                            {kd_lvl2 === 2 ? null : <MyModalHapus setgetInfoEdit={(e) => setgetInfoEdit(e)} trigerHapusUser={() => trigerHapusUser(e.id)} hpsUser={() => hpsUser(e.id)} />}
+                            {
+                                kd_lvl2 === 1 ?
+                                    <>
+                                        <MyModalEdit infoUpdate={(e) => infoUpdate(e)} idEdit={idEdit} editData={() => editData(e.id)} setIdEdit_={(e) => setIdEdit_(e)} />
+                                        <MyModalHapus setgetInfoEdit={(e) => setgetInfoEdit(e)} trigerHapusUser={() => trigerHapusUser(e.id)} hpsUser={() => hpsUser(e.id)} />
+                                    </> :
+                                    (e.nama === nama ? <>
+                                        <MyModalEdit infoUpdate={(e) => infoUpdate(e)} idEdit={idEdit} editData={() => editData(e.id)} setIdEdit_={(e) => setIdEdit_(e)} />
+
+                                    </>
+                                        : null)
+                            }
+
+                            {/* {e.nama === nama ? <MyModalEdit infoUpdate={(e) => infoUpdate(e)} idEdit={idEdit} editData={() => editData(e.id)} setIdEdit_={(e) => setIdEdit_(e)} /> :
+                                
+                                <MyModalEdit infoUpdate={(e) => infoUpdate(e)} idEdit={idEdit} editData={() => editData(e.id)} setIdEdit_={(e) => setIdEdit_(e)} />
+                                
+                                }
+                            {kd_lvl2 === 2 ? null : <MyModalHapus setgetInfoEdit={(e) => setgetInfoEdit(e)} trigerHapusUser={() => trigerHapusUser(e.id)} hpsUser={() => hpsUser(e.id)} />} */}
                         </div>
                     </td>
                 </tr>

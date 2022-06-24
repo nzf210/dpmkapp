@@ -38,7 +38,7 @@ moment.updateLocale('id', {
 
 const Sp2dBlt = () => {
 
-    const { kd_kampung, kd_lvl1 } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_lvl1, kd_lvl2, nama } = useSelector(state => state.userLogin);
     // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
     const gridRef = useRef(); // Optional - for accessing Grid's API
     const gridRef_ = useRef(); // Optional - for accessing Grid's API
@@ -83,7 +83,7 @@ const Sp2dBlt = () => {
         { field: 'tgl_sp2d', headerName: 'TGL SP2D', width: 220, filter: true, suppressSizeToFit: true, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
         {
             headerName: 'Aksi', cellStyle: { textAlign: "right", alignItems: 'right' }, headerClass: 'ag-theme-text-aksi', width: 80, maxWidth: 80,
-            cellRenderer: (e) =>
+            cellRenderer: (e) => (kd_lvl2 === 1 ?
                 <div className=' -ml-10 -mt-1'>
                     <Button onClick={() => { handleUpdateForm(e.data); }} style={{ height: 8, alignContent: 'center', marginRight: -10, width: 2, maxWidth: '2px', padding: 0, }}   >
                         <Tooltip title='Edit Data' style={{ height: 8, alignContent: 'center' }} >
@@ -92,14 +92,14 @@ const Sp2dBlt = () => {
                             </IconButton>
                         </Tooltip>
                     </Button>
-                    <Button onClick={() => handleDelete(e.data)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
+                    <Button onClick={() => handleDelete(e.data, 1)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
                         <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center' }} >
                             <IconButton style={{ height: 8, alignContent: 'center' }} >
                                 <DeleteForeverIcon fontSize="small" sx={{ color: pink[500] }} />
                             </IconButton>
                         </Tooltip>
                     </Button>
-                </div>,
+                </div> : null),
         }
     ]);
     const [columnDefs_] = useState([
@@ -299,27 +299,70 @@ const Sp2dBlt = () => {
         }
     }
     //================= Alert Dialog =========================
-    const handleDelete = async (e) => {
-        const confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
-        if (confirm) {
-            setLoad(true);
-            const tgl_sp2d_ = moment(new Date()).locale('id').format("YYYY-MM-DD")
-            try {
-                //console.log('submit', e, 'xxx', e.id)
-                const update = await axios.patch('/anggaran/dds', { id: e.id, tgl_sp2d: tgl_sp2d_, no_sp2d: null })
-                if (update.status === 200) {
-                    //console.log(update.data.info)
-                    handleClose();
-                    setInfo('Data Berhasil Di Hapus');
-                    setDateUpdate(Date());
-                    setDialogInfo(true);
-                    setTimeout(() => {
-                        setDialogInfo(false);
-                    }, 2000);
-                    setLoad(false);
-                } else { setDialogInfo(true); setInfo('Gagal Di Hapus') }
-            } catch (error) { console.log('Error Hapus Data', error) }
+    const handleDelete = async (e, ee) => {
+        let confirm;
+        if (ee === 1) {
+            confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.tahap} `)
+            if (confirm) {
+                setLoad(true);
+                const tgl_sp2d_ = moment(new Date()).locale('id').format("YYYY-MM-DD")
+                try {
+                    //console.log('submit', e, 'xxx', e.id)
+                    const update = await axios.patch('/anggaran/dds', { id: e.id, tgl_sp2d: tgl_sp2d_, no_sp2d: null, sts_sp2d: false })
+                    if (update.status === 200) {
+                        //console.log(update.data.info)
+                        handleClose();
+                        setInfo('Data Berhasil Di Hapus');
+                        setDateUpdate(Date());
+                        setDialogInfo(true);
+                        setTimeout(() => {
+                            setDialogInfo(false);
+                        }, 2000);
+                        setLoad(false);
+                    } else { setDialogInfo(true); setInfo('Gagal Di Hapus') }
+                } catch (error) { console.log('Error Hapus Data', error) }
+            }
+            return;
+        } else {
+            confirm = window.confirm(`Apa Anda Yakin Hapus Semua Data yang dipilih...? `)
+            if (confirm) {
+                // setLoad(true);
+                // const tgl_sp2d_ = moment(new Date()).locale('id').format("YYYY-MM-DD")
+                // try {
+                //     //console.log('submit', e, 'xxx', e.id)
+                //     const update = await axios.patch('/anggaran/dds', { id: e.id, tgl_sp2d: tgl_sp2d_, no_sp2d: null })
+                //     if (update.status === 200) {
+                //         //console.log(update.data.info)
+                //         handleClose();
+                //         setInfo('Data Berhasil Di Hapus');
+                //         setDateUpdate(Date());
+                //         setDialogInfo(true);
+                //         setTimeout(() => {
+                //             setDialogInfo(false);
+                //         }, 2000);
+                //         setLoad(false);
+                //     } else { setDialogInfo(true); setInfo('Gagal Di Hapus') }
+                // } catch (error) { console.log('Error Hapus Data', error) }
+
+                let len = dataprint.length;
+                setLoad(true);
+                //const nomor = await axios.get(`/nodok?kd_keg=1`);
+                // const nor = parseInt(nomor.data[0].no_sp2d) + 1;
+                try {
+                    let tgl_sp2d = moment(tgl).locale('id').format("YYYY-MM-DD");
+                    for (let i = 0; i < len; i++) {
+                        const { id } = dataprint[i];
+                        console.log('idd', id)
+                        await axios.patch('/anggaran/dds', { id, tgl_sp2d, sts_sp2d: false, no_sp2d: null })
+                        if ((i + 1) === len) {
+                            setLoad(false);
+                            setDateUpdate(new Date());
+                        }
+                    }
+                } catch (error) { console.log(error) }
+            }
         }
+
     }
     //================= btn click cari data ==================
     const btnClick = async () => {
@@ -404,7 +447,7 @@ const Sp2dBlt = () => {
                     <div className='grow'>
                         <div className='mx-auto justify-center items-center h-screen w-[90%] relative'>
                             <PDFViewer style={{ width: "100%", height: "100vh", alignItems: 'center', alignSelf: 'center' }}
-                            ><DocSp2ddds dataselectspp={dataVprint} /></PDFViewer>
+                            ><DocSp2ddds dataselectspp={dataVprint} nama={nama} /></PDFViewer>
                             <span className={`absolute text-red-500 bg-slate-900 rounded-full text-xl cursor-pointer z-20 w-6 m-4 -top-7 text-center -right-6`}
                                 onClick={() => { setViewprint(false); setDataVprint([]) }}>X</span>
                         </div>
@@ -433,7 +476,7 @@ const Sp2dBlt = () => {
                         </div>
                         {print ? <div>
                             {viewbtn ?
-                                <><PDFDownloadLink placeholder='Print Data PDF' document={<DocSp2ddds dataselectspp={dataDlprint} />} fileName={`doc_spp-reg_${new Date().toLocaleTimeString().slice(0, 16)}`}>
+                                <><PDFDownloadLink placeholder='Print Data PDF' document={<DocSp2ddds dataselectspp={dataDlprint} nama={nama} />} fileName={`doc_spp-reg_${new Date().toLocaleTimeString().slice(0, 16)}`}>
                                     {({ loading }) => loading && !viewbtn ? <Loader /> :
                                         <Tooltip title='SaveAs PDF' style={{ alignContent: 'center', height: 8, width: 8 }} >
                                             <IconButton style={{ alignContent: 'center', height: 8, marginTop: -4, width: 8, paddingLeft: 22 }}>
@@ -458,6 +501,12 @@ const Sp2dBlt = () => {
                                     <Button style={{ width: 8 }} onClick={() => onBtnExport()} ><CloudDownloadIcon sx={{ color: green[500] }} /></Button>
                                 </IconButton>
                             </Tooltip>
+                            {kd_lvl2 === 1 ?
+                                <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center', width: 16 }} >
+                                    <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22 }}>
+                                        <Button style={{ width: 8 }} onClick={() => handleDelete()} ><DeleteForeverIcon sx={{ color: red[800] }} /></Button>
+                                    </IconButton>
+                                </Tooltip> : null}
                         </div> : null}
                     </div>
                     <div className='container w-full bg-slate-400 mx-auto -z-40 relative'>

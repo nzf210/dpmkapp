@@ -21,6 +21,7 @@ import BoldItalic from '../../../public/Raleway/static/Raleway-BoldItalic.ttf';
 import SemiBoldItalic from '../../../public/Raleway/static/Raleway-SemiBoldItalic.ttf';
 import moment from "moment";
 import { currency, PdfWithQrCode } from '../Font';
+import { brown } from "@mui/material/colors";
 // import { red } from "@material-ui/core/colors";
 
 
@@ -88,7 +89,7 @@ Font.register({
     ],
 })
 
-const Sp2dDoc = ({ dataselectspp }) => {
+const Sp2dDoc = ({ dataselectspp, nama }) => {
     // useEffect(() => {
     //     console.log("spd dok", dataselectspp);
     // }, []);
@@ -328,6 +329,7 @@ const Sp2dDoc = ({ dataselectspp }) => {
                             //     `Halaman ${pageNumber} dari ${totalPages}`
                             // }
                             >Halaman 1 dari 1</Text>
+                            <Text style={{ fontSize: 5.5, color: brown[900], position: 'absolute', bottom: 20, marginLeft: 30 }}>Oleh: {nama}</Text>
                         </Page>
                     </>
                 ))

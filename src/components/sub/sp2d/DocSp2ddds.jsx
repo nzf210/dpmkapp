@@ -23,6 +23,7 @@ import moment from "moment";
 import { currency, PdfWithQrCode, sayit_v2 } from '../Font';
 // import { red } from "@material-ui/core/colors";
 import CurrencyFormat from 'react-currency-format';
+import { brown } from "@material-ui/core/colors";
 
 
 Font.register({
@@ -88,7 +89,7 @@ Font.register({
     ],
 })
 
-const Sp2dDoc = ({ dataselectspp }) => {
+const Sp2dDoc = ({ dataselectspp, nama }) => {
     // useEffect(() => {
     //     console.log("spd dok", dataselectspp);
     // }, []);
@@ -510,6 +511,7 @@ const Sp2dDoc = ({ dataselectspp }) => {
                             //     `Halaman ${pageNumber} dari ${totalPages}`
                             // }
                             >Halaman 1 dari 1</Text>
+                            <Text style={{ fontSize: 5.5, color: brown[900], position: 'absolute', bottom: 20, marginLeft: 30 }}>Oleh: {nama}</Text>
                         </Page>
                     </>
                 ))

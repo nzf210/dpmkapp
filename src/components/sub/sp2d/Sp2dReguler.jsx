@@ -7,6 +7,7 @@ import axios from 'axios';
 import CurrencyFormat from 'react-currency-format';
 import DocSp2dReg from './DocSp2d_reg';
 import moment from "moment";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 //Redux
 import { useSelector } from 'react-redux';
@@ -30,6 +31,7 @@ import InfoDialog from '../../DialogInfo';
 import { Loader } from '../Font';
 
 import Pagination from '../../Pagination';
+import { pink } from '@material-ui/core/colors';
 
 moment.updateLocale('id', {
     weekdaysMin: ["Ahad", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
@@ -38,7 +40,8 @@ moment.updateLocale('id', {
 
 const Sp2dReguler = () => {
 
-    const { kd_kampung, kd_lvl1 } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_lvl1, kd_lvl2, nama } = useSelector(state => state.userLogin);
+    //console.log("nama=>", nama);
     // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
     const gridRef = useRef(); // Optional - for accessing Grid's API
     const gridRef_ = useRef(); // Optional - for accessing Grid's API
@@ -85,7 +88,7 @@ const Sp2dReguler = () => {
         { field: 'pagu', suppressSizeToFit: true, width: 150, maxWidth: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
         {
             headerName: 'Aksi', cellStyle: { textAlign: "right", alignItems: 'right' }, headerClass: 'ag-theme-text-aksi', width: 80, maxWidth: 80,
-            cellRenderer: (e) => (e.data.sts_sp2d ?
+            cellRenderer: (e) => (e.data.sts_sp2d && kd_lvl2 === 1 ?
                 <div className=' -ml-10 -mt-1'>
                     <Button onClick={() => { handleUpdateForm(e.data); }} style={{ height: 8, alignContent: 'center', marginRight: -10, width: 2, maxWidth: '2px', padding: 0, }}   >
                         <Tooltip title='Edit Data' style={{ height: 8, alignContent: 'center' }} >
@@ -94,13 +97,13 @@ const Sp2dReguler = () => {
                             </IconButton>
                         </Tooltip>
                     </Button>
-                    {/* <Button onClick={() => handleDelete(e.data)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
+                    <Button onClick={() => handleDelete(e.data, 1)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
                         <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center' }} >
                             <IconButton style={{ height: 8, alignContent: 'center' }} >
                                 <DeleteForeverIcon fontSize="small" sx={{ color: pink[500] }} />
                             </IconButton>
                         </Tooltip>
-                    </Button> */}
+                    </Button>
                 </div> : null),
         }
     ]);
@@ -204,8 +207,8 @@ const Sp2dReguler = () => {
         try {
             let tgl_sp2d = moment(tgl).locale('id').format("YYYY-MM-DD");
             for (let i = 0; i < len; i++) {
-                const { id } = dataprint_[i];
-                await axios.patch('/anggaran', { id, tgl_sp2d, sts_sp2d: true, no_sp2d: numbering(nor + i) })
+                const { id, opt1 } = dataprint_[i];
+                await axios.patch('/anggaran', { id, tgl_sp2d, sts_sp2d: true, no_sp2d: numbering(nor + i, opt1) })
                 if ((i + 1) === len) {
                     setLoad(false);
                     setDateUpdate(new Date());
@@ -214,16 +217,66 @@ const Sp2dReguler = () => {
         } catch (error) { console.log(error) }
     }
 
-    const numbering = (v) => {
+    // ++++++++ DELETE DATA +++++++++++++++++++++++
+    const handleDelete = async (e, ee) => {
+        let confirm;
+        if (ee === 1) {
+            confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
+            if (confirm) {
+                setLoad(true);
+                const sts = await axios.patch('/anggaran', { id: e.id, tgl_sp2d: null, sts_sp2d: false, no_sp2d: null })
+                if (sts.status === 200) {
+                    setLoad(false);
+                    setDateUpdate(new Date());
+                    return;
+                }
+            }
+        } else {
+            confirm = window.confirm(`Apa Anda Yakin Hapus Semua Data yang dipilih ... ? `)
+            if (confirm) {
+                let len = dataprint.length;
+                setLoad(true);
+                //const nomor = await axios.get(`/nodok?kd_keg=1`);
+                // const nor = parseInt(nomor.data[0].no_sp2d) + 1;
+                try {
+                    //let tgl_sp2d = moment(tgl).locale('id').format("YYYY-MM-DD");
+                    for (let i = 0; i < len; i++) {
+                        const { id } = dataprint[i];
+                        console.log('idd', id)
+                        await axios.patch('/anggaran', { id, tgl_sp2d: null, sts_sp2d: false, no_sp2d: null })
+                        if ((i + 1) === len) {
+                            setLoad(false);
+                            setDateUpdate(new Date());
+                        }
+                    }
+                } catch (error) { console.log(error) }
+            }
+        }
+    }
+
+    const numbering = (v, vv) => {
+        let no;
+        switch (true) {
+            case vv === 'Tahap I':
+                no = 'I';
+                break;
+            case vv === 'Tahap II':
+                no = 'II';
+                break;
+            default:
+                no = 'III'
+        }
+
+
         switch (true) {
             case v < 10:
-                return `000${v}/SP2D-DDSREGULER/2022`;
+                return `000${v}/SP2D-DDSREGULER ${no}/2022`;
             case v < 100:
-                return `00${v}/SP2D-DDSREGULER/2022`;
+                return `00${v}/SP2D-DDSREGULER ${no}/2022`;
             case v < 1000:
-                return `0${v}/SP2D-DDSREGULER/2022`;
+                return `0${v}/SP2D-DDSREGULER ${no}/2022`;
             default:
-                return `${v}/SP2D-DDSREGULER/2022`;
+                return `${v}/SP2D-DDSREGULER ${no}/2022`;
             //break;
         }
     }
@@ -324,6 +377,7 @@ const Sp2dReguler = () => {
         } else {
             setPrint_(true);
             setDataprint_(data);
+            //console.log('change select_')
         }
     }
 
@@ -339,7 +393,7 @@ const Sp2dReguler = () => {
                     <div className='grow'>
                         <div className='mx-auto justify-center items-center h-screen w-[90%] relative'>
                             <PDFViewer style={{ width: "100%", height: "100vh", alignItems: 'center', alignSelf: 'center' }}
-                            ><DocSp2dReg dataselectspp={dataVprint} /></PDFViewer>
+                            ><DocSp2dReg dataselectspp={dataVprint} nama={nama} /></PDFViewer>
                             <span className={`absolute text-red-500 bg-slate-900 rounded-full text-xl cursor-pointer z-20 w-6 m-4 -top-7 text-center -right-6`}
                                 onClick={() => { setViewprint(false); setDataVprint([]) }}>X</span>
                         </div>
@@ -368,7 +422,7 @@ const Sp2dReguler = () => {
                         </div>
                         {print ? <div>
                             {viewbtn ?
-                                <><PDFDownloadLink placeholder='Print Data PDF' document={<DocSp2dReg dataselectspp={dataDlprint} />} fileName={`doc_spp-reg_${new Date().toLocaleTimeString().slice(0, 16)}`}>
+                                <><PDFDownloadLink placeholder='Print Data PDF' document={<DocSp2dReg dataselectspp={dataDlprint} nama={nama} />} fileName={`doc_spp-reg_${new Date().toLocaleTimeString().slice(0, 16)}`}>
                                     {({ loading }) => loading && !viewbtn ? <Loader /> :
                                         <Tooltip title='SaveAs PDF' style={{ alignContent: 'center', height: 8, width: 8 }} >
                                             <IconButton style={{ alignContent: 'center', height: 8, marginTop: -4, width: 8, paddingLeft: 22 }}>
@@ -393,6 +447,12 @@ const Sp2dReguler = () => {
                                     <Button style={{ width: 8 }} onClick={() => onBtnExport()} ><CloudDownloadIcon sx={{ color: green[500] }} /></Button>
                                 </IconButton>
                             </Tooltip>
+                            {kd_lvl2 === 1 ?
+                                <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center', width: 16 }} >
+                                    <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22 }}>
+                                        <Button style={{ width: 8 }} onClick={() => handleDelete()} ><DeleteForeverIcon sx={{ color: red[800] }} /></Button>
+                                    </IconButton>
+                                </Tooltip> : null}
                         </div> : null}
                     </div>
                     <div className='container w-full bg-slate-400 mx-auto -z-40 relative'>
@@ -497,7 +557,6 @@ const Sp2dReguler = () => {
                     </div>
                 </div>
             </div>
-
         </>
     )
 }

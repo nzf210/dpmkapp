@@ -38,7 +38,7 @@ moment.updateLocale('id', {
 
 const SpmAdd = () => {
 
-    const { kd_kampung, kd_lvl1 } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_lvl1, kd_lvl2 } = useSelector(state => state.userLogin);
     // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
     const gridRef = useRef(); // Optional - for accessing Grid's API
     const gridRef_ = useRef(); // Optional - for accessing Grid's API
@@ -85,23 +85,6 @@ const SpmAdd = () => {
         { field: 'pagu', suppressSizeToFit: true, width: 150, maxWidth: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
         {
             headerName: 'Aksi', cellStyle: { textAlign: "right", alignItems: 'right' }, headerClass: 'ag-theme-text-aksi', width: 80, maxWidth: 80,
-            // cellRendererFramework: (e) =>
-            //     <div className='-pl-20 -ml-6'>
-            //         <Button onClick={() => { handleUpdateForm(e.data) }} style={{ height: 8, alignContent: 'center', marginTop: -6 }} >
-            //             <Tooltip title='Edit Data' style={{ height: 8, alignContent: 'center' }} >
-            //                 <IconButton style={{ height: 8, alignContent: 'center' }}>
-            //                     <EditIcon fontSize="small" sx={{ color: orange[500] }} style={{ alignContent: 'center' }} />
-            //                 </IconButton>
-            //             </Tooltip>
-            //         </Button>
-            //         <Button onClick={() => handleDelete(e.data)} style={{ height: 8, alignContent: 'center', marginTop: -6 }}>
-            //             <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center' }} >
-            //                 <IconButton style={{ height: 8, alignContent: 'center' }}>
-            //                     <DeleteForeverIcon fontSize="small" sx={{ color: pink[500] }} />
-            //                 </IconButton>
-            //             </Tooltip>
-            //         </Button>
-            //     </div>,
             cellRenderer: (e) => (!e.data.sts_sp2d ?
                 <div className=' -ml-10 -mt-1'>
                     <Button onClick={() => { handleUpdateForm(e.data); }} style={{ height: 8, alignContent: 'center', marginRight: -10, width: 2, maxWidth: '2px', padding: 0, }}   >
@@ -111,7 +94,7 @@ const SpmAdd = () => {
                             </IconButton>
                         </Tooltip>
                     </Button>
-                    <Button onClick={() => handleDelete(e.data)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
+                    <Button onClick={() => handleDelete(e.data, 1)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
                         <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center' }} >
                             <IconButton style={{ height: 8, alignContent: 'center' }} >
                                 <DeleteForeverIcon fontSize="small" sx={{ color: pink[500] }} />
@@ -281,22 +264,56 @@ const SpmAdd = () => {
         setDataform({ ...dataform, [id]: value })
     }
     const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
-    const handleDelete = async (e) => {
-        const confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
-        if (confirm) {
-            setLoad(true);
-            try {
-                const update = await axios.patch('/anggaran', { id: e.id, tgl_spm: '1900-01-01', sts_spm: false, no_spm: `data di hapus ${Date()}` })
-                if (update.status === 200) {
-                    //console.log(update.data.info)
-                    handleClose();
-                    setInfo('Data Di Hapus');
-                    setDateUpdate(Date());
-                    setDialogInfo(true);
-                    setTimeout(() => { setDialogInfo(false); }, 2000);
-                    setLoad(false);
-                } else { setDialogInfo(true); setInfo('Gagal Hapus Data') }
-            } catch (error) { console.log('Error Hapus spm reg', error) }
+    const handleDelete = async (e, ee) => {
+        let confirm;
+        let tgl_spm = moment(tgl).locale('id').format("YYYY-MM-DD");
+        if (ee === 1) {
+            confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
+            if (confirm) {
+                setLoad(true);
+                try {
+                    const update = await axios.patch('/anggaran', { id: e.id, tgl_spm, sts_spm: false, no_spm: null })
+                    if (update.status === 200) {
+                        // console.log(update.data.info)
+                        handleClose();
+                        setInfo('Data Di Hapus');
+                        setDateUpdate(Date());
+                        setDialogInfo(true);
+                        setTimeout(() => {
+                            setDialogInfo(false);
+                        }, 2000);
+                        setLoad(false);
+                    } else { setDialogInfo(true); setInfo('Gagal Hapus Data') }
+                } catch (error) { console.log('Error Hapus spm reg', error) }
+            }
+            return;
+        } else {
+            confirm = window.confirm(`Apa Anda Yakin Hapus Semua Data yang dipilih ... ? `)
+            if (confirm) {
+                let len = dataprint.length;
+                console.log('first', len)
+                try {
+                    for (let i = 0; i < len; i++) {
+                        const { id, sts_sp2d } = dataprint[i];
+                        if (!sts_sp2d) {
+                            setLoad(true);
+                            const ok = await axios.patch('/anggaran', { id, tgl_spm, sts_spm: false, no_spm: null })
+                            if (!ok) {
+                                setLoad(true);
+                            }
+                        }
+                        if ((i + 1) === len) {
+                            setInfo('Data Di Hapus');
+                            setDialogInfo(true);
+                            setTimeout(() => {
+                                setDialogInfo(false);
+                            }, 2000);
+                            setDateUpdate(new Date());
+                            setLoad(false);
+                        }
+                    }
+                } catch (error) { console.log(error) }
+            }
         }
     }
     const handleSubmitForm = async () => {
@@ -441,6 +458,12 @@ const SpmAdd = () => {
                                     <Button style={{ width: 8 }} onClick={() => onBtnExport()} ><CloudDownloadIcon sx={{ color: green[500] }} /></Button>
                                 </IconButton>
                             </Tooltip>
+                            {kd_lvl2 === 1 ?
+                                <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center', width: 16 }} >
+                                    <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22 }}>
+                                        <Button style={{ width: 8 }} onClick={() => handleDelete()} ><DeleteForeverIcon sx={{ color: red[800] }} /></Button>
+                                    </IconButton>
+                                </Tooltip> : null}
                         </div> : null}
                     </div>
                     <div className='container w-full bg-slate-400 mx-auto -z-40 relative'>

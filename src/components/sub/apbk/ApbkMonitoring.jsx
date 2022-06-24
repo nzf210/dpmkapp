@@ -24,7 +24,7 @@ import BackupIcon from '@mui/icons-material/Backup';
 
 // import DatePicker from '../../DatePicker'
 
-import { blue, green, pink } from '@mui/material/colors';
+import { blue, green, pink, red } from '@mui/material/colors';
 // import AlertDialog from '../../DialogAlert';
 // import InfoDialog from '../../DialogInfo';
 import { Loader } from '../Font';
@@ -39,7 +39,7 @@ moment.updateLocale('id', {
 
 const ApbkMonitoring = () => {
 
-    const { kd_kampung, kd_lvl1 } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_lvl1, kd_lvl2 } = useSelector(state => state.userLogin);
     // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
     const gridRef = useRef(); // Optional - for accessing Grid's API
     // const gridRef_ = useRef(); // Optional - for accessing Grid's API
@@ -67,20 +67,22 @@ const ApbkMonitoring = () => {
 
 
     const [columnDefs] = useState([
-        { field: 'kampung', filter: true, minWidth: 150, maxWidth: 150, suppressSizeToFit: true, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, checkboxSelection: true },
+        {
+            field: 'kampung', filter: true, minWidth: 150, maxWidth: 150, suppressSizeToFit: true, headerCheckboxSelection: true, headerCheckboxSelectionFilteredOnly: true, checkboxSelection: true
+        },
         { field: 'distrik', filter: true, minWidth: 150, maxWidth: 150, suppressSizeToFit: true }, //suppressSizeToFit: false 
         { field: 'thp_advis', headerName: 'Kegiatan', width: 270, filter: true, suppressSizeToFit: true },
         //{ field: 'no_spp', headerName: 'No SP2SPD', width: 220, filter: true, suppressSizeToFit: true },
         // { field: 'tgl_spp', headerName: 'Tgl SP2SPD', width: 150, cellRenderer: (e) => <span>{e.value}</span> },
         { field: 'tgl', suppressSizeToFit: true, filter: true, headerName: 'Tgl Verf', width: 150, maxWidth: 150, cellRenderer: (e) => <span>{moment(e.value).locale('id').format("DD MMMM YYYY")}</span> },
         {
-            field: 'sts', suppressSizeToFit: true, filter: true, headerName: 'Status APBK', width: 150, maxWidth: 150, cellRenderer: (e) => (e.data.sts ? <span className='bg-green-500 text-center justify-center w-10'>OK</span>
+            field: 'sts', suppressSizeToFit: true, filter: true, headerName: 'Status APBK', width: 150, maxWidth: 150, cellRenderer: (e) =>
+            (e.data.sts ? <span className='bg-green-500 text-center justify-center w-10'>OK</span>
                 : <span className='bg-yellow-500 text-center justify-center w-20 p-1 rounded-sm h-2  align-top content-center items-center'>PROSES</span>)
         },
         { field: 'pagu', suppressSizeToFit: true, width: 150, maxWidth: 150, cellRenderer: (e) => <CurrencyFormat value={e.value} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /> },
         {
             headerName: 'Aksi', cellStyle: { textAlign: "right", alignItems: 'right' }, headerClass: 'ag-theme-text-aksi', width: 80, maxWidth: 80,
-
             cellRenderer: (e) => (!e.data.sts || e.data.sts_spp ? null :
                 <div className=' -ml-10 -mt-1'>
                     {/* <Button onClick={() => { handleUpdateForm(e.data); }} style={{ height: 8, alignContent: 'center', marginRight: -10, width: 2, maxWidth: '2px', padding: 0, }}   >
@@ -90,13 +92,15 @@ const ApbkMonitoring = () => {
                             </IconButton>
                         </Tooltip>
                     </Button> */}
-                    <Button onClick={() => handleDelete(e.data)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
-                        <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center' }} >
-                            <IconButton style={{ height: 8, alignContent: 'center' }} >
-                                <DeleteForeverIcon fontSize="small" sx={{ color: pink[500] }} />
-                            </IconButton>
-                        </Tooltip>
-                    </Button>
+                    {kd_lvl2 === 1 ?
+                        <Button onClick={() => handleDelete(e.data, 1)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
+                            <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center' }} >
+                                <IconButton style={{ height: 8, alignContent: 'center' }} >
+                                    <DeleteForeverIcon fontSize="small" sx={{ color: pink[500] }} />
+                                </IconButton>
+                            </Tooltip>
+                        </Button>
+                        : null}
                 </div>),
         }
     ]);
@@ -153,8 +157,6 @@ const ApbkMonitoring = () => {
                 }
             })
         }
-
-
     }
     /* Funtiom Update Data */
     //================= Terbitkan SP2SPD =========================
@@ -165,24 +167,46 @@ const ApbkMonitoring = () => {
     const handleClose = () => { /*setOpen(false);*/ setDialogInfo(false) };
     // const onChangeForm = (e) => { const { value, id } = e.target; setDataform({ ...dataform, [id]: value }) }
     // const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
-    const handleDelete = async (e) => {
-        const confirm = window.confirm(`Dengan Menghapus Akan Mengembalikan Status APBK ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} kembali ke PROSES dan Tidak Dapat Terbitkan SP2SPD`)
+    const handleDelete = async (e, ee) => {
+        let confirm;
+        if (ee === 1) {
+            confirm = window.confirm(`Dengan Menghapus Akan Mengembalikan Status APBK ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} kembali ke PROSES dan Tidak Dapat Terbitkan SP2SPD`)
+            if (confirm) {
+                setLoad(true);
+                try {
+                    const update = await axios.patch('/anggaran', { id: e.id, sts: false, tgl: null })
+                    if (update.status === 200) {
+                        // console.log(update.data.info)
+                        handleClose();
+                        setInfo('Data Di Hapus');
+                        setDateUpdate(Date());
+                        setDialogInfo(true);
+                        setTimeout(() => {
+                            setDialogInfo(false);
+                        }, 1700);
+                        setLoad(false);
+                    } else { setDialogInfo(true); setInfo('Gagal Hapus Data') }
+                } catch (error) { console.log('Error Hapus spp reg', error) }
+                return;
+            }
+        } else {
+            confirm = window.confirm(`Anda Yakin Menghapus semua data yang di pilih kembali ke PROSES dan Tidak Dapat Terbitkan SP2SPD`)
+        }
         if (confirm) {
             setLoad(true);
+            let len = dataprint.length;
             try {
-                const update = await axios.patch('/anggaran', { id: e.id, sts: false, tgl: null })
-                if (update.status === 200) {
-                    // console.log(update.data.info)
-                    handleClose();
-                    setInfo('Data Di Hapus');
-                    setDateUpdate(Date());
-                    setDialogInfo(true);
-                    setTimeout(() => {
-                        setDialogInfo(false);
-                    }, 1700);
-                    setLoad(false);
-                } else { setDialogInfo(true); setInfo('Gagal Hapus Data') }
-            } catch (error) { console.log('Error Hapus spp reg', error) }
+                //let tgl_sp2d = moment(tgl).locale('id').format("YYYY-MM-DD");
+                for (let i = 0; i < len; i++) {
+                    const { id } = dataprint[i];
+                    console.log('idd', id)
+                    await axios.patch('/anggaran', { id, tgl: null, sts: false, sts_spp: false })
+                    if ((i + 1) === len) {
+                        setLoad(false);
+                        setDateUpdate(new Date());
+                    }
+                }
+            } catch (error) { console.log(error) }
         }
     }
 
@@ -224,7 +248,8 @@ const ApbkMonitoring = () => {
 
     const isRowSelectable = (nd) => {
         // console.log(nd)
-        return nd.data.sts ? !nd.data.sts : true
+        // return nd.data.sts ? !nd.data.sts : true //Before
+        return nd.data.sts_spp !== false ? false : true
     }
 
     return (
@@ -264,14 +289,26 @@ const ApbkMonitoring = () => {
                                     <Button style={{ width: 8 }} onClick={() => onBtnExport()} ><CloudDownloadIcon sx={{ color: green[500] }} /></Button>
                                 </IconButton>
                             </Tooltip>
-                            <Tooltip title='Verifikasi APBK' style={{ height: 8, alignContent: 'center', paddingLeft: 22, width: 16, }} >
-                                <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22, }}>
-                                    <Button onClick={updateDataChecklist} className='mx-4 -mt-6'><BackupIcon sx={{ color: blue[500] }} /></Button>
-                                </IconButton>
-                            </Tooltip>
-                            <div className='h-4 -mb-8'>
-                                <DatePicker tgl={tgl} setTgl={e => setTgl(e)} nmpicker={nmpicker} />
-                            </div>
+                            {kd_lvl2 === 1 ?
+                                <>
+                                    <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center', width: 16 }} >
+                                        <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22 }}>
+                                            <Button style={{ width: 8 }} onClick={() => handleDelete()} ><DeleteForeverIcon sx={{ color: red[800] }} /></Button>
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title='Verifikasi APBK' style={{ height: 8, alignContent: 'center', paddingLeft: 22, width: 16, }} >
+                                        <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22, }}>
+                                            <Button onClick={updateDataChecklist} className='mx-4 -mt-6'><BackupIcon sx={{ color: blue[500] }} /></Button>
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Tooltip style={{ marginLeft: 30, position: 'relative', backgroundColor: red[200], height: 0 }}>
+                                        <div style={{ position: 'absolute', marginLeft: 50 }}>
+                                            <DatePicker tgl={tgl} setTgl={e => setTgl(e)} nmpicker={nmpicker} />
+                                        </div>
+                                    </Tooltip>
+                                </>
+                                : null}
+
                         </div> : null}
                     </div>
                     <div className='container w-full bg-slate-400 mx-auto -z-40 relative'>

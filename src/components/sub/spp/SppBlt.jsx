@@ -38,7 +38,7 @@ moment.updateLocale('id', {
 
 const SppBlt = () => {
 
-    const { kd_kampung, kd_lvl1 } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_lvl1, kd_lvl2 } = useSelector(state => state.userLogin);
     // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
     const gridRef = useRef(); // Optional - for accessing Grid's API
     const gridRef_ = useRef(); // Optional - for accessing Grid's API
@@ -94,7 +94,7 @@ const SppBlt = () => {
                             </IconButton>
                         </Tooltip>
                     </Button>
-                    <Button onClick={() => handleDelete(e.data)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
+                    <Button onClick={() => handleDelete(e.data, 1)} style={{ height: 8, alignContent: 'center', marginLeft: -10 }}>
                         <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center' }} >
                             <IconButton style={{ height: 8, alignContent: 'center' }} >
                                 <DeleteForeverIcon fontSize="small" sx={{ color: pink[500] }} />
@@ -285,26 +285,53 @@ const SppBlt = () => {
     const handleClose = () => { setOpen(false); setDialogInfo(false) };
     const onChangeForm = (e) => { const { value, id } = e.target; setDataform({ ...dataform, [id]: value }) }
     const handleUpdateForm = async (e) => { setDataform(e); handleClickOpen(); }
-    const handleDelete = async (e) => {
-        const confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
-        setLoad(true);
-        if (confirm) {
-            try {
-                const update = await axios.patch('/anggaran', { id: e.id, tgl_spp: '1900-01-01', sts_spp: false, no_spp: null })
-                if (update.status === 200) {
-                    //  console.log(update.data.info)
-                    handleClose();
-                    setInfo('Data Di Hapus');
-                    setDateUpdate(Date());
-                    setDialogInfo(true);
-                    setTimeout(() => {
-                        setDialogInfo(false);
-                    }, 2000);
-                    setLoad(false);
-                } else { setDialogInfo(true); setInfo('Gagal Hapus Data') }
-            } catch (error) { console.log('Error Hapus spp reg', error) }
+    const handleDelete = async (e, ee) => {
+        let confirm;
+        if (ee === 1) {
+            confirm = window.confirm(`Apa Anda Yakin Hapus Data ${e.kampung} Distrik ${e.distrik} ${e.thp_advis} `)
+            if (confirm) {
+                setLoad(true);
+                try {
+                    const update = await axios.patch('/anggaran', { id: e.id, tgl_spp: '1900-01-01', sts_spp: false, no_spp: null })
+                    if (update.status === 200) {
+                        // console.log(update.data.info)
+                        handleClose();
+                        setInfo('Data Di Hapus');
+                        setDateUpdate(Date());
+                        setDialogInfo(true);
+                        setTimeout(() => {
+                            setDialogInfo(false);
+                        }, 2000);
+                        setLoad(false);
+                    } else { setDialogInfo(true); setInfo('Gagal Hapus Data') }
+                } catch (error) { console.log('Error Hapus spp reg', error) }
+            }
+        } else {
+            confirm = window.confirm(`Apa Anda Yakin Hapus Semua Data yang dipilih ... ? `)
+            if (confirm) {
+                let len = dataprint.length;
+                try {
+                    for (let i = 0; i < len; i++) {
+                        const { id, sts_spm } = dataprint[i];
+                        if (!sts_spm) {
+                            setLoad(true);
+                            await axios.patch('/anggaran', { id, tgl_spp: null, sts_spp: false, no_spp: null })
+                            if ((i + 1) === len) {
+                                setInfo('Data Di Hapus');
+                                setDialogInfo(true);
+                                setTimeout(() => {
+                                    setDialogInfo(false);
+                                }, 2000);
+                                setDateUpdate(new Date());
+                                setLoad(false);
+                            }
+                        }
+                    }
+                } catch (error) { console.log(error) }
+            }
         }
     }
+
     const handleSubmitForm = async () => {
         const confirm = window.confirm(`Apa Anda Yakin Ubah Data ${dataform.kampung} Distrik ${dataform.distrik} ${dataform.thp_advis} `)
         if (confirm) {
@@ -453,6 +480,12 @@ const SppBlt = () => {
                                     <Button style={{ width: 8 }} onClick={() => onBtnExport()} ><CloudDownloadIcon sx={{ color: green[500] }} /></Button>
                                 </IconButton>
                             </Tooltip>
+                            {kd_lvl2 === 1 ?
+                                <Tooltip title='Hapus Data' style={{ height: 8, alignContent: 'center', width: 16 }} >
+                                    <IconButton style={{ height: 8, alignContent: 'center', width: 16, paddingLeft: 22 }}>
+                                        <Button style={{ width: 8 }} onClick={() => handleDelete()} ><DeleteForeverIcon sx={{ color: red[800] }} /></Button>
+                                    </IconButton>
+                                </Tooltip> : null}
                         </div> : null}
                     </div>
                     <div className='container w-full bg-slate-400 mx-auto -z-40 relative'>

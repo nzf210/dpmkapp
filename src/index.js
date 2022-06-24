@@ -10,8 +10,8 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 
-//axios.defaults.baseURL = 'https://appin.id';
-axios.defaults.baseURL = 'http://localhost:3002';
+axios.defaults.baseURL = 'https://appin.id';
+//axios.defaults.baseURL = 'http://localhost:3002';
 // axios.defaults.baseURL = window.Location; yahiko2547
 
 

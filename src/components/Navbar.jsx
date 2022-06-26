@@ -14,7 +14,8 @@ import { IoBuildOutline } from 'react-icons/io5';
 import { MdAccountBalance } from 'react-icons/md';
 import { BsCheck2Square } from 'react-icons/bs';
 import { GrDocumentText } from 'react-icons/gr';
-
+import { AiOutlineRightSquare } from 'react-icons/ai';
+import { CgPentagonRight } from 'react-icons/cg';
 
 
 import Home from "../public/icons/icons8-home.svg";
@@ -40,9 +41,11 @@ axios.defaults.withCredentials = true;
 
 const Navbar = ({ ubahMenu }) => {
     function btnNav(e) {
+        //console.log('first=====', e.target.id)
         switch (e.target.id) {
             case 'btn-home':
             case 'img-home':
+            case 'li-dropdown-home':
                 document.getElementById('li-dropdown-home').classList.remove('sm:bg-transparent');
                 document.getElementById('li-dropdown-apbk').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-config').classList.add('sm:bg-transparent');
@@ -137,6 +140,12 @@ const Navbar = ({ ubahMenu }) => {
             case 'btn-sp2d-blt':
             case 'btn-sp2d-add':
             case 'btn-sp2d-laporan':
+            case 'btn-sp2d-laporan-1':
+            case 'btn-sp2d-laporan-2':
+            case 'btn-sp2d-laporan-3':
+            case 'btn-sp2d-laporan-4':
+            case 'btn-sp2d-laporan-5':
+
                 document.getElementById('li-dropdown-home').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-apbk').classList.add('sm:bg-transparent');
                 document.getElementById('li-dropdown-config').classList.add('sm:bg-transparent');
@@ -183,9 +192,10 @@ const Navbar = ({ ubahMenu }) => {
     const [kd_lvl2, setKdlvl2] = useState('');
     const [userId, setUserId] = useState('');
     const [expier, setExpier] = useState('');
+    const [vlaporan, setVlaporan] = useState(false);
+
 
     const navLink = useNavigate();
-
 
     const refreshtoken = async () => {
         try {
@@ -287,10 +297,11 @@ const Navbar = ({ ubahMenu }) => {
                             <div className="pl-4 pr-4 text-white font-thin sm:flex sm:flex-row hidden" id="div-nav">
                                 <ul className="py-1 my-1 pl-2 sm:flex sm:flex-row sm:-mt-[45px] sm:space-x-1 duration-100 md:space-x-2">
                                     <Link to="/home" onClick={() => { ubahMenu('home') }}>
-                                        <li id="li-dropdown-home" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-full flex cursor-pointer sm:py-1" /*onMouseEnter={() => { console.log('home in') }} onMouseLeave={() => { console.log('mouse left') }}*/ onClick={(e) => { btnNav(e) }} >
+                                        <li id="li-dropdown-home" className="items-center mx-auto bg-blue-900 pl-2 hover:bg-blue-800 active:bg-blue-900 my-1 rounded-sm sm:w-full flex cursor-pointer sm:py-1" /*onMouseEnter={() => { console.log('home in') }} onMouseLeave={() => { console.log('mouse left') }}*/
+                                            onClick={(e) => { btnNav(e) }} >
                                             <div className="mx-auto flex flex-1">
-                                                <i><img src={Home} alt="" className="h-6" /></i>
-                                                <span className="text-center  px-2">Home</span>
+                                                <i><img src={Home} alt="" className="h-6" id="img-home" /></i>
+                                                <span className="text-center px-2" id="btn-home">Home</span>
                                             </div>
                                         </li>
                                     </Link>
@@ -308,7 +319,7 @@ const Navbar = ({ ubahMenu }) => {
                                                 <ul>
                                                     <Link to="/home/apbk/realisasi" onClick={() => { ubahMenu() }}>
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
-                                                            <span id="btn-apbk-realisasi flex" className="w-full inline-block" onClick={() => {
+                                                            <span id="btn-apbk-realisasi" className="w-full inline-block" onClick={() => {
                                                             }}> <DiOpensource className="inline-block -mt-1 " /> Realisasi APBK</span> </li>
                                                     </Link>
                                                     <Link to="/home/apbk/monitoring" onClick={() => { ubahMenu() }}>
@@ -502,10 +513,27 @@ const Navbar = ({ ubahMenu }) => {
                                                         <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
                                                             <span id="btn-sp2d-add" className="w-full inline-block"><MdAccountBalance className='inline-block -mt-1' /> ADD / Honor</span></li>
                                                     </Link>
-                                                    <Link onClick={() => { ubahMenu() }} to="/home/sp2d/laporan">
-                                                        <li className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" >
-                                                            <span id="btn-sp2d-laporan" className="w-full inline-block"><GrDocumentText className='inline-block -mt-1 mr-1' />Laporan SP2D</span></li>
-                                                    </Link>
+
+                                                    <span >
+                                                        <li onMouseEnter={() => setVlaporan(true)} onMouseLeave={() => setVlaporan(false)}
+                                                        //className="m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40" 
+                                                        >
+                                                            <div className="flex flex-row m-1 bg-slate-200 w-[93%] pl-1 mr-8 rounded-sm hover:bg-slate-300 hover:text-white sm:w-40">
+                                                                <span id="btn-sp2d-laporan" className="w-full inline-block" ><GrDocumentText className='inline-block -mt-1 mr-1' />Laporan SP2D </span>
+                                                                <AiOutlineRightSquare className="mt-1" />
+                                                            </div>
+                                                            {vlaporan ?
+                                                                <div className="absolute ml-[160px] -mt-8 z-[51]" onMouseEnter={() => setVlaporan(true)}>
+                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span id="btn-sp2d-laporan-1"><Link onClick={() => { ubahMenu() }} to="/home/sp2d/laporan">Laporan DDS Reg</Link></span></li>
+                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span id="btn-sp2d-laporan-2"><Link onClick={() => { ubahMenu() }} to="/home/sp2d/laporan">Laporan BLT</Link></span></li>
+                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span id="btn-sp2d-laporan-3"><Link onClick={() => { ubahMenu() }} to="/home/sp2d/laporan">Laporan Covid</Link></span></li>
+                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span id="btn-sp2d-laporan-4"><Link onClick={() => { ubahMenu() }} to="/home/sp2d/laporan">Laporan Add</Link></span></li>
+                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span id="btn-sp2d-laporan-5"><Link onClick={() => { ubahMenu() }} to="/home/sp2d/laporan">Laporan Gabungan</Link></span></li>
+                                                                </div> : null
+                                                            }
+                                                        </li>
+                                                    </span>
+
                                                 </ul>
                                             </div>
                                         </div>
@@ -522,14 +550,13 @@ const Navbar = ({ ubahMenu }) => {
                                             <span className="text-center pl-2" id="btn-realisasi">Realisasi Anggaran</span>
                                         </li>
                                     </Link>
-
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </nav >
-        </div>
+        </div >
 
     )
 }

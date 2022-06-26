@@ -345,12 +345,12 @@ const Sp2dBlt = () => {
                 // } catch (error) { console.log('Error Hapus Data', error) }
 
                 let len = dataprint.length;
-                setLoad(true);
                 //const nomor = await axios.get(`/nodok?kd_keg=1`);
                 // const nor = parseInt(nomor.data[0].no_sp2d) + 1;
                 try {
                     let tgl_sp2d = moment(tgl).locale('id').format("YYYY-MM-DD");
                     for (let i = 0; i < len; i++) {
+                        setLoad(true);
                         const { id } = dataprint[i];
                         console.log('idd', id)
                         await axios.patch('/anggaran/dds', { id, tgl_sp2d, sts_sp2d: false, no_sp2d: null })

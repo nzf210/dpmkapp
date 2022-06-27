@@ -41,7 +41,7 @@ axios.defaults.withCredentials = true;
 
 const Navbar = ({ ubahMenu }) => {
     function btnNav(e) {
-        console.log('first=====', e.target.id)
+        //console.log('first=====', e.target.id)
         switch (e.target.id) {
             case 'btn-home':
             case 'img-home':

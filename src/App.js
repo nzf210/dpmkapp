@@ -26,10 +26,20 @@ import SpdReguler from "./components/sub/spd/SpdReguler";
 import Sp2dAdd from "./components/sub/sp2d/Sp2dAdd";
 import Sp2dBlt from "./components/sub/sp2d/Sp2dBlt";
 import Sp2dCovid from "./components/sub/sp2d/Sp2dCovid";
-import Sp2dLaporan from "./components/sub/sp2d/Sp2dLaporan";
+// import Sp2dLaporan from "./components/sub/sp2d/Sp2dLaporan";
 import Sp2dReguler from "./components/sub/sp2d/Sp2dReguler";
 import Sp2ddds from "./components/sub/sp2d/Sp2ddds";
 /* SP2D */
+
+/* Laporan SP2D */
+import LaporanSp2d from "./components/sub/sp2d/laporan/Laporan";
+import LaporanSp2dReg from "./components/sub/sp2d/laporan/LaporanReg";
+import LaporanSp2dBlt from "./components/sub/sp2d/laporan/LaporanBlt";
+import LaporanSp2dCov from "./components/sub/sp2d/laporan/LaporanCov";
+import LaporanSp2dAdd from "./components/sub/sp2d/laporan/LaporanAdd";
+
+/* Laporan SP2D */
+
 
 /* SPM */
 import SpmAdd from "./components/sub/spm/SpmAdd";
@@ -88,10 +98,14 @@ function App() {
 
           <Route path="sp2d/blt" element={<Sp2dBlt />} />
           <Route path="sp2d/covid" element={<Sp2dCovid />} />
-          <Route path="sp2d/laporan" element={<Sp2dLaporan />} />
           <Route path="sp2d/add-honor" element={<Sp2dAdd />} />
           <Route path="sp2d/reguler" element={<Sp2dReguler />} />
           <Route path="sp2d/dds" element={<Sp2ddds />} />
+          <Route path="sp2d/laporan" element={<LaporanSp2d />} />
+          <Route path="sp2d/lapreg" element={<LaporanSp2dReg />} />
+          <Route path="sp2d/lapblt" element={<LaporanSp2dBlt />} />
+          <Route path="sp2d/lapcov" element={<LaporanSp2dCov />} />
+          <Route path="sp2d/lapadd" element={<LaporanSp2dAdd />} />
 
           <Route path="spd/blt" element={<SpdBlt />} />
           <Route path="spd/covid" element={<SpdCovid />} />

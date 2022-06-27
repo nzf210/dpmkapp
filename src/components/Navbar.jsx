@@ -41,7 +41,7 @@ axios.defaults.withCredentials = true;
 
 const Navbar = ({ ubahMenu }) => {
     function btnNav(e) {
-        //console.log('first=====', e.target.id)
+        console.log('first=====', e.target.id)
         switch (e.target.id) {
             case 'btn-home':
             case 'img-home':
@@ -524,11 +524,11 @@ const Navbar = ({ ubahMenu }) => {
                                                             </div>
                                                             {vlaporan ?
                                                                 <div className="absolute ml-[160px] -mt-8 z-[51]" onMouseEnter={() => setVlaporan(true)}>
-                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span id="btn-sp2d-laporan-1"><Link onClick={() => { ubahMenu() }} to="/home/sp2d/lapreg">Laporan DDS Reg</Link></span></li>
-                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span id="btn-sp2d-laporan-2"><Link onClick={() => { ubahMenu() }} to="/home/sp2d/lapblt">Laporan BLT</Link></span></li>
-                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span id="btn-sp2d-laporan-3"><Link onClick={() => { ubahMenu() }} to="/home/sp2d/lapcov">Laporan Covid</Link></span></li>
-                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span id="btn-sp2d-laporan-4"><Link onClick={() => { ubahMenu() }} to="/home/sp2d/lapadd">Laporan Add</Link></span></li>
-                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span id="btn-sp2d-laporan-5"><Link onClick={() => { ubahMenu() }} to="/home/sp2d/laporan">Laporan Gabungan</Link></span></li>
+                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span ><Link id="btn-sp2d-laporan-1" onClick={(e) => { ubahMenu(); btnNav(e); }} to="/home/sp2d/lapreg">Laporan DDS Reg</Link></span></li>
+                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span ><Link id="btn-sp2d-laporan-2" onClick={(e) => { ubahMenu(); btnNav(e); }} to="/home/sp2d/lapblt">Laporan BLT</Link></span></li>
+                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span ><Link id="btn-sp2d-laporan-3" onClick={(e) => { ubahMenu(); btnNav(e); }} to="/home/sp2d/lapcov">Laporan Covid</Link></span></li>
+                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span ><Link id="btn-sp2d-laporan-4" onClick={(e) => { ubahMenu(); btnNav(e); }} to="/home/sp2d/lapadd">Laporan Add</Link></span></li>
+                                                                    <li className="m-1 bg-slate-400 w-[90%] pl-1 mr-8 rounded-sm hover:bg-slate-600 hover:text-white sm:w-40 flex flex-row"><CgPentagonRight className="mt-1" /><span ><Link id="btn-sp2d-laporan-5" onClick={(e) => { ubahMenu(); btnNav(e); }} to="/home/sp2d/laporan">Laporan Gabungan</Link></span></li>
                                                                 </div> : null
                                                             }
                                                         </li>

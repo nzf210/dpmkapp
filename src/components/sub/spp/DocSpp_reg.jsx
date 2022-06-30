@@ -391,9 +391,9 @@ const DocSpp_reg = ({ dataselectspp }) => {
                                     <View style={{ width: "30%", height: '100%' }}>
                                         <Text style={{ textAlign: 'center', border: '1px', borderColor: 'black', borderStyle: 'dashed', paddingVertical: 3, alignItems: 'flex-start', fontWeight: 'semibold' }}>Program / Kegiatan dan Sub Kegiatan</Text>
                                         <View style={{ border: '1px', borderColor: 'black', borderStyle: 'dashed', paddingVertical: 3, alignItems: 'flex-start' }}>
-                                            <Text style={{ fontWeight: 'semibold' }} ><Text style={{ color: 'white' }}>....</Text>5.4.01.01 Belanja Tak Terduga</Text>
-                                            <Text><Text style={{ color: 'white' }}>....</Text>- Belanja Bantuan Langsung Tunai Untuk {e.j_kk} KK</Text>
-                                            <Text style={{ color: 'white' }}>- Penyediaan Penghasilan</Text>
+                                            <Text style={{ fontWeight: 'semibold' }} ><Text style={{ color: 'white' }}>....</Text>5............. Kegiatan Reguler {e.thp_cair}</Text>
+                                            <Text><Text style={{ color: 'white' }}>....</Text>- Kegiatan Reguler {e.thp_cair}</Text>
+                                            <Text style={{ color: 'white' }}>- Kegiatan Reguler {e.thp_cair}</Text>
                                             {/* <Text style={{ color: 'white' }}>- Penyediaan Penghasilan Tetap dan Tunjangan Perangkat Desa</Text>
                                             <Text>- Penyediaan Tunjangan BPD</Text>
                                             <Text style={{ marginTop: 2, fontWeight: 'semibold' }}>Sub Total</Text> */}

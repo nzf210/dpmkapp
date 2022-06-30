@@ -30,10 +30,10 @@ const LaporanSp2d = () => {
         { headerName: 'ID', minWidth: 60, maxWidth: 60, field: 'kd_kampung' },
         { field: 'kampung', filter: true, minWidth: 150, maxWidth: 150, suppressSizeToFit: true, },
         { field: 'distrik', filter: true, minWidth: 150, maxWidth: 150, suppressSizeToFit: true }, //suppressSizeToFit: false 
-        { field: 'thp_1', headerName: 'Tahap I', width: 120, filter: true, suppressSizeToFit: true, cellRenderer: (e) => (e.data.s1 === null ? <span className='bg-red-400 px-2 rounded-sm text-red-300'>Proses.....</span> : <CurrencyFormat value={(JSON.parse(e.data.s1).length >= 1 ? JSON.parse(e.data.s1)[0].pagu : 0) + (JSON.parse(e.data.s1).length >= 2 ? JSON.parse(e.data.s1)[1].pagu : 0) + (JSON.parse(e.data.s1).length === 3 ? JSON.parse(e.data.s1)[2].pagu : 0)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />) },
-        { field: 'thp_2', headerName: 'Tahap II', width: 120, filter: true, suppressSizeToFit: true, cellRenderer: (e) => (e.data.s2 === null ? <span className='bg-red-400 px-2 rounded-sm text-red-300'>Proses.....</span> : <CurrencyFormat value={(JSON.parse(e.data.s2).length >= 1 ? JSON.parse(e.data.s2)[0].pagu : 0) + (JSON.parse(e.data.s2).length >= 2 ? JSON.parse(e.data.s2)[1].pagu : 0) + (JSON.parse(e.data.s2).length === 3 ? JSON.parse(e.data.s2)[2].pagu : 0)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />) },
+        { field: 's1', headerName: 'Tahap I', width: 120, filter: true, suppressSizeToFit: true, cellRenderer: (e) => (e.data.s1 === null ? <span className='bg-red-400 px-2 rounded-sm text-red-300'>Proses.....</span> : <CurrencyFormat value={(JSON.parse(e.data.s1).length >= 1 ? JSON.parse(e.data.s1)[0].pagu : 0) + (JSON.parse(e.data.s1).length >= 2 ? JSON.parse(e.data.s1)[1].pagu : 0) + (JSON.parse(e.data.s1).length === 3 ? JSON.parse(e.data.s1)[2].pagu : 0)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />) },
+        { field: 's2', headerName: 'Tahap II', width: 120, filter: true, suppressSizeToFit: true, cellRenderer: (e) => (e.data.s2 === null ? <span className='bg-red-400 px-2 rounded-sm text-red-300'>Proses.....</span> : <CurrencyFormat value={(JSON.parse(e.data.s2).length >= 1 ? JSON.parse(e.data.s2)[0].pagu : 0) + (JSON.parse(e.data.s2).length >= 2 ? JSON.parse(e.data.s2)[1].pagu : 0) + (JSON.parse(e.data.s2).length === 3 ? JSON.parse(e.data.s2)[2].pagu : 0)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />) },
         // { field: 'thp_3', headerName: 'Tahap III', width: 120, filter: true, suppressSizeToFit: true, cellRenderer: (e) => (e.data.thp_3 === null ? <span className='bg-red-400 px-2 rounded-sm text-red-300'>Proses.....</span> : <span >{e.value}</span>) },
-        { field: 'thp_3', headerName: 'Tahap III', width: 120, filter: true, suppressSizeToFit: true, cellRenderer: (e) => (e.data.s3 === null ? <span className='bg-red-400 px-2 rounded-sm text-red-300'>Proses.....</span> : <CurrencyFormat value={(JSON.parse(e.data.s3).length >= 1 ? JSON.parse(e.data.s3)[0].pagu : 0) + (JSON.parse(e.data.s3).length >= 2 ? JSON.parse(e.data.s3)[1].pagu : 0) + (JSON.parse(e.data.s3).length === 3 ? JSON.parse(e.data.s3)[2].pagu : 0)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />) },
+        { field: 's3', headerName: 'Tahap III', width: 120, filter: true, suppressSizeToFit: true, cellRenderer: (e) => (e.data.s3 === null ? <span className='bg-red-400 px-2 rounded-sm text-red-300'>Proses.....</span> : <CurrencyFormat value={(JSON.parse(e.data.s3).length >= 1 ? JSON.parse(e.data.s3)[0].pagu : 0) + (JSON.parse(e.data.s3).length >= 2 ? JSON.parse(e.data.s3)[1].pagu : 0) + (JSON.parse(e.data.s3).length === 3 ? JSON.parse(e.data.s3)[2].pagu : 0)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />) },
 
     ]);
 
@@ -95,7 +95,16 @@ const LaporanSp2d = () => {
     // ++++++++++++ Cari Data ++++++++++++++++
 
     // const onBtnExport = useCallback(() => { gridRef.current.api.getDataAsCsv(); }, []);
-    const onBtnExport = useCallback(() => { gridRef.current.api.exportDataAsCsv(); }, []);
+    const onBtnExport = useCallback(() => {
+        //gridRef.current.api.exportDataAsExcel()
+        gridRef.current.api.exportDataAsCsv({
+            processCellCallback: function (cell) {
+                // Manipulate the value however you need.
+                console.log("cell =>", cell)
+                return cell.value;
+            }
+        });
+    }, []);
 
     return (
         <>

@@ -455,9 +455,9 @@ const DocSpp_cov = ({ dataselectspp }) => {
                                             <View style={{ border: '1px', borderColor: 'black', borderStyle: 'dashed', paddingVertical: 3, alignItems: 'flex-start' }}>
                                                 {/* <Text style={{ color: 'white' }}>0</Text> */}
                                                 <Text style={{ color: 'white' }}>0</Text>
-                                                <Text style={{ width: 100, textAlign: 'center' }}><CurrencyFormat value={parseInt(e.cov_spp_cair)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
+                                                <Text style={{ width: 100, textAlign: 'center' }}><CurrencyFormat value={parseInt(e.pagu)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                                 <Text style={{ color: 'white' }}>0</Text>
-                                                <Text style={{ width: 100, fontWeight: 'semibold', textAlign: 'center' }}><CurrencyFormat value={parseInt(e.cov_spp_cair)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
+                                                <Text style={{ width: 100, fontWeight: 'semibold', textAlign: 'center' }}><CurrencyFormat value={parseInt(e.pagu)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                                 {/* <Text style={{ color: 'white' }}>0</Text>
                                                 <Text style={{ textAlign: 'right', width: 83, }}><CurrencyFormat value={parseInt(63300000 - 15750000 - (parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                                 <Text style={{ width: 83, marginTop: 2, fontWeight: 'semibold' }}><CurrencyFormat value={parseInt(134000000 - 33600000 - (parseInt(e.thp_select) + parseInt(e.opt3) + parseInt(e.opt4)))} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text> */}

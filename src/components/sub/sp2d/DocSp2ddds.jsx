@@ -125,76 +125,77 @@ const Sp2dDoc = ({ dataselectspp, nama }) => {
                                 </View>
                                 <View style={[{ flexDirection: 'row', fontSize: 8 }]}>
                                     <View style={[style.row, { flexDirection: 'column', width: '50%', maxWidth: '50%', borderLeft: 0.8, borderBottom: 0.8 }]}>
+
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
                                             <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>1. Nomor SP2SPD</Text>
-                                            <Text style={[{ paddingRight: 3 }]}>:</Text>
-                                            <Text style={[{ width: 167, minWidth: 167 }]}>{(JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].no_spp : '-')}</Text>
-                                        </View>
-                                        <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>2. Tanggal SP2SPD</Text>
-                                            <Text style={[{ paddingRight: 3 }]}>:</Text>
-                                            <Text style={[{ width: 167, minWidth: 167 }]}>
-                                                {(JSON.parse(e.sub).length >= 1 ? moment((JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].tgl_spp : '-')).locale('id').format("DD MMMM YYYY") : '-')}
-                                            </Text>
-                                        </View>
-                                        <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>3. Nomor SKBK</Text>
-                                            <Text style={[{ paddingRight: 3 }]}>:</Text>
-                                            <Text style={[{ width: 167, minWidth: 167 }]}>{(JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].no_spm : '-')}</Text>
-                                        </View>
-                                        <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>4. Tanggal SKBK</Text>
-                                            <Text style={[{ paddingRight: 3 }]}>:</Text>
-                                            <Text style={[{ width: 167, minWidth: 167 }]}>
-                                                {(JSON.parse(e.sub).length >= 1 ? moment((JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].tgl_spm : '-')).locale('id').format("DD MMMM YYYY") : '-')}
-                                            </Text>
-                                        </View>
-                                        <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>5. Nomor SP2SPD</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
                                             <Text style={[{ width: 167, minWidth: 167 }]}>{(JSON.parse(e.sub).length >= 2 ? JSON.parse(e.sub)[1].no_spp : '-')}</Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>6. Tanggal SP2SPD</Text>
+                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>2. Tanggal SP2SPD</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
                                             <Text style={[{ width: 167, minWidth: 167 }]}>
                                                 {(JSON.parse(e.sub).length >= 2 ? moment((JSON.parse(e.sub).length >= 2 ? JSON.parse(e.sub)[1].tgl_spp : '-')).locale('id').format("DD MMMM YYYY") : '-')}
                                             </Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>7. Nomor SKBK</Text>
+                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>3. Nomor SKBK</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
                                             <Text style={[{ width: 167, minWidth: 167 }]}>{(JSON.parse(e.sub).length >= 2 ? JSON.parse(e.sub)[1].no_spm : '-')}</Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>8. Tanggal SKBK</Text>
+                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>4. Tanggal SKBK</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
                                             <Text style={[{ width: 167, minWidth: 167 }]}>
                                                 {(JSON.parse(e.sub).length >= 2 ? moment((JSON.parse(e.sub).length >= 2 ? JSON.parse(e.sub)[1].tgl_spm : '-')).locale('id').format("DD MMMM YYYY") : '-')}
                                             </Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>9. Nomor SP2SPD</Text>
+                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>5. Nomor SP2SPD</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
                                             <Text style={[{ width: 167, minWidth: 167 }]}>{(JSON.parse(e.sub).length === 3 ? JSON.parse(e.sub)[2].no_spp : '-')}</Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>10. Tanggal SP2SPD</Text>
+                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>6. Tanggal SP2SPD</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
                                             <Text style={[{ width: 167, minWidth: 167 }]}>
                                                 {(JSON.parse(e.sub).length === 3 ? moment((JSON.parse(e.sub).length === 3 ? JSON.parse(e.sub)[2].tgl_spp : '-')).locale('id').format("DD MMMM YYYY") : '-')}
                                             </Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
-                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>11. Nomor SKBK</Text>
+                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>7. Nomor SKBK</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
                                             <Text style={[{ width: 167, minWidth: 167 }]}>{(JSON.parse(e.sub).length === 3 ? JSON.parse(e.sub)[2].no_spm : '-')}</Text>
+                                        </View>
+                                        <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
+                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>8. Tanggal SKBK</Text>
+                                            <Text style={[{ paddingRight: 3 }]}>:</Text>
+                                            <Text style={[{ width: 167, minWidth: 167 }]}>
+                                                {(JSON.parse(e.sub).length === 3 ? moment((JSON.parse(e.sub).length === 3 ? JSON.parse(e.sub)[2].tgl_spm : '-')).locale('id').format("DD MMMM YYYY") : '-')}
+                                            </Text>
+                                        </View>
+                                        <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
+                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>9. Nomor SP2SPD</Text>
+                                            <Text style={[{ paddingRight: 3 }]}>:</Text>
+                                            <Text style={[{ width: 167, minWidth: 167 }]}>{(JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].no_spp : '-')}</Text>
+                                        </View>
+                                        <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
+                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>10. Tanggal SP2SPD</Text>
+                                            <Text style={[{ paddingRight: 3 }]}>:</Text>
+                                            <Text style={[{ width: 167, minWidth: 167 }]}>
+                                                {(JSON.parse(e.sub)[0].sts_spm === true ? moment((JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].tgl_spp : '-')).locale('id').format("DD MMMM YYYY") : '-')}
+                                            </Text>
+                                        </View>
+                                        <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
+                                            <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>11. Nomor SKBK</Text>
+                                            <Text style={[{ paddingRight: 3 }]}>:</Text>
+                                            <Text style={[{ width: 167, minWidth: 167 }]}>{(JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].no_spm : '-')}</Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
                                             <Text style={[{ paddingRight: 1, width: 73, minWidth: 70 }]}>12. Tanggal SKBK</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
                                             <Text style={[{ width: 167, minWidth: 167 }]}>
-                                                {(JSON.parse(e.sub).length === 3 ? moment((JSON.parse(e.sub).length === 3 ? JSON.parse(e.sub)[2].tgl_spm : '-')).locale('id').format("DD MMMM YYYY") : '-')}
+                                                {(JSON.parse(e.sub)[0].sts_spm === true ? moment((JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].tgl_spm : '-')).locale('id').format("DD MMMM YYYY") : '-')}
                                             </Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
@@ -273,13 +274,13 @@ const Sp2dDoc = ({ dataselectspp, nama }) => {
                                             <Text style={[{ paddingRight: 1, width: 90 }]}>Uang Sebesar</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
                                             <Text style={{ fontWeight: 'semibold' }}>
-                                                <CurrencyFormat value={(JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].pagu : 0) + (JSON.parse(e.sub).length >= 2 ? JSON.parse(e.sub)[1].pagu : 0) + (JSON.parse(e.sub).length === 3 ? JSON.parse(e.sub)[2].pagu : 0)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
+                                                <CurrencyFormat value={(JSON.parse(e.sub)[0].sts_spm === true ? JSON.parse(e.sub)[0].pagu : 0) + (JSON.parse(e.sub)[1].sts_spm === true ? JSON.parse(e.sub)[1].pagu : 0) + (JSON.parse(e.sub)[2].sts_spm === true ? JSON.parse(e.sub)[2].pagu : 0)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></Text>
                                         </View>
                                         <View style={[style.row, { paddingLeft: 3, width: '100%' }]}>
                                             <Text style={[{ paddingRight: 1, width: 90 }]}>Terbilang</Text>
                                             <Text style={[{ paddingRight: 3 }]}>:</Text>
                                             <Text style={{ fontFamily: 'Raleway', fontWeight: 'semibold', textTransform: 'capitalize', maxWidth: 410 }}>
-                                                {sayit_v2((JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].pagu : 0) + (JSON.parse(e.sub).length >= 2 ? JSON.parse(e.sub)[1].pagu : 0) + (JSON.parse(e.sub).length === 3 ? JSON.parse(e.sub)[2].pagu : 0))}
+                                                {sayit_v2((JSON.parse(e.sub)[0].sts_spm === true ? JSON.parse(e.sub)[0].pagu : 0) + (JSON.parse(e.sub)[1].sts_spm === true ? JSON.parse(e.sub)[1].pagu : 0) + (JSON.parse(e.sub)[2].sts_spm === true ? JSON.parse(e.sub)[2].pagu : 0))}
                                             </Text>
                                         </View>
                                     </View>
@@ -337,12 +338,12 @@ const Sp2dDoc = ({ dataselectspp, nama }) => {
                                                         </View>
                                                         <View style={{ flexDirection: 'row' }}>
                                                             <Text>2. </Text>
-                                                            <Text style={{ fontWeight: 'semibold', width: 220, minWidth: 220, textAlign: 'left' }}>Belanja Bantuan Langsung Tunai (BLT) Dana Desa (DD) {JSON.parse(e.sub)[0].thp_select}</Text>
-                                                        </View>
-                                                        <View style={{ flexDirection: 'row' }}>
-                                                            <Text>3. </Text>
                                                             <Text style={{ fontWeight: 'semibold', width: 220, minWidth: 220, textAlign: 'left' }}>Belanja Bantuan Covid_19 Sebesar 8% (Delapan Persen) dari Pagu Dana Desa</Text>
                                                         </View>
+                                                        {JSON.parse(e.sub)[0].sts_spm === true ? <View style={{ flexDirection: 'row' }}>
+                                                            <Text>3. </Text>
+                                                            <Text style={{ fontWeight: 'semibold', width: 220, minWidth: 220, textAlign: 'left' }}>Belanja Bantuan Langsung Tunai (BLT) Dana Desa (DD) {JSON.parse(e.sub)[0].thp_select}</Text>
+                                                        </View> : null}
                                                     </View> : null
                                                 }
                                             </View>
@@ -418,7 +419,7 @@ const Sp2dDoc = ({ dataselectspp, nama }) => {
                                                 <View style={[{ width: '50%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>Belanja Dana Desa Reguler {e.opt1}</Text></View>
                                                 <View style={[{ width: '15%', textAlign: 'right', paddingRight: 3 }]}>
                                                     <Text>
-                                                        <CurrencyFormat value={(JSON.parse(e.sub)[2].pagu)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={''} />
+                                                        <CurrencyFormat value={JSON.parse(e.sub)[2].sts_spm === true ? (JSON.parse(e.sub)[2].pagu) : 0} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={''} />
                                                         {/* {currency(JSON.parse(e.sub)[2].pagu)} */}
                                                     </Text>
                                                 </View>
@@ -426,37 +427,38 @@ const Sp2dDoc = ({ dataselectspp, nama }) => {
                                         </View>
                                         <View>
                                             <View style={[{ flexDirection: 'row', fontSize: 9, textAlign: 'center', paddingBottom: 2, paddingTop: 2, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
-                                                <View style={[{ width: '100%', textAlign: 'left', paddingLeft: 3, fontWeight: 'semibold' }]}><Text>5.4.01.01 Belanja Tak Terduga</Text></View>
-                                            </View>
-                                            <View style={[{ flexDirection: 'row', fontSize: 9, textAlign: 'center', paddingBottom: 2, paddingTop: 2, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
-                                                <View style={[{ width: '10%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>2</Text></View>
-                                                <View style={[{ width: '25%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>5.1.01.01.01</Text></View>
-                                                <View style={[{ width: '50%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>Belanja Bantuan Langsung Tunai Untuk {e.j_kk} KK</Text></View>
-                                                <View style={[{ width: '15%', textAlign: 'right', paddingRight: 3 }]}>
-                                                    <Text>
-                                                        <CurrencyFormat value={(JSON.parse(e.sub)[0].pagu)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={''} />
-                                                        {/* {currency(JSON.parse(e.sub)[0].pagu)} */}
-                                                    </Text></View>
-                                            </View>
-                                        </View>
-                                        <View>
-                                            <View style={[{ flexDirection: 'row', fontSize: 9, textAlign: 'center', paddingBottom: 2, paddingTop: 2, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
                                                 <View style={[{ width: '100%', textAlign: 'left', paddingLeft: 3, fontWeight: 'semibold' }]}><Text>5.2.02.04 Penyelenggaraan Desa Siaga Kesehatan</Text></View>
                                             </View>
                                             <View style={[{ flexDirection: 'row', fontSize: 9, textAlign: 'center', paddingBottom: 2, paddingTop: 2, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
-                                                <View style={[{ width: '10%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>3</Text></View>
+                                                <View style={[{ width: '10%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>2</Text></View>
                                                 <View style={[{ width: '25%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>5.2.02.04</Text></View>
                                                 <View style={[{ width: '50%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}>
                                                     <Text>Penyelenggaraan Desa Siaga Kesehatan</Text>
                                                 </View>
                                                 <View style={[{ width: '15%', textAlign: 'right', paddingRight: 3 }]}>
                                                     <Text>
-                                                        <CurrencyFormat value={(JSON.parse(e.sub)[1].pagu)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={''} />
+                                                        <CurrencyFormat value={JSON.parse(e.sub)[1].sts_spm === true ? (JSON.parse(e.sub)[1].pagu) : 0} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={''} />
                                                         {/* {currency(JSON.parse(e.sub)[1].pagu)} */}
                                                     </Text>
                                                 </View>
                                             </View>
                                         </View>
+                                        {JSON.parse(e.sub)[0].sts_spm === true ?
+                                            <View>
+                                                <View style={[{ flexDirection: 'row', fontSize: 9, textAlign: 'center', paddingBottom: 2, paddingTop: 2, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
+                                                    <View style={[{ width: '100%', textAlign: 'left', paddingLeft: 3, fontWeight: 'semibold' }]}><Text>5.4.01.01 Belanja Tak Terduga</Text></View>
+                                                </View>
+                                                <View style={[{ flexDirection: 'row', fontSize: 9, textAlign: 'center', paddingBottom: 2, paddingTop: 2, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8 }]}>
+                                                    <View style={[{ width: '10%', borderRight: 0.8, marginTop: -2, marginBottom: -2 }]}><Text>3</Text></View>
+                                                    <View style={[{ width: '25%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>5.1.01.01.01</Text></View>
+                                                    <View style={[{ width: '50%', borderRight: 0.8, marginTop: -2, marginBottom: -2, textAlign: 'left', paddingLeft: 3 }]}><Text>Belanja Bantuan Langsung Tunai Untuk {e.j_kk} KK</Text></View>
+                                                    <View style={[{ width: '15%', textAlign: 'right', paddingRight: 3 }]}>
+                                                        <Text>
+                                                            <CurrencyFormat value={JSON.parse(e.sub)[0].sts_spm === true ? (JSON.parse(e.sub)[0].pagu) : 0} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={''} />
+                                                            {/* {currency(JSON.parse(e.sub)[0].pagu)} */}
+                                                        </Text></View>
+                                                </View>
+                                            </View> : null}
                                     </View>
                                     : null}
 
@@ -466,14 +468,14 @@ const Sp2dDoc = ({ dataselectspp, nama }) => {
                                     <View style={[{ width: '50%', textAlign: 'right', fontWeight: 'semibold' }]}><Text>Jumlah</Text></View>
                                     <View style={[{ width: '15%', fontWeight: 'semibold', textAlign: 'right', paddingRight: 3 }]}>
                                         <Text>
-                                            <CurrencyFormat value={(JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].pagu : 0) + (JSON.parse(e.sub).length >= 2 ? JSON.parse(e.sub)[1].pagu : 0) + (JSON.parse(e.sub).length === 3 ? JSON.parse(e.sub)[2].pagu : 0)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />
+                                            <CurrencyFormat value={(JSON.parse(e.sub)[0].sts_spm === true ? JSON.parse(e.sub)[0].pagu : 0) + (JSON.parse(e.sub)[1].sts_spm === true ? JSON.parse(e.sub)[1].pagu : 0) + (JSON.parse(e.sub)[2].sts_spm === true ? JSON.parse(e.sub)[2].pagu : 0)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />
                                             {/* {currency((JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].pagu : 0) + (JSON.parse(e.sub).length >= 2 ? JSON.parse(e.sub)[1].pagu : 0) + (JSON.parse(e.sub).length === 3 ? JSON.parse(e.sub)[2].pagu : 0))} */}
                                         </Text>
                                     </View>
                                 </View>
                                 <View style={[{ flexDirection: 'row', fontSize: 9, textAlign: 'left', paddingBottom: 2, paddingTop: 2, borderLeft: 0.8, borderBottom: 0.8, borderRight: 0.8, fontWeight: 'semibold' }]}>
                                     <Text style={{ paddingLeft: 3, fontFamily: 'Raleway', }}>Uang Sejumlah : </Text>
-                                    <Text style={{ textTransform: 'capitalize', marginLeft: 3, width: 400, fontStyle: 'italic', }}>{sayit_v2((JSON.parse(e.sub).length >= 1 ? JSON.parse(e.sub)[0].pagu : 0) + (JSON.parse(e.sub).length >= 2 ? JSON.parse(e.sub)[1].pagu : 0) + (JSON.parse(e.sub).length === 3 ? JSON.parse(e.sub)[2].pagu : 0))}</Text>
+                                    <Text style={{ textTransform: 'capitalize', marginLeft: 3, width: 400, fontStyle: 'italic', }}>{sayit_v2((JSON.parse(e.sub)[0].sts_spm === true ? JSON.parse(e.sub)[0].pagu : 0) + (JSON.parse(e.sub)[1].sts_spm === true ? JSON.parse(e.sub)[1].pagu : 0) + (JSON.parse(e.sub)[2].sts_spm === true ? JSON.parse(e.sub)[2].pagu : 0))}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', fontSize: 9, marginTop: 5 }}>
                                     <View style={{ flexDirection: 'column', width: '35%', alignContent: 'flex-start', paddingLeft: 3, fontSize: 9 }}>

@@ -155,28 +155,6 @@ const Sp2dBlt = () => {
     }, [page, perpage, dateupdate]);
 
 
-    // var array = ['John', 'Make', 'Mac', 'David', 'Smith', 'John', 'Mac', 'Make']
-    // var filterArray = array.filter(function (item, index) { return array.indexOf(item) >= index; });
-    // document.write('Output :- ' + filterArray);
-
-
-    // useEffect(async () => {
-    //     setLoad(true);
-    //     let url = `/anggaran/dds?page=${page_}&size=${perpage_}`;
-    //     if (search_) { url += `&kampung=${search_}` }
-    //     await axios.get(url).then((e) => {
-    //         setRowData_(e.data.result.data.data);
-    //         setCount_(e.data.result.data.count);
-    //         setPage_(e.data.result.data.page);
-    //         setPerpage_(e.data.result.data.per_page);
-    //         setPrev_(e.data.result.pagination.previous_page);
-    //         setNext_(e.data.result.pagination.next_page);
-    //         if (e.status === 200) {
-    //             setLoad(false);
-    //         }
-    //     })
-    // }, [page_, perpage_, dateupdate]);
-
     useEffect(() => {
         let a = true;
         async function geT() {

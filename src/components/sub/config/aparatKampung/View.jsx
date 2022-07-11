@@ -91,12 +91,14 @@ function View() {
                                     title={loading ? 'Mohon Tunggu Sedang Memuat Data ... ' : "Data Bamuskam"}
                                     options={{
                                         exportButton: true,
-                                        pageSizeOptions: [5, 10, 25, 50, 100], pageSize: 10, actionsColumnIndex: 0,
-                                        editable: false
+                                        pageSizeOptions: [5, 10, 25, 50, 100, 517], pageSize: 10, actionsColumnIndex: 0,
+                                        editable: false,
+                                        filtering: true
                                     }}
                                     columns={columns}
                                     data={data}
                                     editable={editable}
+
 
                                 />
                             </div>

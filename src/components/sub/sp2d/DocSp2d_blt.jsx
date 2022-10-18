@@ -25,7 +25,6 @@ import { currency, PdfWithQrCode, sayit_v2 } from '../Font';
 // import { red } from "@material-ui/core/colors";
 import CurrencyFormat from 'react-currency-format';
 import { brown } from "@mui/material/colors";
-import { kadis } from "./DataKadis";
 
 
 Font.register({
@@ -322,11 +321,11 @@ const Sp2dDoc = ({ dataselectspp, nama }) => {
                                     <View style={{ flexDirection: 'column', width: '65%' }}>
                                         <View style={{ flexDirection: 'column' }}>
                                             <Text style={{ textAlign: 'center' }}>DEKAI, {moment(e.tgl_sp2d).locale('id').format("DD MMMM YYYY")}</Text>
-                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>{dataKadis.jabatan}</Text>
+                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>{dataKadis.jabatan || "data kadis tidak temukan"}</Text>
                                             <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>DINAS PEMBERDAYAAN MASAYRAKAT KAMPUNG</Text>
-                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold', textDecoration: 'underline', marginTop: 60 }}>{dataKadis.nama}</Text>
-                                            <Text style={{ textAlign: 'center' }}>{dataKadis.pangkat}</Text>
-                                            <Text style={{ textAlign: 'center' }}>{dataKadis.nip}</Text>
+                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold', textDecoration: 'underline', marginTop: 60 }}>{dataKadis.nama || "data kadis tidak temukan"}</Text>
+                                            <Text style={{ textAlign: 'center' }}>{dataKadis.pangkat || "data kadis tidak temukan"}</Text>
+                                            <Text style={{ textAlign: 'center' }}>{dataKadis.nip || "data kadis tidak temukan"}</Text>
                                         </View>
                                     </View>
                                 </View>

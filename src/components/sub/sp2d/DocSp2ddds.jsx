@@ -21,7 +21,7 @@ import BoldItalic from '../../../public/Raleway/static/Raleway-BoldItalic.ttf';
 import SemiBoldItalic from '../../../public/Raleway/static/Raleway-SemiBoldItalic.ttf';
 import moment from "moment";
 import { currency, PdfWithQrCode, sayit_v2 } from '../Font';
-// import { red } from "@material-ui/core/colors";
+import { kadis } from "./DataKadis";
 import CurrencyFormat from 'react-currency-format';
 import { brown } from "@material-ui/core/colors";
 
@@ -498,11 +498,11 @@ const Sp2dDoc = ({ dataselectspp, nama }) => {
                                     <View style={{ flexDirection: 'column', width: '65%' }}>
                                         <View style={{ flexDirection: 'column' }}>
                                             <Text style={{ textAlign: 'center' }}>DEKAI, {moment(e.tgl_sp2d).locale('id').format("DD MMMM YYYY")}</Text>
-                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>Plt. KEPALA</Text>
+                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>{kadis.jabatan}</Text>
                                             <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>DINAS PEMBERDAYAAN MASAYRAKAT KAMPUNG</Text>
-                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold', textDecoration: 'underline', marginTop: 60 }}>LAZARUS PAHABOL, SE, MM</Text>
-                                            <Text style={{ textAlign: 'center' }}>PENATA Tk.I </Text>
-                                            <Text style={{ textAlign: 'center' }}>NIP. 19740404 200605 1 001</Text>
+                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold', textDecoration: 'underline', marginTop: 60 }}>{kadis.nama}</Text>
+                                            <Text style={{ textAlign: 'center' }}>{kadis.pangkat}</Text>
+                                            <Text style={{ textAlign: 'center' }}>{kadis.nip}</Text>
                                         </View>
                                     </View>
                                 </View>

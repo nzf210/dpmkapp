@@ -8,6 +8,7 @@ import {
     View, Font
 } from "@react-pdf/renderer";
 import Yhk from '../../../public/yhk.png';
+import dataKadis from '../../../public/data/kadis.json';
 import bold from '../../../public/Roboto_Slab/static/RobotoSlab-Bold.ttf';
 import extrabold from '../../../public/Roboto_Slab/static/RobotoSlab-ExtraBold.ttf';
 import extralight from '../../../public/Roboto_Slab/static/RobotoSlab-ExtraLight.ttf';
@@ -94,6 +95,20 @@ const Sp2dDoc = ({ dataselectspp, nama }) => {
     // useEffect(() => {
     //     console.log("spd dok", dataselectspp);
     // }, []);
+
+    // const [kadis_, setKadis] = React.useState([{}])
+    // React.useEffect(() => {
+    //     fetch('data/kadis.json', {
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json'
+    //         }
+    //     }).then(
+    //         async (res) => { await res.json(); console.log("res=>", res); }).then((data) => {
+    //             setKadis(data)
+    //             console.log("data=>", data);
+    //         })
+    // }, [])
 
     const style = StyleSheet.create({
         pageNumber: { position: "absolute", fontSize: 12, bottom: 30, left: 0, right: 0, textAlign: "center", color: "grey" },
@@ -307,11 +322,11 @@ const Sp2dDoc = ({ dataselectspp, nama }) => {
                                     <View style={{ flexDirection: 'column', width: '65%' }}>
                                         <View style={{ flexDirection: 'column' }}>
                                             <Text style={{ textAlign: 'center' }}>DEKAI, {moment(e.tgl_sp2d).locale('id').format("DD MMMM YYYY")}</Text>
-                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>{kadis.pangkat}</Text>
+                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>{dataKadis.jabatan}</Text>
                                             <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>DINAS PEMBERDAYAAN MASAYRAKAT KAMPUNG</Text>
-                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold', textDecoration: 'underline', marginTop: 60 }}>{kadis.nama}</Text>
-                                            <Text style={{ textAlign: 'center' }}>{kadis.pangkat}</Text>
-                                            <Text style={{ textAlign: 'center' }}>{kadis.nip}</Text>
+                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold', textDecoration: 'underline', marginTop: 60 }}>{dataKadis.nama}</Text>
+                                            <Text style={{ textAlign: 'center' }}>{dataKadis.pangkat}</Text>
+                                            <Text style={{ textAlign: 'center' }}>{dataKadis.nip}</Text>
                                         </View>
                                     </View>
                                 </View>

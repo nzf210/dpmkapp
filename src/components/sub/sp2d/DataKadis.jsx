@@ -1,3 +1,4 @@
+
 export const kadis = {
     jabatan: "PJS. KEPALA",
     nama: "LAZARUS PAHABOL, SE, MM",

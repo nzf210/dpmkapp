@@ -8,7 +8,6 @@ import {
     View, Font
 } from "@react-pdf/renderer";
 import Yhk from '../../../public/yhk.png';
-import dataKadis from '../../../public/data/kadis.json';
 import bold from '../../../public/Roboto_Slab/static/RobotoSlab-Bold.ttf';
 import extrabold from '../../../public/Roboto_Slab/static/RobotoSlab-ExtraBold.ttf';
 import extralight from '../../../public/Roboto_Slab/static/RobotoSlab-ExtraLight.ttf';
@@ -16,6 +15,7 @@ import light from '../../../public/Roboto_Slab/static/RobotoSlab-Light.ttf';
 import medium from '../../../public/Roboto_Slab/static/RobotoSlab-Medium.ttf';
 import reguler from '../../../public/Roboto_Slab/static/RobotoSlab-Regular.ttf';
 import semibold from '../../../public/Roboto_Slab/static/RobotoSlab-SemiBold.ttf';
+import dataKadis from '../../../public/data/kadis.json';
 import thin from '../../../public/Roboto_Slab/static/RobotoSlab-Thin.ttf';
 import ExtraLightItalic from '../../../public/Raleway/static/Raleway-ExtraLightItalic.ttf';
 import BoldItalic from '../../../public/Raleway/static/Raleway-BoldItalic.ttf';

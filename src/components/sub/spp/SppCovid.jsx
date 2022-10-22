@@ -123,7 +123,6 @@ const SppCovid = () => {
     // const cellClickedListener = useCallback(event => {
     //     console.log('cellClicked', event.data);
     // }, []);
-
     // Example load data from sever
     // useEffect(async () => {
     //     setLoad(true);
@@ -185,7 +184,6 @@ const SppCovid = () => {
     //             setLoad(false);
     //         }
     //     })
-
     // }, [page_, perpage_, dateupdate]);
 
     useEffect(() => {

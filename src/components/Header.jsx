@@ -12,7 +12,7 @@ let bulan = tw.getMonth();
 let tanggal = tw.getDate();
 let hariarray = ["Minggu,", "Senin,", "Selasa,", "Rabu,", "Kamis,", "Jum'at,", "Sabtu,"];
 let bulanarray = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus",
-    "September", "Oktober", "Nopember", "Desember"];
+    "September", "Oktober", "November", "Desember"];
 let tgl_ = hariarray[hari] + " " + tanggal + " " + bulanarray[bulan] + " " + tahun;
 
 const Header = () => {

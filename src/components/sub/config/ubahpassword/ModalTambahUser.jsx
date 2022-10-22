@@ -16,24 +16,6 @@ import axios from "axios";
 export default function MyModal({ setgetUserInfo, setInfoHasil }) {
 
     const { kd_kampung, kd_distrik, kd_lvl1, kd_lvl2 } = useSelector(state => state.userLogin);
-    // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, userId } = useSelector(state => state.userLogin);
-
-    // const [kd_kampung_, setKdDistrik_] = useState('0');
-    // const [kd_distrik_, setKdKampung_] = useState('0');
-    // const [kd_lvl1_, setKdlvl1_] = useState('');
-
-    // useEffect(() => {
-    //     if (kd_lvl1 === 2) {
-    //         setKdDistrik_(kd_distrik);
-    //         setKdKampung_(kd_kampung);
-    //         setKdlvl1_(kd_lvl1);
-    //     }
-    //     return () => {
-
-    //     };
-    // }, []);
-
-
     const kam = useSelector(mkamdisSelector.selectAll);
     const dt = [{ id: 0, kampung: '', kd_kampung: 0, distrik: '', kd_distrik: 0 }];
     kam.map((d) => { return dt.push(d) });

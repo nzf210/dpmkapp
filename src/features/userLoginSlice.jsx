@@ -12,7 +12,8 @@ const userLoginSlice = createSlice({
         kd_kampung: "",
         kd_distrik: "",
         userId: '',
-        token: ''
+        token: '',
+        dataKadis: ''
 
     },
     reducers: {
@@ -24,6 +25,7 @@ const userLoginSlice = createSlice({
             state.kd_distrik = action.payload.kd_distrik;
             state.userId = action.payload.userId;
             state.token = action.payload.token;
+            state.dataKadis = action.payload.dataKadis;
         }
     }
 });

@@ -21,7 +21,6 @@ import BoldItalic from '../../../public/Raleway/static/Raleway-BoldItalic.ttf';
 import SemiBoldItalic from '../../../public/Raleway/static/Raleway-SemiBoldItalic.ttf';
 import moment from "moment";
 import { currency, PdfWithQrCode, sayit_v2 } from '../Font';
-import dataKadis from '../../../public/data/kadis.json';
 import CurrencyFormat from 'react-currency-format';
 import { brown } from "@material-ui/core/colors";
 
@@ -89,7 +88,7 @@ Font.register({
     ],
 })
 
-const Sp2dDoc = ({ dataselectspp, nama }) => {
+const Sp2dDoc = ({ dataselectspp, nama, dataKadis }) => {
     // useEffect(() => {
     //     console.log("spd dok", dataselectspp);
     // }, []);
@@ -498,11 +497,11 @@ const Sp2dDoc = ({ dataselectspp, nama }) => {
                                     <View style={{ flexDirection: 'column', width: '65%' }}>
                                         <View style={{ flexDirection: 'column' }}>
                                             <Text style={{ textAlign: 'center' }}>DEKAI, {moment(e.tgl_sp2d).locale('id').format("DD MMMM YYYY")}</Text>
-                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>{dataKadis.jabatan || "data kadis tidak temukan"}</Text>
-                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>DINAS PEMBERDAYAAN MASAYRAKAT KAMPUNG</Text>
-                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold', textDecoration: 'underline', marginTop: 60 }}>{dataKadis.nama || "data kadis tidak temukan"}</Text>
-                                            <Text style={{ textAlign: 'center' }}>{dataKadis.pangkat || "data kadis tidak temukan"}</Text>
-                                            <Text style={{ textAlign: 'center' }}>{dataKadis.nip || "data kadis tidak temukan"}</Text>
+                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>{dataKadis.jabatan || "Plt, KEPALA DINAS"}</Text>
+                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold' }}>{dataKadis.dinas || "DINAS PEMBERDAYAAN MASAYRAKAT KAMPUNG"}</Text>
+                                            <Text style={{ textAlign: 'center', fontWeight: 'semibold', textDecoration: 'underline', marginTop: 60 }}>{dataKadis.nama || "LAZARUS PAHABOL, SE, MM"}</Text>
+                                            <Text style={{ textAlign: 'center' }}>{dataKadis.pangkat || "PENATA Tk.I"}</Text>
+                                            <Text style={{ textAlign: 'center' }}>{dataKadis.nip || "19740404 200605 1 001"}</Text>
                                         </View>
                                     </View>
                                 </View>

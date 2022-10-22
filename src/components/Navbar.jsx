@@ -193,6 +193,7 @@ const Navbar = ({ ubahMenu }) => {
     const [userId, setUserId] = useState('');
     const [expier, setExpier] = useState('');
     const [vlaporan, setVlaporan] = useState(false);
+    const [dataKadis, setDataKadis] = useState({});
 
 
     const navLink = useNavigate();
@@ -210,6 +211,7 @@ const Navbar = ({ ubahMenu }) => {
             setKdlvl1(decode.kd_lvl1);
             setKdlvl2(decode.kd_lvl2);
             setUserId(decode.userId);
+            await axios.get('/kadis').then((e) => { setDataKadis(e.data); console.log("Data kadis di Nav", e.data) })
         } catch (e) {
             //console.log('error refresh token', e.message);
             navLink('/');
@@ -222,7 +224,7 @@ const Navbar = ({ ubahMenu }) => {
     //Redux Data
     const dispatch = useDispatch();
 
-    useEffect(() => dispatch(dataUser({ namauser, kd_lvl1, kd_lvl2, kd_kampung, kd_distrik, userId, token }))
+    useEffect(() => dispatch(dataUser({ namauser, kd_lvl1, kd_lvl2, kd_kampung, kd_distrik, userId, token, dataKadis }))
         , [refreshtoken])
     //Redux Data
 

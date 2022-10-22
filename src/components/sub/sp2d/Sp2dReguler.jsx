@@ -40,7 +40,7 @@ moment.updateLocale('id', {
 
 const Sp2dReguler = () => {
 
-    const { kd_kampung, kd_lvl1, kd_lvl2, nama } = useSelector(state => state.userLogin);
+    const { kd_kampung, kd_lvl1, kd_lvl2, nama, dataKadis } = useSelector(state => state.userLogin);
     //console.log("nama=>", nama);
     // const { nama, kd_kampung, kd_distrik, kd_lvl1, kd_lvl2, token } = useSelector(state => state.userLogin);
     const gridRef = useRef(); // Optional - for accessing Grid's API
@@ -393,7 +393,7 @@ const Sp2dReguler = () => {
                     <div className='grow'>
                         <div className='mx-auto justify-center items-center h-screen w-[90%] relative'>
                             <PDFViewer style={{ width: "100%", height: "100vh", alignItems: 'center', alignSelf: 'center' }}
-                            ><DocSp2dReg dataselectspp={dataVprint} nama={nama} /></PDFViewer>
+                            ><DocSp2dReg dataselectspp={dataVprint} nama={nama} dataKadis={dataKadis} /></PDFViewer>
                             <span className={`absolute text-red-500 bg-slate-900 rounded-full text-xl cursor-pointer z-20 w-6 m-4 -top-7 text-center -right-6`}
                                 onClick={() => { setViewprint(false); setDataVprint([]) }}>X</span>
                         </div>
@@ -422,7 +422,7 @@ const Sp2dReguler = () => {
                         </div>
                         {print ? <div>
                             {viewbtn ?
-                                <><PDFDownloadLink placeholder='Print Data PDF' document={<DocSp2dReg dataselectspp={dataDlprint} nama={nama} />} fileName={`doc_spp-reg_${new Date().toLocaleTimeString().slice(0, 16)}`}>
+                                <><PDFDownloadLink placeholder='Print Data PDF' document={<DocSp2dReg dataselectspp={dataDlprint} nama={nama} dataKadis={dataKadis} />} fileName={`doc_spp-reg_${new Date().toLocaleTimeString().slice(0, 16)}`}>
                                     {({ loading }) => loading && !viewbtn ? <Loader /> :
                                         <Tooltip title='SaveAs PDF' style={{ alignContent: 'center', height: 8, width: 8 }} >
                                             <IconButton style={{ alignContent: 'center', height: 8, marginTop: -4, width: 8, paddingLeft: 22 }}>

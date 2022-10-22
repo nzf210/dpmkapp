@@ -34,7 +34,7 @@ import DatePicker from '../../DatePicker';
 import InfoDialog from '../../DialogInfo';
 moment.updateLocale('id', {
     weekdaysMin: ["Ahad", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
-    months: ["Januari", "February", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Novenber", "Desember"]
+    months: ["Januari", "February", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
 });
 
 const ApbkMonitoring = () => {
